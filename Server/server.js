@@ -3,6 +3,7 @@ const express=require('express')
 const mongoose=require('mongoose')
 const bodyParser = require('body-parser');
 const userRoutes=require('./routes/userRoute')
+const profileRoutes=require('./routes/profileRoute')
 
 const app=express()
 app.use(bodyParser.json());
@@ -14,6 +15,7 @@ app.use((req,res,next)=>{
     next()
 });
 app.use('/api/user',userRoutes)
+app.use('/api/profile',profileRoutes)
 
 mongoose.connect(process.env.MONGO_URI)
 .then(()=>{

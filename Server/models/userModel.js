@@ -13,7 +13,6 @@ userSchema.statics.signup=async function(email,password){
    if(!email||!password){
     throw Error('Tous les champs doivent être remplis')
    }
-
    if(!validator.isEmail(email)){
      throw Error('Email n\'est pas valide')
    }
@@ -26,11 +25,8 @@ userSchema.statics.signup=async function(email,password){
     throw Error('Email déja utilisé')
   } 
   const salt=await bcrypt.genSalt(10)
-
   const hash=await bcrypt.hash(password,salt)
-
   const user=await this.create({email,password:hash})
-
   return user
 } 
 
@@ -38,12 +34,10 @@ userSchema.statics.login=async function(email,password){
     if(!email||!password){
         throw Error('Tous les champs doivent être remplis')
     }
-
     const user=await this.findOne({ email})
     if(!user){
       throw Error('Email incorrecte ')
     } 
-
     const match=await bcrypt.compare(password,user.password)
      if(!match){
         throw Error('mot de passe incorrecte')
