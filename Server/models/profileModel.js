@@ -6,10 +6,11 @@ const profileSchema = new mongoose.Schema({
     lastName: { type: String, required: true },
     filiere: { type: String, required: true },
     niveau: { type: String, required: function () { return this.role === 'etudiant'; } },
-    role: { type: String, enum: ['etudiant', 'laureat'], required: true },
     experiences: { type: String, required: function () { return this.role === 'etudiant'; } },
     posteActuel: { type: String, required: function () { return this.role === 'laureat'; } },
     experiencesPassee: { type: String, required: function () { return this.role === 'laureat'; } },
+    promotion:{ type: String, required: function () { return this.role === 'laureat'; } },
   });
   
   module.exports = mongoose.model('Profile', profileSchema);
+  

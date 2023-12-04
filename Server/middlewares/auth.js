@@ -11,17 +11,6 @@ const getUserIdFromToken = (token) => {
     }
   };
   
-exports.requireRole = (allowedRoles) => {
-    return (req, res, next) => {
-      const { role } = req.userProfile;
-      if (allowedRoles === role) {
-        next();
-      } else {
-        res.status(403).json({ message: 'Forbidden: Insufficient privileges' });
-      }
-    };
-  };
-
   const verifyToken = async (req, res, next) => {
     try {
       const token = req.headers.authorization?.split(' ')[1];
@@ -48,12 +37,6 @@ exports.requireRole = (allowedRoles) => {
       const user = await getUserFromDatabase(req.body.email, req.body.password);
       if (!user) {
         return res.status(401).json({ message: 'Identifiants incorrects' });
-      }
-      if (user.role === 'etudiant') {
-        const isEtuEmail = /@etu\.uae\.ac\.ma$/;
-        if (!isEtuEmail.test(user.email)) {
-          return res.status(403).json({ message: 'L\'adresse e-mail doit se terminer par "@etu.uae.ac.ma"' });
-        }
       }
       req.userProfile = user;
       next();
