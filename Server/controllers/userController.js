@@ -17,10 +17,6 @@ const loginUser=async (req,res)=>{
 
 const signupUser=async (req,res)=>{
     const {email,password,role,confirmPassword}=req.body
-    console.log('Email:', email);
-console.log('Password:', password);
-console.log('Confirm Password:', confirmPassword);
-console.log('Role:', role);
     try{
         const user = await User.signup(email.trim(), password.trim(), confirmPassword.trim(), role);
         const token=createToken(user._id)

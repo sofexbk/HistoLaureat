@@ -1,10 +1,11 @@
-/*const express=require('express')
+const express=require('express')
 const router=express.Router()
-const {createStage,updateStage,getStage,deleteStage}=require('../controllers/stageController')
+const stage=require('../controllers/stageController')
 const authMiddleware = require('../middlewares/auth');
 
-router.get('/getStage',authMiddleware.verifyToken,getStage)
-router.post('/createStage',authMiddleware.verifyToken,createStage)
-router.patch('/updateStage/:stageId',authMiddleware.verifyToken,updateStage)
-router.delete('/deleteStage/:stageId',authMiddleware.verifyToken,deleteStage)
-module.exports=router*/
+router.get('/getAllStages',authMiddleware.verifyToken,stage.getAllStages)
+router.get('/:laureatId/getAllStages',authMiddleware.verifyToken,stage.getStagesByLaureat)
+router.post('/:laureatId/createStage',authMiddleware.verifyToken,stage.createStage)
+router.patch('/:laureatId/:stageId/updateStage/',authMiddleware.verifyToken,stage.updateStage)
+router.delete('/:laureatId/:stageId/deleteStage',authMiddleware.verifyToken,stage.deleteStage)
+module.exports=router

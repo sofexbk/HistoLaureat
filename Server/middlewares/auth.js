@@ -18,8 +18,8 @@ const getUserIdFromToken = (token) => {
         return res.status(401).json({ message: 'Authorization token is missing.' });
       }
       const userId = await getUserIdFromToken(token); 
-      console.log('Decoded Token:', jwt.verify(token, process.env.SECRET));
-      console.log('userId:', userId);
+      //console.log('Decoded Token:', jwt.verify(token, process.env.SECRET));
+      //console.log('userId:', userId);
   
       if (!userId) {
         return res.status(401).json({ message: 'Invalid or expired token.' });
