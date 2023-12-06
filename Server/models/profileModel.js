@@ -11,6 +11,5 @@ const profileSchema = new mongoose.Schema({
     experiencesPassee: { type: String, required: function () { return this.role === 'laureat'; } },
     promotion:{ type: String, required: function () { return this.role === 'laureat'; } },
   });
-  
-  module.exports = mongoose.model('Profile', profileSchema);
+module.exports = mongoose.model('Profile', profileSchema);
   

@@ -16,9 +16,13 @@ const loginUser=async (req,res)=>{
 }}
 
 const signupUser=async (req,res)=>{
-    const {email,password,role}=req.body
+    const {email,password,role,confirmPassword}=req.body
+    console.log('Email:', email);
+console.log('Password:', password);
+console.log('Confirm Password:', confirmPassword);
+console.log('Role:', role);
     try{
-        const user=await User.signup(email,password,role)
+        const user = await User.signup(email.trim(), password.trim(), confirmPassword.trim(), role);
         const token=createToken(user._id)
         res.status(200).json({email,token,role})
     }catch (error) {
