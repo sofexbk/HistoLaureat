@@ -7,7 +7,6 @@ const userSchema=new Schema({
   email:{type:String,required:true,unique:true},
   password:{type:String,required:true},
   role: { type: String, enum: ['etudiant', 'laureat'], required: true },
-  confirmPassword:{type:String,required:true}
 })
 
 userSchema.statics.signup = async function (email, password, confirmPassword, role) {
@@ -32,7 +31,7 @@ userSchema.statics.signup = async function (email, password, confirmPassword, ro
   }
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
-  const user = await this.create({ email, password: hash, role, confirmPassword });
+  const user = await this.create({ email, password: hash, role });
   return user;
 }
 
