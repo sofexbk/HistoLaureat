@@ -6,10 +6,12 @@ const userRoutes=require('./routes/userRoute')
 const profileRoutes=require('./routes/profileRoute')
 const stageRoutes=require('./routes/stageRoute')
 //const { checkLaureatRole } = require('./middlewares/auth');
+const router = express.Router();
 
 const app=express()
 app.use(bodyParser.json());
 
+router.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 
 app.use((req,res,next)=>{ 
