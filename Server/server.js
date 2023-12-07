@@ -5,6 +5,9 @@ const bodyParser = require('body-parser');
 const userRoutes=require('./routes/userRoute')
 const profileRoutes=require('./routes/profileRoute')
 const stageRoutes=require('./routes/stageRoute')
+const commentRoutes=require('./routes/commentRoute')
+const posteRoutes=require('./routes/posteRoute')
+
 //const { checkLaureatRole } = require('./middlewares/auth');
 
 const app=express()
@@ -19,6 +22,8 @@ app.use((req,res,next)=>{
 app.use('/api/user',userRoutes)
 app.use('/api/profile',profileRoutes)
 app.use('/api/stageLaureat',stageRoutes)
+app.use('/api/comment',commentRoutes)
+app.use('/api/poste',posteRoutes)
 mongoose.connect(process.env.MONGO_URI)
 .then(()=>{
     app.listen(process.env.PORT,()=>{
