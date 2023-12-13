@@ -1,26 +1,28 @@
 const Comment = require('../models/commentModel');
 const Poste = require('../models/posteModel');
-const User = require('../models/userModel');
+const Profile = require('../models/profileModel');
 const { Types: { ObjectId } } = require('mongoose');
 
 // Créer un commentaire
 exports.createComment = async (req, res) => {
   try {
-    const { userId, posteId } = req.params;
+    const { profileId, posteId } = req.params;
     const { content } = req.body;
-
     const poste = await Poste.findById(posteId);
     if (!poste) {
       return res.status(404).json({ message: 'Le poste n\'a pas été trouvé.' });
     }
-
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: 'L\'utilisateur n\'a pas été trouvé.' });
+    const profile = await Profile.findById(profileId);
+    if (!profile) {
+      return res.status(404).json({ message: 'Le profile n\'a pas été trouvé.' });
     }
-
     const creationDate = new Date();
-    const newComment = new Comment({ posteId, userId, content, creationDate });
+    const newComment = new Comment({
+      posteId,
+      profileId,
+      content,
+      creationDate,
+    });
 
     await newComment.save();
 
@@ -34,7 +36,7 @@ exports.createComment = async (req, res) => {
 // Mettre à jour un commentaire
 exports.updateComment = async (req, res) => {
   try {
-    const { userId, commentId } = req.params;
+    const { profileId, commentId } = req.params;
     const { content } = req.body;
 
     if (!commentId) {
@@ -47,7 +49,7 @@ exports.updateComment = async (req, res) => {
       return res.status(404).json({ message: 'Commentaire non trouvé.' });
     }
 
-    if (existingComment.userId.toString() !== userId) {
+    if (existingComment.profileId.toString() !== profileId) {
       return res.status(403).json({ message: 'Vous n\'êtes pas autorisé à mettre à jour ce commentaire.' });
     }
 
@@ -66,13 +68,13 @@ exports.updateComment = async (req, res) => {
 // Supprimer un commentaire
 exports.deleteComment = async (req, res) => {
   try {
-    const { userId, commentId } = req.params;
+    const { profileId, commentId } = req.params;
 
     if (!commentId) {
       return res.status(400).json({ message: 'commentId est requis dans les paramètres de la requête.' });
     }
 
-    const result = await Comment.deleteOne({ _id: commentId, userId });
+    const result = await Comment.deleteOne({ _id: commentId, profileId });
 
     if (result.deletedCount === 0) {
       return res.status(404).json({ message: 'Commentaire non trouvé ou vous n\'êtes pas autorisé à le supprimer.' });
@@ -97,6 +99,31 @@ exports.getCommentsByPoste = async (req, res) => {
     const comments = await Comment.find({ posteId }).sort({ creationDate: -1 });
 
     res.status(200).json({ message: 'Commentaires récupérés avec succès', comments });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erreur interne du serveur', error: error.message });
+  }
+};
+// Récupérer un commentaire par ID
+exports.getCommentById = async (req, res) => {
+  try {
+    const { profileId, commentId } = req.params;
+
+    if (!commentId) {
+      return res.status(400).json({ message: 'commentId est requis dans les paramètres de la requête.' });
+    }
+
+    const comment = await Comment.findById(commentId);
+
+    if (!comment) {
+      return res.status(404).json({ message: 'Commentaire non trouvé.' });
+    }
+
+    if (comment.profileId.toString() !== profileId) {
+      return res.status(403).json({ message: 'Vous n\'êtes pas autorisé à accéder à ce commentaire.' });
+    }
+
+    res.status(200).json({ message: 'Commentaire récupéré avec succès', comment });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Erreur interne du serveur', error: error.message });
