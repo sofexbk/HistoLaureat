@@ -3,7 +3,7 @@ const router=express.Router()
 const stage=require('../controllers/stageController')
 const authMiddleware = require('../middlewares/auth');
 
-router.get('/getAllStages',stage.getAllStages)
+router.get('/getAllStages',authMiddleware.verifyToken,stage.getAllStages)
 router.get('/:laureatId/getAllStages',authMiddleware.verifyToken,stage.getStagesByLaureat)
 router.post('/:laureatId/createStage',authMiddleware.verifyToken,stage.createStage)
 router.patch('/:laureatId/:stageId/updateStage/',authMiddleware.verifyToken,stage.updateStage)
