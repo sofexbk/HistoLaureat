@@ -79,3 +79,18 @@ exports.updateProfile = async (req, res) => {
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
+
+exports.checkProfile = async (req, res) => {
+  try {
+    const userId = req.params.userId; 
+    const profile = await Profile.findOne({ userId });
+    if (profile) {
+      res.json({ hasProfile: true });
+    } else {
+      res.json({ hasProfile: false });
+    }
+  } catch (error) {
+    console.error('Error checking profile:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};

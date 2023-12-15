@@ -11,6 +11,7 @@ const profileSchema = new mongoose.Schema({
     experiencesPassee: { type: String, required: function () { return this.role === 'laureat'; } },
     promotion:{ type: String, required: function () { return this.role === 'laureat'; } },
   });
+  
   profileSchema.pre('save', async function (next) {
     if (this.isNew) {
         try {
