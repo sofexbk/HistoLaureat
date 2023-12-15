@@ -21,6 +21,7 @@ export const useSignup = () => {
       console.log('Signup error:', error.response.data);
       setIsLoading(false);
       setError('Failed to sign up');
+      throw Error(error.response.data.response)
     }
 };
 

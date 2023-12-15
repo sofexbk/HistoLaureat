@@ -20,8 +20,8 @@ export const useLogin = () => {
       dispatch({ type: 'LOGIN', payload: data });
       setIsLoading(false);
     } catch (error) {
-      console.log('Signup error:', error);
       setIsLoading(false);
+      setError(error.response.data.error)
     }
 };
 

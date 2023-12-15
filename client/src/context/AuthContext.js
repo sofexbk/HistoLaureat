@@ -3,9 +3,11 @@ import React, { createContext, useEffect, useReducer } from "react";
 export const authReducer = (state, action) => {
   switch (action.type) {
     case 'LOGIN':
-      return { user: action.payload };
+      return { ...state,user: action.payload };
     case 'LOGOUT':
-      return { user: null };
+      return { ...state,user: null };
+      case 'PROFILE_STATUS':
+        return { ...state , hasProfile: action.payload };
     default:
       return state;
   }
@@ -15,7 +17,8 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, {
-    user: null
+    user: null,
+    hasProfile:false
   });
 
   useEffect(()=>{
