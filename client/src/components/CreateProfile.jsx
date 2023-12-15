@@ -1,23 +1,14 @@
 import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
 
 function CreateProfile() {
-  const handleLocalStorage=()=>{
-    localStorage.removeItem('signupSuccess');
-  }
-
-  const {navigate}=useNavigate();
-
+  
 useEffect(() => {
-  const signupSuccess = localStorage.getItem('signupSuccess');
-
-  if (signupSuccess !== 'true') {
-    navigate('/home');
-  }
-}, [navigate]);
+  console.log("from create-profile")
+}, );
 
   return (
-    <button onClick={handleLocalStorage}>remove LocalStorage</button>
+    
+    <h1>test</h1>
   )
 }
 

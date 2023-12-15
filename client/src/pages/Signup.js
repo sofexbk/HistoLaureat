@@ -8,16 +8,13 @@ function Signup() {
   const [role, setRole] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const {navigate}=useNavigate()
-
-  const redirection =()=>{
-    localStorage.setItem('signupSuccess', 'true');
-    navigate('/create-profile') 
-  }
-
   const roles = ["etudiant", "laureat"];
   const { Signup: handleSignup, isLoading, } = useSignup();
+
+
+  const Navigate =useNavigate();
   const handleSubmit = async (e) => {
+    
     e.preventDefault();
 
     if (password !== confirmPassword) {
@@ -25,13 +22,14 @@ function Signup() {
       return;
     }
 
-    try {
-      await handleSignup(email, password, confirmPassword, role);
-      redirection();
+  try {
+    await handleSignup(email, password, confirmPassword, role);
+    Navigate('/create-profile')
 
-    } catch (error) {
-      setError("echec d'inscreption");
-    }
+    } 
+    catch (error) {
+    setError("echec d'inscreption");
+  }
   };
 
   return (
