@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSignup } from "../hooks/useSignup";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -7,10 +8,15 @@ function Signup() {
   const [role, setRole] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const {navigate}=useNavigate()
+
+  const redirection =()=>{
+    localStorage.setItem('signupSuccess', 'true');
+    navigate('/create-profile') 
+  }
 
   const roles = ["etudiant", "laureat"];
   const { Signup: handleSignup, isLoading, } = useSignup();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -21,8 +27,10 @@ function Signup() {
 
     try {
       await handleSignup(email, password, confirmPassword, role);
+      redirection();
+
     } catch (error) {
-      setError("Échec de l'inscription");
+      setError("echec d'inscreption");
     }
   };
 

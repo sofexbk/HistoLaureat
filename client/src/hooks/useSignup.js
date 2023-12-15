@@ -14,8 +14,8 @@ export const useSignup = () => {
     try {
       const response = await axios.post('/api/user/signup',{ email, password, confirmPassword, role });
       const { data } = response;
-      console.log("test signup")
       localStorage.setItem('user', JSON.stringify(data));
+      localStorage.setItem('signupSuccess', 'true');
       dispatch({ type: 'LOGIN', payload: data });
       setIsLoading(false);
     } catch (error) {
