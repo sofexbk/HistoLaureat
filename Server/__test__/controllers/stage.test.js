@@ -11,14 +11,12 @@ jest.mock('../../models/userModel');
 describe('Stage Controller', () => {
   describe('createStage', () => {
     it('should create a stage successfully', async () => {
-      Profile.findById.mockResolvedValueOnce({ userId: 'user123' });
+      Profile.findById.mockResolvedValueOnce({ userId: 'user123'});
       User.findById.mockResolvedValueOnce({ role: 'laureat' });
-
-      const validObjectId = new ObjectId(); // Generate a valid ObjectId
-
+      const validObjectId = new ObjectId();
       const req = {
         params: {
-          laureatId: validObjectId.toHexString(), // Use the hex string representation
+          laureatId: validObjectId.toHexString(), 
         },
         body: {
           company: 'ABC Inc',
@@ -58,7 +56,6 @@ describe('Stage Controller', () => {
           startDate: '2023-01-01',
           endDate: '2023-03-31',
         },
-        // Add more stage objects as needed
       ];
 
       Stage.find.mockResolvedValueOnce(stagesMock);
@@ -89,7 +86,6 @@ describe('Stage Controller', () => {
           startDate: '2023-01-01',
           endDate: '2023-03-31',
         },
-        // Add more stage objects as needed
       ];
 
       Stage.find.mockResolvedValueOnce(stagesMock);
