@@ -1,9 +1,12 @@
-import { useState } from "react";
+import {  useState } from "react";
 import axios from "axios";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useNavigate } from "react-router-dom";
 
 function CreateProfile() {
-  const { user } = useAuthContext();
+  const { user ,dispatch} = useAuthContext();
+  const [error,setError]=useState(null);
+  const Navigate=useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -37,13 +40,21 @@ function CreateProfile() {
       );
 
       console.log("Profile creation successful:", response.data);
+      localStorage.setItem('user',  JSON.stringify({
+        ...user,
+        hasProfile: true,
+      }))
+      dispatch({ type: "PROFILE_STATUS", payload: true });
+
+      Navigate('/home');
+
       
     } catch (error) {
-      console.error("Error creating profile:", error.response.data);
-      
+      setError(error.response ? error.response.data : "An error occurred");
     }
-  };
 
+  };
+    
   return (
     <>
       {user && (
@@ -162,6 +173,8 @@ function CreateProfile() {
             >
               Save Profile
             </button>
+            {error && <div className="text-red-500 mt-4">{error.error}</div>}
+
           </form>
         </div>
       )}

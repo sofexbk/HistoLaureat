@@ -5,13 +5,14 @@ export const authReducer = (state, action) => {
     case 'LOGIN':
       return { ...state,user: action.payload };
     case 'LOGOUT':
-      return { ...state,user: null };
+      return { user: null ,hasProfile:false};
       case 'PROFILE_STATUS':
         return { ...state , hasProfile: action.payload };
     default:
       return state;
   }
 };
+
 
 export const AuthContext = createContext();
 
@@ -21,12 +22,14 @@ export const AuthContextProvider = ({ children }) => {
     hasProfile:false
   });
 
-  useEffect(()=>{
-    const user = JSON.parse(localStorage.getItem('user'))
-    if(user){
-      dispatch({type:'LOGIN',payload:user})
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      dispatch({ type: 'LOGIN', payload: { email: user.email, role: user.role, token: user.token } });
+      dispatch({type:'PROFILE_STATUS',payload:user.hasProfile})
     }
-  },[])
+  }, []);
+  
 
   console.log("AuthContext state", state);
 
