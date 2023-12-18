@@ -1,4 +1,6 @@
 const Profile = require('../models/profileModel');
+const multer = require('multer');
+const upload = multer();
 
 const validateFields = ({ firstName, lastName, filiere, experiences, posteActuel, experiencesPassee, niveau,role,promotion }) => {
   if (!firstName || !lastName || !filiere) {
@@ -16,9 +18,10 @@ exports.createProfile = async (req, res) => {
     if (!userId) {
       return res.status(400).json({ message: 'userId is required in the request.' });
     }
-    const { firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee,promotion } = req.body;
-    validateFields({ firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee,role,promotion });
-    const newProfile = new Profile({ userId, firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee,role,promotion });
+    const { firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee,promotion} = req.body;
+
+    validateFields({ firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee,role,promotion});
+    const newProfile = new Profile({ userId, firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee,role,promotion});
 
     if (role === 'etudiant') {
       newProfile.experiences = experiences;
@@ -47,8 +50,8 @@ exports.updateProfile = async (req, res) => {
     if (!userId) {
       return res.status(400).json({ message: 'userId is required in the request.' });
     }
-    const { firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee } = req.body;
-    validateFields({ firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee });
+    const { firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee} = req.body;
+    validateFields({ firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee});
     const existingProfile = await Profile.findOne({ userId });
 
     if (!existingProfile) {

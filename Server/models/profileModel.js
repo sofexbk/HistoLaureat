@@ -1,4 +1,4 @@
-const mongoose=require('mongoose')
+const mongoose = require('mongoose');
 
 const profileSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
@@ -9,15 +9,13 @@ const profileSchema = new mongoose.Schema({
     experiences: { type: String, required: function () { return this.role === 'etudiant'; } },
     posteActuel: { type: String, required: function () { return this.role === 'laureat'; } },
     experiencesPassee: { type: String, required: function () { return this.role === 'laureat'; } },
-    promotion:{ type: String, required: function () { return this.role === 'laureat'; } },
+    promotion:{ type: String, required: function () { return this.role === 'laureat'; } }
   });
-  
   profileSchema.pre('save', async function (next) {
     if (this.isNew) {
         try {
             const user = await mongoose.model('User').findById(this.userId);
             this.role = user.role;
-            console.log("succesfully")
         } catch (error) {
             throw new Error('Error fetching associated user role.');
         }
