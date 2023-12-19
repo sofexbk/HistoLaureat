@@ -1,6 +1,6 @@
 const Profile = require('../models/profileModel');
-const multer = require('multer');
-const upload = multer();
+
+
 
 const validateFields = ({ firstName, lastName, filiere, experiences, posteActuel, experiencesPassee, niveau,role,promotion }) => {
   if (!firstName || !lastName || !filiere) {
@@ -14,15 +14,17 @@ if(role=='etudiant')
 
 exports.createProfile = async (req, res) => {
   try {
+
     const { userId, role } = req;
-    if (!userId) {
-      return res.status(400).json({ message: 'userId is required in the request.' });
+     console.log(req.file);
+    if (!userId || !req.file) {
+      return res.status(400).json({ message: 'userId and image are required in the request.' });
     }
+    image=req.file.filename;
     const { firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee,promotion} = req.body;
-
     validateFields({ firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee,role,promotion});
-    const newProfile = new Profile({ userId, firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee,role,promotion});
-
+  
+    const newProfile = new Profile({ userId, firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee,role,promotion,image});
     if (role === 'etudiant') {
       newProfile.experiences = experiences;
       newProfile.niveau = niveau; 
@@ -35,7 +37,6 @@ exports.createProfile = async (req, res) => {
       newProfile.experiences = undefined
       newProfile.niveau = undefined 
     }
-
     await newProfile.save();
     res.status(201).json({ message: 'Profile créé avec succès', profile: newProfile });
   } catch (error) {

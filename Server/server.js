@@ -7,7 +7,6 @@ const profileRoutes=require('./routes/profileRoute')
 const stageRoutes=require('./routes/stageRoute')
 const commentRoutes=require('./routes/commentRoute')
 const posteRoutes=require('./routes/posteRoute')
-const path = require('path');
 const router = express.Router();
 
 const app=express()
@@ -20,6 +19,7 @@ app.use((req,res,next)=>{
     console.log(req.path,req.method)
     next()
 });
+app.use(express.static("uploads"));
 
 app.use('/api/user',userRoutes)
 app.use('/api/profile',profileRoutes)

@@ -80,11 +80,10 @@ function Login() {
             />
           </div>
         </div>
-
         <button
           type="submit"
           disabled={isLoading}
-          className="text-blue-500 border border-solid border-blue-500 bg-white text-white px-4 py-2 rounded-md transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white hover:border-blue-700"
+          className="text-blue-500 border border-solid border-blue-500 bg-white px-4 py-2 rounded-md transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white hover:border-blue-700"
         >
           Connexion
         </button>
