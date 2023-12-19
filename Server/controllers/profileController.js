@@ -48,9 +48,20 @@ exports.createProfile = async (req, res) => {
 exports.updateProfile = async (req, res) => {
   try {
     const { userId, role } = req;
-    if (!userId) {
-      return res.status(400).json({ message: 'userId is required in the request.' });
+    if (!userId || !req.file) {
+      return res.status(400).json({ message: 'userId and image are required in the request.' });
     }
+    let new_image='';
+    if(req.file){
+      new_image=req.file.filename;
+      try{
+        fs.unlinkSync('./uploads/'+req.body.old_image);
+      }catch(err){
+        console.log(err);
+      }
+   }else{
+    new_image=req.body.old_image;
+   }
     const { firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee} = req.body;
     validateFields({ firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee});
     const existingProfile = await Profile.findOne({ userId });
@@ -58,11 +69,10 @@ exports.updateProfile = async (req, res) => {
     if (!existingProfile) {
       return res.status(404).json({ message: 'Profile not found for the given userId.' });
     }
-
     existingProfile.firstName = firstName;
     existingProfile.lastName = lastName;
     existingProfile.filiere = filiere;
-
+    existingProfile.image= new_image;
     if (role === 'etudiant') {
       existingProfile.experiences = experiences;
       existingProfile.posteActuel = undefined;
