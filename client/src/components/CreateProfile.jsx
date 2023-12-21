@@ -1,12 +1,13 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const CreateProfile = () => {
-  const { user ,dispatch} = useAuthContext();
-  const [error,setError]=useState(null);
-  const Navigate=useNavigate();
+  const { user, dispatch } = useAuthContext();
+  const [error, setError] = useState(null);
+  const Navigate = useNavigate();
+  const [profilePicture, setProfilePicture] = useState(null);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -23,16 +24,28 @@ const CreateProfile = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
-    console.log(formData)
+    console.log(formData);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({...formData, role: user.role});
+    console.log({ ...formData, role: user.role, image: profilePicture });
+
+    const formDataWithImage = new FormData();
+    formDataWithImage.append("image", profilePicture);
+    formDataWithImage.append("firstName", formData.firstName);
+    formDataWithImage.append("lastName", formData.lastName);
+    formDataWithImage.append("filiere", formData.filiere);
+    formDataWithImage.append("niveau", formData.niveau);
+    formDataWithImage.append("experiences", formData.experiences);
+    formDataWithImage.append("posteActuel", formData.posteActuel);
+    formDataWithImage.append("experiencesPassee", formData.experiencesPassee);
+    formDataWithImage.append("promotion", formData.promotion);
+
     try {
       const response = await axios.post(
         "api/profile/createProfile",
-        {...formData,role:user.role},
+        formDataWithImage,
         {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -41,19 +54,21 @@ const CreateProfile = () => {
       );
 
       console.log("Profile creation successful:", response.data);
-      localStorage.setItem('user',  JSON.stringify({
-        ...user,
-        hasProfile: true,
-      }))
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          ...user,
+          hasProfile: true,
+        })
+      );
       dispatch({ type: "PROFILE_STATUS", payload: true });
 
-      Navigate('/home');
-
-      
+      Navigate("/home");
     } catch (error) {
-      setError(error.response ? error.response.data : "An error occurred");
+      setError(
+        error.response ? error.response.data : "An error occurred"
+      );
     }
-
   };
   return (
     <>
@@ -61,8 +76,14 @@ const CreateProfile = () => {
     <form onSubmit={handleSubmit} className='relative bg-aliceblue-100 w-full h-[2078px] min-w-[580px] flex flex-col items-center justify-start py-[60px] px-10 box-border gap-[40px] text-left text-xl text-white font-poppins'>
    
       <div className='self-stretch relative text-[40px] font-extrabold text-steelblue-200'>
-        Mon Profile
+              Mon Profile
+            </div>
+            <div className='self-stretch relative h-[27px]'>
+        <label htmlFor='image' className='top-0 left-0'>
+          Photo de profil
+        </label>
       </div>
+
       <div className='w-full rounded-3xl bg-white flex flex-col items-start justify-center py-[30px] px-10 box-border gap-[38px] max-w-[1000px] text-base'>
         <div className='self-stretch flex flex-row items-start justify-center gap-[6px] min-w-[400px] text-center text-xs font-avenir'>
           <div className='shrink-0 flex flex-col items-center justify-center gap-[8px]'>
@@ -101,6 +122,7 @@ const CreateProfile = () => {
             </i>
           </div>
         </div>
+        
         <div className='self-stretch flex flex-col items-start justify-center gap-[8px]'>
           <div className='self-stretch flex flex-row items-center justify-start gap-[12px] text-center text-xs font-avenir'>
             <div className='relative w-6 h-6'>
@@ -120,6 +142,16 @@ const CreateProfile = () => {
             *Tous les champs sont obligatoires sauf indication contraire.
           </div>
         </div>
+        <div className='self-stretch relative rounded-lg box-border h-14 overflow-hidden shrink-0 text-dimgray-200 border border-solid border-dimgray-400'>
+        <input
+          type='file'
+          id='image'
+          name='image'
+          onChange={(e) => setProfilePicture(e.target.files[0])}
+          accept='image/*'
+          className='w-full h-full px-6 appearance-none bg-transparent border-none'
+        />
+      </div>
         <div className='self-stretch flex flex-row items-start justify-center gap-[38px] text-dimgray-100'>
           <div className='flex-1 shrink-0 flex flex-row items-start justify-start'>
             <div className='flex-1 flex flex-col items-start justify-start gap-[4px]'>
@@ -446,7 +478,7 @@ const CreateProfile = () => {
           type="submit"
           className="text-blue-500 border border-solid border-blue-500 bg-white px-4 py-2 rounded-md transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white hover:border-blue-700">
              Connexion
-      </button>
+        </button>
     </form>
   )}
     </>
