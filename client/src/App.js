@@ -13,7 +13,7 @@ import Navbar from './components/Navbar'
 
 
 function App() {
-  const {user}=useAuthContext();
+  const {user,hasProfile}=useAuthContext();
   return (
     <Router>
       <div className="App">
@@ -22,7 +22,16 @@ function App() {
             <Route path="/login" element={!user ? <Login/> : <Navigate to="/home" />} />
             <Route path="/signup" element={!user ? <Signup/> : <Navigate to="/home" />} />
             <Route  path="/home" element={user ? <Home/>: <Navigate to="/login" /> } />
-            <Route  path="/create-profile" element={ <CreateProfile/>}/>
+            <Route
+              path="/create-profile"
+              element={
+                !user && hasProfile ? (
+                  <CreateProfile />
+                ) : (
+                  <Navigate to="/login" replace />
+                )
+              }
+            />            
             <Route path="/landing" element={<Landing/>} />
             <Route path='/new-post' element={<NewPost/>}/>
             <Route path='/new-stage' element={<NewStage/>}/>
