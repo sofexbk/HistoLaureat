@@ -14,16 +14,14 @@ if(role=='etudiant')
 
 exports.createProfile = async (req, res) => {
   try {
-
     const { userId, role } = req;
-     console.log(req.file);
-    if (!userId || !req.file) {
+    console.log(req.file);
+    if (!userId) {
       return res.status(400).json({ message: 'userId and image are required in the request.' });
     }
-    image=req.file.filename;
+    const image = req.file ? req.file.filename : null;    
     const { firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee,promotion} = req.body;
     validateFields({ firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee,role,promotion});
-  
     const newProfile = new Profile({ userId, firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee,role,promotion,image});
     if (role === 'etudiant') {
       newProfile.experiences = experiences;
@@ -48,12 +46,12 @@ exports.createProfile = async (req, res) => {
 exports.updateProfile = async (req, res) => {
   try {
     const { userId, role } = req;
-    if (!userId || !req.file) {
+    if (!userId) {
       return res.status(400).json({ message: 'userId and image are required in the request.' });
     }
     let new_image='';
     if(req.file){
-      new_image=req.file.filename;
+      new_image=req.file?req.file.filename:0;
       try{
         fs.unlinkSync('./uploads/'+req.body.old_image);
       }catch(err){
