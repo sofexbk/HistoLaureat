@@ -123,6 +123,6 @@ exports.getProfile = async (req, res) => {
     }
   } catch (error) {
     console.error('Error checking profile:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error });
   }
 };
