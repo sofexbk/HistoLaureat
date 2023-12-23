@@ -6,6 +6,8 @@ import Signup from './pages/Signup';
 import { useAuthContext } from './hooks/useAuthContext';
 import Home from './components/Home';
 import CreateProfile from './components/CreateProfile';
+import CreatePost from './components/CreatePost';
+import CreateStage from './components/CreateStage';
 
 function App() {
   const {user}=useAuthContext();
@@ -17,6 +19,8 @@ function App() {
             <Route path="/signup" element={!user ? <Signup/> : <Navigate to="/home" />} />
             <Route  path="/home" element={user ? <Home/>: <Navigate to="/login" /> } />
             <Route  path="/create-profile" element={ <CreateProfile/>}/>
+            <Route path='/create-post' element={ <CreatePost/>} />
+            <Route  path="/create-stage" element={ <CreateStage/>}/>
           </Routes>
       </div>
     </Router>
