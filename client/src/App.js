@@ -20,7 +20,6 @@ function App() {
             <Route  path="/home" element={user ? <Home/>: <Navigate to="/login" /> } />
             <Route  path="/create-profile" element={ <CreateProfile/>}/>
             <Route path='/create-post' element={ <CreatePost/>} />
-            <Route  path="/create-profile" element={ <CreateProfile/>}/>
             <Route  path="/create-stage" element={ <CreateStage/>}/>
           </Routes>
       </div>
