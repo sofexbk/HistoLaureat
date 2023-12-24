@@ -9,7 +9,7 @@ import './App.css'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import { useAuthContext } from './hooks/useAuthContext'
-import Home from './components/Home'
+import Home from './pages/Home'
 import CreateProfile from './components/CreateProfile'
 import Landing from './pages/Landing' // Import Landing component
 import MonProfile from './pages/monProfile' // Import MonProfile component
@@ -22,9 +22,9 @@ function App () {
   return (
     <Router>
       <div className='App'>
-        <Navbar 
-        // ajouter connextion if connected
-        connexion
+        <Navbar
+          // ajouter connextion if connected
+          connexion
         />
         <Routes>
           <Route
@@ -35,13 +35,10 @@ function App () {
             path='/signup'
             element={!user ? <Signup /> : <Navigate to='/home' />}
           />
-          <Route
-            path='/home'
-            element={user ? <Home /> : <Navigate to='/login' />}
-          />
+          <Route path='/' element={<Home />} />
+          <Route path='/home' element={<Home />} />
           <Route path='/create-profile' element={<CreateProfile />} />
           <Route path='/landing' element={<Landing />} />
-          <Route path='/' element={<Landing />} />
           <Route path='/mon-profile' element={<MonProfile />} />
           <Route path='/new-post' element={<NewPost />} />
           <Route path='/new-stage' element={<NewStage />} />
