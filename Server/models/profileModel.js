@@ -9,7 +9,8 @@ const profileSchema = new mongoose.Schema({
     experiences: { type: String, required: function () { return this.role === 'etudiant'; } },
     posteActuel: { type: String, required: function () { return this.role === 'laureat'; } },
     experiencesPassee: { type: String, required: function () { return this.role === 'laureat'; } },
-    promotion:{ type: String, required: function () { return this.role === 'laureat'; } }
+    promotion:{ type: String, required: function () { return this.role === 'laureat'; } },
+    image:{type:String}
   });
   profileSchema.pre('save', async function (next) {
     if (this.isNew) {

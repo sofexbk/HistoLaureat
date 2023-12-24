@@ -8,4 +8,5 @@ router.get('/:laureatId/getAllStages',authMiddleware.verifyToken,stage.getStages
 router.post('/:laureatId/createStage',authMiddleware.verifyToken,stage.createStage)
 router.patch('/:laureatId/:stageId/updateStage/',authMiddleware.verifyToken,stage.updateStage)
 router.delete('/:laureatId/:stageId/deleteStage',authMiddleware.verifyToken,stage.deleteStage)
+
 module.exports=router
