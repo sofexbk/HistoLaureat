@@ -16,8 +16,10 @@ export const Navbar = ({
 }) => {
   return (
     <>
-      <div className='relative w-full flex bg-aliceblue-100 flex-row flex-wrap items-center justify-between py-[12px] px-[60px] box-border gap-[40px] text-left text-[20px] text-black font-poppins'>
-        <img src={Logo} alt='Logo' class='object-contain h-28 w-24' />
+      <div className='relative w-full flex bg-aliceblue-100 flex-row flex-wrap items-center justify-between pt-[12px] px-[60px] box-border gap-[40px] text-left text-[20px] text-black font-poppins'>
+      <a href="/" target="_self" rel="noopener noreferrer">
+      <img src={Logo} alt='Logo' className='object-contain h-28 w-24' />
+    </a>
         {connexion ? (
           <>
             <ButtonIcon //home
@@ -79,7 +81,7 @@ export const Navbar = ({
                 property1='default'
                 className='ml-3'
                 icon={Icons.ArrowRightStartOnRectangleIcon}
-                src='https://www.google.com/search?q=your+search+query'
+                src='/'
               />
             </div>
           </>
