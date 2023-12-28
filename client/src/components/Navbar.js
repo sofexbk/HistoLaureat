@@ -79,7 +79,7 @@ export const Navbar = ({
                 property1='default'
                 className='ml-3'
                 icon={Icons.ArrowRightStartOnRectangleIcon}
-                src='https://www.google.com/search?q=your+search+query'
+                src='/'
               />
             </div>
           </>

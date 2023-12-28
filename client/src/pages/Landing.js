@@ -37,6 +37,25 @@ const Landing = () => {
                 }
               />
               <OnePost
+                profileName='Soufian'
+                profileStatus='Il y a 35 min'
+                description='Je suis anass'
+                commentaires={
+                  <>
+                    <OneComment
+                      commentOwner='Anass'
+                      commentTime='Il y a 3 min'
+                      commentDescription='hada commentaire'
+                    />
+                    <OneComment
+                      commentOwner='Anass'
+                      commentTime='Il y a 3 min'
+                      commentDescription='hada commentaire'
+                    />
+                  </>
+                }
+              />
+              <OnePost
                 profileStatus='Il y a 35 min'
                 description='Je suis anass'
                 profileName='Soufian'
@@ -54,6 +73,14 @@ const Landing = () => {
           {/* 2.1 - CONTENAIRE STAGES */}
           <div className='self-stretch flex flex-col items-start justify-start gap-[30px] text-center text-xl text-black'>
             {/* 2.1 - start ONE STAGE */}
+            <OneStage
+            company='ensa de tanger'
+            titreStage='Stage en informatique'
+            typeStage='Stage PFA'
+            startDate='23/04/2023'
+            endDate='31/31/2020'
+            description='Bonjour'
+            />
             <OneStage
             company='ensa de tanger'
             titreStage='Stage en informatique'
