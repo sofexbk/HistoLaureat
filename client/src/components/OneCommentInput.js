@@ -23,11 +23,11 @@ export const OneCommentInput = ({
           <input
             type='text'
             id='commmentInput'
-            class='block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-lg focus:ring-blue-500 focus:border-blue-500'
+            className='block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-lg focus:ring-blue-500 focus:border-blue-500'
           />
           <button
             type='submit'
-            class='mt-2 bg-transparent hover:bg-[#017cc5] text-[#017cc5] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
+            className='mt-2 bg-transparent hover:bg-[#017cc5] text-[#017cc5] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
           >
             Valider
           </button>

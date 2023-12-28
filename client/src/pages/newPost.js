@@ -16,7 +16,7 @@ const newPost = () => {
         <div className='self-stretch flex flex-row items-start justify-start'>
           <div className='flex-1 flex flex-col items-start justify-start gap-[4px]'>
             <div className='self-stretch relative h-[27px]'>
-              <label for='titrePost' class='top-0 left-0'>
+              <label htmlFor='titrePost' className='top-0 left-0'>
                 Titre du poste
               </label>
             </div>
@@ -25,7 +25,7 @@ const newPost = () => {
                 type='text'
                 id='titrePost'
                 name='titrePost'
-                class='w-full h-full text-base px-6 appearance-none bg-transparent border-none'
+                className='w-full h-full text-base px-6 appearance-none bg-transparent border-none'
               />
             </div>
           </div>

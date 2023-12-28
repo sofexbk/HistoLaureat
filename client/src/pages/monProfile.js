@@ -69,7 +69,7 @@ const monProfile = () => {
           <div className='flex-1 shrink-0 flex flex-row items-start justify-start'>
             <div className='flex-1 flex flex-col items-start justify-start gap-[4px]'>
               <div className='self-stretch relative h-[27px]'>
-                <label for='prenom' class='top-0 left-0'>
+                <label htmlFor='prenom' className='top-0 left-0'>
                   Prénom
                 </label>
               </div>
@@ -78,7 +78,7 @@ const monProfile = () => {
                   type='text'
                   id='prenom'
                   name='prenom'
-                  class='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
+                  className='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
                 />
               </div>
             </div>
@@ -86,7 +86,7 @@ const monProfile = () => {
           <div className='flex-1 shrink-0 flex flex-row items-start justify-start'>
             <div className='flex-1 flex flex-col items-start justify-start gap-[4px]'>
               <div className='self-stretch relative h-[27px]'>
-                <label for='nom' class='top-0 left-0'>
+                <label htmlFor='nom' className='top-0 left-0'>
                   Nom
                 </label>
               </div>
@@ -95,7 +95,7 @@ const monProfile = () => {
                   type='text'
                   id='nom'
                   name='nom'
-                  class='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
+                  className='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
                 />
               </div>
             </div>
@@ -103,76 +103,76 @@ const monProfile = () => {
         </div>
         <div className='self-stretch flex flex-col items-start justify-start gap-[6px] text-sm text-dimgray-100'>
           <div className='relative'>Votre filière</div>
-          <div class='self-stretch flex flex-row flex-wrap items-start justify-start gap-2 text-base text-gray'>
-            <div class='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
+          <div className='self-stretch flex flex-row flex-wrap items-start justify-start gap-2 text-base text-gray'>
+            <div className='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
               <input
                 type='radio'
                 id='ginf'
                 name='options'
                 value='ginf'
-                class='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
               />
-              <label for='ginf' class='relative cursor-pointer'>
+              <label htmlFor='ginf' className='relative cursor-pointer'>
                 GINF
               </label>
             </div>
-            <div class='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
+            <div className='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
               <input
                 type='radio'
                 id='gind'
                 name='options'
                 value='gind'
-                class='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
               />
-              <label for='gind' class='relative cursor-pointer'>
+              <label htmlFor='gind' className='relative cursor-pointer'>
                 GIND
               </label>
             </div>
-            <div class='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
+            <div className='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
               <input
                 type='radio'
                 id='gstr'
                 name='options'
                 value='gstr'
-                class='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
               />
-              <label for='gstr' class='relative cursor-pointer'>
+              <label htmlFor='gstr' className='relative cursor-pointer'>
                 GSTR
               </label>
             </div>
-            <div class='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
+            <div className='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
               <input
                 type='radio'
                 id='cs'
                 name='options'
                 value='cs'
-                class='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
               />
-              <label for='cs' class='relative cursor-pointer'>
+              <label htmlFor='cs' className='relative cursor-pointer'>
                 CS
               </label>
             </div>
-            <div class='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
+            <div className='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
               <input
                 type='radio'
                 id='gsea'
                 name='options'
                 value='gsea'
-                class='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
               />
-              <label for='gsea' class='relative cursor-pointer'>
+              <label htmlFor='gsea' className='relative cursor-pointer'>
                 GSEA
               </label>
             </div>
-            <div class='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
+            <div className='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
               <input
                 type='radio'
                 id='g3ei'
                 name='options'
                 value='g3ei'
-                class='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
               />
-              <label for='g3ei' class='relative cursor-pointer'>
+              <label htmlFor='g3ei' className='relative cursor-pointer'>
                 G3EI
               </label>
             </div>
@@ -232,7 +232,7 @@ const monProfile = () => {
           <div className='flex-1 shrink-0 flex flex-row items-start justify-start'>
             <div className='flex-1 flex flex-col items-start justify-start gap-[4px]'>
               <div className='self-stretch relative h-[27px]'>
-                <label for='promotion' class='top-0 left-0'>
+                <label htmlFor='promotion' className='top-0 left-0'>
                   Promotion
                 </label>
               </div>
@@ -241,7 +241,7 @@ const monProfile = () => {
                   type='text'
                   id='promotion'
                   name='promotion'
-                  class='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
+                  className='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
                 />
               </div>
             </div>
@@ -249,7 +249,7 @@ const monProfile = () => {
           <div className='flex-1 shrink-0 flex flex-row items-start justify-start'>
             <div className='flex-1 flex flex-col items-start justify-start gap-[4px]'>
               <div className='self-stretch relative h-[27px]'>
-                <label for='poste' class='top-0 left-0'>
+                <label htmlFor='poste' className='top-0 left-0'>
                   Poste actuel
                 </label>
               </div>
@@ -258,7 +258,7 @@ const monProfile = () => {
                   type='text'
                   id='poste'
                   name='poste'
-                  class='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
+                  className='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
                 />
               </div>
             </div>
@@ -266,7 +266,7 @@ const monProfile = () => {
         </div>
         <div className='self-stretch flex flex-col items-start justify-center gap-[12px] text-left text-base text-dimgray-100 font-poppins'>
           <div className='self-stretch relative h-[27px]'>
-            <label for='exp1' class='top-0 left-0'>
+            <label htmlFor='exp1' className='top-0 left-0'>
               Expériences passées
             </label>
           </div>
@@ -275,7 +275,7 @@ const monProfile = () => {
               type='text'
               id='exp1'
               name='exp1'
-              class='w-full h-full px-2 appearance-none bg-transparent border-none text-base'
+              className='w-full h-full px-2 appearance-none bg-transparent border-none text-base'
             />
           </div>
         </div>
@@ -333,7 +333,7 @@ const monProfile = () => {
           <div className='flex-1 shrink-0 flex flex-row items-start justify-start'>
             <div className='flex-1 flex flex-col items-start justify-start gap-[4px]'>
               <div className='self-stretch relative h-[27px]'>
-                <label for='niveau' class='top-0 left-0'>
+                <label htmlFor='niveau' className='top-0 left-0'>
                   Niveau
                 </label>
               </div>
@@ -341,7 +341,7 @@ const monProfile = () => {
                 <select
                   id='niveau'
                   name='niveau'
-                  class='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
+                  className='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
                 >
                   <option value='AP1'>AP1</option>
                   <option value='AP2'>AP2</option>
@@ -355,7 +355,7 @@ const monProfile = () => {
         </div>
         <div className='self-stretch flex flex-col items-start justify-center gap-[12px] text-left text-base text-dimgray-100 font-poppins'>
           <div className='self-stretch relative h-[27px]'>
-            <label for='exp2' class='top-0 left-0'>
+            <label htmlFor='exp2' className='top-0 left-0'>
               Expériences passées
             </label>
           </div>
@@ -364,7 +364,7 @@ const monProfile = () => {
               type='text'
               id='exp1'
               name='exp1'
-              class='w-full h-full px-2 appearance-none text-base bg-transparent border-none '
+              className='w-full h-full px-2 appearance-none text-base bg-transparent border-none '
             />
           </div>
         </div>
