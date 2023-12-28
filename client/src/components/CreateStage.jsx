@@ -71,7 +71,7 @@ export default function CreateStage() {
     );
 
     console.log("stage Created with success",response.data);
-    //Navigate('/home');
+    Navigate('/landing');
     }catch (error) {
       setError(error.response ? error.response.data : "An error occurred");
     }
@@ -95,12 +95,13 @@ const handleInput = (e) => {
 
 
   return (
-    
-    <div className='relative bg-aliceblue-100 w-full h-[2078px] flex flex-col items-center justify-start py-[60px] px-10 box-border gap-[40px] text-left text-[40px] text-steelblue-200 font-poppins'>
+    <>
+    <form onSubmit={handleSubmit}>
+    <div className='relative bg-aliceblue-100 w-full h-[2078px] flex flex-col items-center justify-start py-[10px] px-10 box-border gap-[40px] text-left text-[40px] text-steelblue-200 font-poppins'>
       <div className='self-stretch relative font-extrabold'>
         Proposer un nouveau stage
       </div>
-      <form onSubmit={handleSubmit}>
+      
       <div className='w-full rounded-3xl flex flex-col items-start justify-center py-[30px] px-10 box-border gap-[38px] max-w-[1000px] text-base text-dimgray-100'>
         <div className='self-stretch flex flex-row items-start justify-start'>
           <div className='flex-1 flex flex-col items-start justify-start gap-[4px]'>
@@ -248,10 +249,10 @@ const handleInput = (e) => {
         </div>
       </div>
       <button type="submit">Poster</button>
-        {error && <div className="text-red-500 mt-4">{error.error}</div>}
-      </form>
+        {error && <div className="text-red-500 mt-4">{error.error}</div>}  
     </div>
-    
+    </form>
+    </>
     
       
     

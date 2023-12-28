@@ -17,6 +17,7 @@ import NewPost from './pages/newPost' // Import NewPost component
 import NewStage from './pages/newStage' // Import NewStage component
 import { Navbar } from './components/Navbar'
 import CreatePost from './components/CreatePost'
+import CreateStage from './components/CreateStage'
 
 function App () {
   const { user } = useAuthContext()
@@ -42,6 +43,7 @@ function App () {
           <Route path='/landing' element={<Landing />} />
           <Route path='/mon-profile' element={<MonProfile />} />
           <Route path='/create-post' element={<CreatePost />} />
+          <Route path='/create-stage' element={<CreateStage />} />
           <Route path='/new-post' element={<NewPost/>} />
           <Route path='/new-stage' element={<NewStage />} />
         </Routes>
