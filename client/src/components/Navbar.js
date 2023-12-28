@@ -17,7 +17,7 @@ export const Navbar = ({
   return (
     <>
       <div className='relative w-full flex bg-aliceblue-100 flex-row flex-wrap items-center justify-between py-[12px] px-[60px] box-border gap-[40px] text-left text-[20px] text-black font-poppins'>
-        <img src={Logo} alt='Logo' class='object-contain h-28 w-24' />
+        <img src={Logo} alt='Logo' className='object-contain h-28 w-24' />
         {connexion ? (
           <>
             <ButtonIcon //home
@@ -53,7 +53,7 @@ export const Navbar = ({
                 type='text'
                 id='recherche'
                 name='recherche'
-                class='w-full h-full px-2 appearance-none bg-transparent border-none text-lg'
+                className='w-full h-full px-2 appearance-none bg-transparent border-none text-lg'
               />
             </div>
 
@@ -64,9 +64,9 @@ export const Navbar = ({
                   alt='userPic'
                   src={profilePic}
                 />
-                <span class='relative flex h-3 w-3 top-[0px] left-[59.86px]'>
-                  <span class='animate-ping absolute inline-flex h-full w-full rounded-full bg-mediumseagreen opacity-100'></span>
-                  <span class='relative inline-flex rounded-full h-3 w-3 bg-mediumseagreen'></span>
+                <span className='relative flex h-3 w-3 top-[0px] left-[59.86px]'>
+                  <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-mediumseagreen opacity-100'></span>
+                  <span className='relative inline-flex rounded-full h-3 w-3 bg-mediumseagreen'></span>
                 </span>
               </div>
               <div className='shrink-0 flex flex-col items-start justify-start gap-[8px]'>
