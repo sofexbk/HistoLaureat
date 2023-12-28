@@ -38,14 +38,14 @@ export const Navbar = ({
               className='submit'
               buttonTxt='Post'
               icon={Icons.PlusIcon}
-              src='/new-post'
+              src='/create-post'
             />
             <Button // proposer stage
               property1='default'
               className='submit'
               buttonTxt='Stage'
               icon={Icons.PlusIcon}
-              src='/new-stage'
+              src='/create-stage'
             />
 
             <div className='relative rounded-xl box-border border-[#017cc5] w-[485.14px] h-[60px] overflow-hidden shrink-0 min-w-[300px] max-w-[700px] border-[1px]  border-solid border-dimgray'>
