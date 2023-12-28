@@ -208,6 +208,13 @@ function Signup () {
                 </i>
               </div>
             </div>
+            <Button
+        property1='default'
+        className='submit'
+        buttonTxt='Enregistrer'
+        icon={Icons.ChevronRightIcon}
+        src='/'
+      />
           </div>
         </div>
       </div>
