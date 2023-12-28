@@ -10,7 +10,7 @@ const newStage = () => {
         <div className='self-stretch flex flex-row items-start justify-start'>
           <div className='flex-1 flex flex-col items-start justify-start gap-[4px]'>
             <div className='self-stretch relative h-[27px]'>
-              <label for='entreprise' class='top-0 left-0'>
+              <label htmlFor='entreprise' className='top-0 left-0'>
                 Entreprise
               </label>
             </div>
@@ -19,7 +19,7 @@ const newStage = () => {
                 type='text'
                 id='entreprise'
                 name='entreprise'
-                class='w-full h-full px-6 text-base appearance-none bg-transparent border-none'
+                className='w-full h-full px-6 text-base appearance-none bg-transparent border-none'
               />
             </div>
           </div>
@@ -27,7 +27,7 @@ const newStage = () => {
         <div className='self-stretch flex flex-row items-start justify-start'>
           <div className='flex-1 flex flex-col items-start justify-start gap-[4px]'>
             <div className='self-stretch relative h-[27px]'>
-              <label for='offreTitle' class='top-0 left-0'>
+              <label htmlFor='offreTitle' className='top-0 left-0'>
                 Titre de l'offre
               </label>
             </div>
@@ -36,7 +36,7 @@ const newStage = () => {
                 type='text'
                 id='offreTitle'
                 name='offreTitle'
-                class='w-full h-full text-base px-6 appearance-none bg-transparent border-none'
+                className='w-full h-full text-base px-6 appearance-none bg-transparent border-none'
               />
             </div>
           </div>
@@ -44,7 +44,7 @@ const newStage = () => {
         <div className='self-stretch flex flex-row items-start justify-start'>
           <div className='flex-1 flex flex-col items-start justify-start gap-[4px]'>
             <div className='self-stretch relative h-[27px]'>
-              <label for='descOffre' class='top-0 left-0'>
+              <label htmlFor='descOffre' className='top-0 left-0'>
                 Description de l'offre
               </label>
             </div>
@@ -53,47 +53,47 @@ const newStage = () => {
                 type='text'
                 id='descOffre'
                 name='descOffre'
-                class='w-full h-full text-base px-3 appearance-none bg-transparent border-none'
+                className='w-full h-full text-base px-3 appearance-none bg-transparent border-none'
               />
             </div>
           </div>
         </div>
         <div className='self-stretch flex flex-col items-start justify-start gap-[6px] text-sm text-dimgray-100'>
           <div className='relative'>Type de stage</div>
-          <div class='self-stretch flex flex-row flex-wrap items-start justify-start gap-2 text-base text-gray '>
-            <div class='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2 '>
+          <div className='self-stretch flex flex-row flex-wrap items-start justify-start gap-2 text-base text-gray '>
+            <div className='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2 '>
               <input
                 type='radio'
                 id='observation'
                 name='options'
                 value='ginf'
-                class=' appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                className=' appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
               />
-              <label for='observation' class='relative cursor-pointer'>
+              <label htmlFor='observation' className='relative cursor-pointer'>
                 Observation
               </label>
             </div>
-            <div class='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
+            <div className='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
               <input
                 type='radio'
                 id='pfa'
                 name='options'
                 value='gind'
-                class='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
               />
-              <label for='pfa' class='relative cursor-pointer'>
+              <label htmlFor='pfa' className='relative cursor-pointer'>
                 PFA
               </label>
             </div>
-            <div class='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
+            <div className='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
               <input
                 type='radio'
                 id='pfe'
                 name='options'
                 value='gstr'
-                class='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
               />
-              <label for='pfe' class='relative cursor-pointer'>
+              <label htmlFor='pfe' className='relative cursor-pointer'>
                 PFE
               </label>
             </div>
@@ -103,7 +103,7 @@ const newStage = () => {
           <div className='flex-1 shrink-0 flex flex-row items-start justify-start'>
             <div className='flex-1 flex flex-col items-start justify-start gap-[4px]'>
               <div className='self-stretch relative h-[27px]'>
-                <label for='startDate' class='top-0 left-0'>
+                <label htmlFor='startDate' className='top-0 left-0'>
                   Date début
                 </label>
               </div>
@@ -112,7 +112,7 @@ const newStage = () => {
                   type='date'
                   id='startDate'
                   name='startDate'
-                  class='w-full h-full px-6 text-base appearance-none bg-transparent border-none'
+                  className='w-full h-full px-6 text-base appearance-none bg-transparent border-none'
                 />
               </div>
             </div>
@@ -120,7 +120,7 @@ const newStage = () => {
           <div className='flex-1 shrink-0 flex flex-row items-start justify-start'>
             <div className='flex-1 flex flex-col items-start justify-start gap-[4px]'>
               <div className='self-stretch relative h-[27px]'>
-                <label for='endDate' class='top-0 left-0'>
+                <label htmlFor='endDate' className='top-0 left-0'>
                   Date fin
                 </label>
               </div>
@@ -129,7 +129,7 @@ const newStage = () => {
                   type='date'
                   id='endDate'
                   name='endDate'
-                  class='w-full h-full px-6 appearance-none bg-transparent border-none'
+                  className='w-full h-full px-6 appearance-none bg-transparent border-none'
                 />
               </div>
             </div>

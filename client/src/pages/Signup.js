@@ -112,7 +112,7 @@ function Signup () {
               </div>
               <div className='self-stretch flex flex-col items-start justify-start gap-[4px]'>
                 <div className='self-stretch relative h-[27px]'>
-                  <label for='prenom' class='top-0 left-0'>
+                  <label htmlFor='prenom' className='top-0 left-0'>
                     Email
                   </label>
                 </div>
@@ -121,34 +121,34 @@ function Signup () {
                     type='text'
                     id='email'
                     name='email'
-                    class='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
+                    className='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
                   />
                 </div>
               </div>
               <div className='flex flex-col items-start justify-start gap-[6px] text-sm'>
                 <i className='relative'>Sélectionner votre rôle</i>
                 <div className='shrink-0 flex flex-row items-start justify-start gap-[32px] text-base text-gray'>
-                  <div class='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
+                  <div className='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
                     <input
                       type='radio'
                       id='Etudiant'
                       name='options'
                       value='Etudiant'
-                      class='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                      className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
                     />
-                    <label for='Etudiant' class='relative cursor-pointer'>
+                    <label htmlFor='Etudiant' className='relative cursor-pointer'>
                       Étudiant
                     </label>
                   </div>
-                  <div class='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
+                  <div className='shrink-0 flex flex-row items-center justify-center py-1 px-2 gap-2'>
                     <input
                       type='radio'
                       id='laureat'
                       name='options'
                       value='laureat'
-                      class='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                      className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
                     />
-                    <label for='Etudiant' class='relative cursor-pointer'>
+                    <label htmlFor='Etudiant' className='relative cursor-pointer'>
                       Laureat
                     </label>
                   </div>
@@ -165,7 +165,7 @@ function Signup () {
                         <img
                           className='absolute top-[3px] right-[49px] w-6 h-6 overflow-hidden object-cover'
                           alt=''
-                          src='/icon@2x.png'
+                          //src='/icon@2x.png'
                         />
                         <i className='absolute top-[0px] right-[0px]'>Hide</i>
                       </div>
@@ -178,7 +178,7 @@ function Signup () {
                         type='password'
                         id='password1'
                         name='password1'
-                        class='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
+                        className='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
                       />
                     </div>
                   </div>
@@ -197,7 +197,7 @@ function Signup () {
                         type='password'
                         id='password2'
                         name='password2'
-                        class='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
+                        className='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
                       />
                     </div>
                   </div>
