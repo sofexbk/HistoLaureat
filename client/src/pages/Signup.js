@@ -144,7 +144,7 @@ function Signup () {
                     <input
                       type='radio'
                       id='laureat'
-                      name='laureat'
+                      name='options'
                       value='laureat'
                       class='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
                     />
