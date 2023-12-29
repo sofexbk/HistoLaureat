@@ -12,7 +12,6 @@ function Signup () {
   const [role, setRole] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
-  const roles = ['etudiant', 'laureat']
   const { Signup: handleSignup, isLoading } = useSignup()
 
   const Navigate = useNavigate()
@@ -34,7 +33,7 @@ function Signup () {
 
   return (
     <>
-    <div className='bg-aliceblue-100 relative  bg-aliceblue w-full h-[1117px] overflow-hidden flex flex-col items-center justify-center  px-[20%] box-border min-w-[1080px] text-center text-[32px] text-white font-poppins'>
+    <form onSubmit={handleSubmit} className='bg-aliceblue-100 relative  bg-aliceblue w-full h-[1117px] overflow-hidden flex flex-col items-center justify-center  px-[20%] box-border min-w-[1080px] text-center text-[32px] text-white font-poppins'>
       <div className='self-stretch flex flex-col items-center justify-center'>
         <div className='self-stretch rounded-t-3xl rounded-b-none [background:linear-gradient(91.7deg,_#017cc5,_#8248f5)] shadow-[4px_4px_27.8px_rgba(102,_102,_102,_0.47)] flex flex-row flex-wrap items-center justify-center py-[9px] px-0 gap-[46px]'>
           <img
@@ -118,9 +117,11 @@ function Signup () {
                 </div>
                 <div className='self-stretch relative rounded-xl box-border h-14 overflow-hidden shrink-0 text-dimgray-300 border-[1px] border-solid border-dimgray-400'>
                   <input
-                    type='text'
-                    id='email'
-                    name='email'
+                    required={true}
+                    type="email"
+                    id="email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
                     className='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
                   />
                 </div>
@@ -133,7 +134,8 @@ function Signup () {
                       type='radio'
                       id='Etudiant'
                       name='options'
-                      value='Etudiant'
+                      onChange={(e) => setRole(e.target.value)}
+                      value='etudiant'
                       className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
                     />
                     <label htmlFor='Etudiant' className='relative cursor-pointer'>
@@ -145,6 +147,7 @@ function Signup () {
                       type='radio'
                       id='laureat'
                       name='options'
+                      onChange={(e) => setRole(e.target.value)}
                       value='laureat'
                       className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
                     />
@@ -176,8 +179,9 @@ function Signup () {
                       </div>
                       <input
                         type='password'
-                        id='password1'
-                        name='password1'
+                        id='password'
+                        onChange={(e) => setPassword(e.target.value)}
+                        name='password'
                         className='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
                       />
                     </div>
@@ -194,9 +198,10 @@ function Signup () {
                         <div className='relative bg-gray w-px h-6 hidden' />
                       </div>
                       <input
-                        type='password'
-                        id='password2'
-                        name='password2'
+                        required={true}
+                        type="password"
+                        id="confirmPassword"
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                         className='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
                       />
                     </div>
@@ -208,17 +213,18 @@ function Signup () {
                 </i>
               </div>
             </div>
-            <Button
-        property1='default'
-        className='submit'
-        buttonTxt='Enregistrer'
-        icon={Icons.ChevronRightIcon}
-        src='/'
-      />
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            >
+              Valider
+            </button>
+            {error && <div className="text-red-500 mt-4">{error}</div>}
           </div>
         </div>
       </div>
-    </div>
+    </form>
     </>
   )
 }
