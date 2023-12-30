@@ -13,16 +13,16 @@ exports.createStage = async (req, res) => {
     const laureatObjectId = new ObjectId(laureatId);
     const profile = await Profile.findById(laureatObjectId);
     if (!profile) {
-      return res.status(404).json({ message: 'Laureat profile not found.' });
+      return res.status(404).json({ message: 'Profil de lauréat non trouvé.' });
     }
     const user = await User.findById(profile.userId);
     if (!user || user.role !== 'laureat') {
-      return res.status(404).json({ message: 'Laureat profile not found or user is not a laureat.' });
+      return res.status(404).json({ message: 'Profil de lauréat non trouvé ou l\'utilisateur n\'est pas un lauréat.' });
     }
     const start = new Date(startDate);
     const end = new Date(endDate);
     if (start >= end) {
-      return res.status(400).json({ message: 'Invalid date range. Start date must be earlier than end date.' });
+      return res.status(400).json({ message: 'Plage de dates invalide. La date de début doit être antérieure à la date de fin.' });
     }
     const newStage = new Stage({
       laureatId: laureatObjectId,
@@ -34,10 +34,10 @@ exports.createStage = async (req, res) => {
       endDate
     });
     await newStage.save();
-    res.status(201).json({ message: 'Stage created successfully', stage: newStage });
+    res.status(201).json({ message: 'Stage créé avec succès', stage: newStage });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error', error: error.message });
+    res.status(500).json({ message: 'Erreur interne du serveur', error: error.message });
   }
 };
 exports.getAllStages = async (req, res) => {
@@ -46,7 +46,7 @@ exports.getAllStages = async (req, res) => {
       res.status(200).json({ stages });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Internal server error', error: error.message });
+      res.status(500).json({ message: 'Erreur interne du serveur', error: error.message });
     }
   };
   exports.getStagesByLaureat = async (req, res) => {
@@ -54,12 +54,12 @@ exports.getAllStages = async (req, res) => {
       const { laureatId } = req.params;
       const stages = await Stage.find({ laureatId })
       if (!stages || stages.length === 0) {
-        return res.status(404).json({ message: 'No stages found for the given laureat.' });
+        return res.status(404).json({ message:  'Aucun stage trouvé pour le lauréat spécifié.'  });
       }
       res.status(200).json({ stages });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Internal server error', error: error.message });
+      res.status(500).json({ message: 'Erreur interne du serveur', error: error.message });
     }
   };
   exports.updateStage = async (req, res) => {
@@ -68,7 +68,7 @@ exports.getAllStages = async (req, res) => {
       const { company, type, title, description, startDate, endDate } = req.body;
       const existingStage = await Stage.findOne({ _id: stageId, laureatId });
       if (!existingStage) {
-        return res.status(404).json({ message: 'Stage not found for the specified laureat.' });
+        return res.status(404).json({ message: 'Stage non trouvé pour le lauréat spécifié.' });
       }
       existingStage.company = company;
       existingStage.type = type;
@@ -77,10 +77,10 @@ exports.getAllStages = async (req, res) => {
       existingStage.startDate = startDate;
       existingStage.endDate = endDate;
       await existingStage.save();
-      res.status(200).json({ message: 'Stage updated successfully', stage: existingStage });
+      res.status(200).json({ message:'Stage mis à jour avec succès', stage: existingStage });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Internal server error', error: error.message });
+      res.status(500).json({ message:'Erreur interne du serveur', error: error.message });
     }
   };
   exports.deleteStage = async (req, res) => {
@@ -88,11 +88,11 @@ exports.getAllStages = async (req, res) => {
       const { laureatId, stageId } = req.params;
       const deletedStage = await Stage.findOneAndDelete({ _id: stageId, laureatId });
       if (!deletedStage) {
-        return res.status(404).json({ message: 'Stage not found for the specified laureat.' });
+        return res.status(404).json({ message: 'Stage non trouvé pour le lauréat spécifié.'});
       }
-      res.status(200).json({ message: 'Stage deleted successfully', stage: deletedStage });
+      res.status(200).json({ message:'Stage supprimé avec succès', stage: deletedStage });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Internal server error', error: error.message });
+      res.status(500).json({ message: 'Erreur interne du serveur', error: error.message });
     }
   };
