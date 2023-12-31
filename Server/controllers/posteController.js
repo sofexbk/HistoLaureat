@@ -30,7 +30,7 @@ exports.createPoste= async (req, res) => {
       
     });
     await newPoste.save();
-    res.status(201).json({ message: 'Poste créé avec succès', poste: nouveauPoste });
+    res.status(201).json({ message: 'Poste créé avec succès', poste: newPoste });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Erreur interne du serveur', error: error.message });
@@ -120,7 +120,7 @@ exports.deletePoste = async (req, res) => {
   exports.getAllPostes = async (req, res) => {
     try {
       // Récupérer tous les postes
-      const postes = await Poste.find().sort({ creationDate: -1 });
+      const postes = await Poste.find().sort({ creationDate: -1 }).populate('comments', 'content creationDate');
   
       res.status(200).json({ message: 'Tous les postes récupérés avec succès', postes });
     } catch (error) {
