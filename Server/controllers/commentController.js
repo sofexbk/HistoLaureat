@@ -25,7 +25,9 @@ exports.createComment = async (req, res) => {
     });
 
     await newComment.save();
-
+    const post = await Poste.findById(posteId);
+    post.comments.push(newComment._id);
+    await post.save();
     res.status(201).json({ message: 'Commentaire créé avec succès', comment: newComment });
   } catch (error) {
     console.error(error);
