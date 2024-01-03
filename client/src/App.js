@@ -26,7 +26,7 @@ function App () {
       <div className='App'>
         <Navbar
           // ajouter connextion if connected
-          connexion
+          connexion={user}
         />
         <Routes>
           <Route

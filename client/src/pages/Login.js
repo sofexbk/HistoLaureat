@@ -18,8 +18,8 @@ function Login () {
   return (
     <>
       <div className='bg-aliceblue-100 relative h-[1078px] flex flex-col items-center justify-center bg-gray-100 '>
-        <form className='bg-white p-16 h-auto rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out w-[650px] '>
-          <img src={Logo} alt='Logo' className='object-contain' />
+        <form onSubmit={handleSubmit} className='bg-white p-16 h-auto rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out w-[650px] '>
+          <img src={Logo} alt='Logo' class='object-contain' />
 
           <h3 className='text-2xl font-bold mb-10 text-[#017CC6] font-poppins '>
             Connecter votre compte Histolauréat avec
@@ -35,6 +35,8 @@ function Login () {
               <input
                 type='email'
                 id='email'
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
                 className='w-60 h-12 px-3 border rounded focus:outline-none focus:border-blue-500'
               />
             </div>
@@ -50,18 +52,23 @@ function Login () {
               <input
                 type='password'
                 id='password'
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
                 className='w-60 h-12 px-3 border rounded focus:outline-none focus:border-blue-500'
               />
             </div>
           </div>
-          <Button
-            property1='default'
-            className='submit mt-4'
-            buttonTxt='Se connecter'
-            icon={Icons.ChevronRightIcon}
-            src='/'
-          />
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="text-blue-500 border border-solid border-blue-500 bg-white px-4 py-2 rounded-md transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white hover:border-blue-700"
+          >
+            Connexion
+          </button>
+
+          {error && <div className="text-red-500 mt-4">{error}</div>}
         </form>
+        
       </div>
     </>
   )

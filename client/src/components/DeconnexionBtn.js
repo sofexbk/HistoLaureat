@@ -7,6 +7,7 @@ export const DeconnexionBtn = ({
   className,
   icon,
   src,
+  onClick
 }) => {
   const [state, dispatch] = useReducer(reducer, {
     property1: property1 || 'default'
@@ -19,7 +20,7 @@ export const DeconnexionBtn = ({
   return (
     <button
     type='buton'
-    onClick={handleClick}
+    onClick={onClick || handleClick}
     className={`border border-solid border-[#FF5284] inline-flex items-center gap-[15px] px-[15px] py-[10px] overflow-hidden rounded-[5px] relative shadow-md  hover:shadow-xl hover:shadow-rose-200 transition-all duration-300 ease-in-out 
     ${state.property1 === 'hover' ? 'bg-[#FF5284] cursor-pointer' : 'bg-transparent '}
     ${className}`}
