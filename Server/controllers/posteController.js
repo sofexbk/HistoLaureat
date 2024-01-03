@@ -11,7 +11,7 @@ exports.createPoste= async (req, res) => {
     const profileObjectId = new ObjectId(profileId);
     const profile = await Profile.findById(profileObjectId);
     if (!profile) {
-      return res.status(404).json({ message: 'Le profile pas trouvé.' });
+      return res.status(404).json({ message: 'Le profile n\'est pas trouvé.' });
     }
     const image = req.file;
     const user = await User.findById(profile.userId);
@@ -27,7 +27,6 @@ exports.createPoste= async (req, res) => {
       content,
       image,
       creationDate
-      
     });
     await newPoste.save();
     res.status(201).json({ message: 'Poste créé avec succès', poste: newPoste });
