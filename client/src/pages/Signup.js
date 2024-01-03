@@ -26,8 +26,8 @@ function Signup () {
     try {
       await handleSignup(email, password, confirmPassword, role)
       Navigate('/create-profile')
-    } catch (error) {
-      setError("echec d'inscreption")
+    } catch (err) {
+      setError("L'adresse e-mail doit se terminer par \"@etu.uae.ac.ma\" pour les étudiants.")
     }
   }
 

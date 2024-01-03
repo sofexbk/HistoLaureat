@@ -25,9 +25,7 @@ export const Navbar = () => {
             Authorization: `Bearer ${user.token}`,
           },
         });
-        
         console.log(response.data);
-        
         setUserName(response.data.profile.firstName);
         setPhoto(response.data.profile.image);
         setUserRole(user.role);

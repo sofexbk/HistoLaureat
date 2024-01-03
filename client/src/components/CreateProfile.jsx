@@ -274,7 +274,7 @@ const CreateProfile = () => {
           </div>
         </div>
       </div>
-      {user.role=='etudiant'&&(
+      {user.role=='laureat'&&(
       <div className='w-full rounded-3xl bg-white flex flex-col items-start justify-start py-10 px-[60px] box-border gap-[38px] max-w-[1000px] text-center text-xs font-avenir'>
         <div className='self-stretch flex flex-row items-start justify-center gap-[6px]'>
           <div className='shrink-0 flex flex-col items-center justify-center gap-[8px]'>
@@ -380,7 +380,7 @@ const CreateProfile = () => {
         </div>
       </div>
       )}
-      {user.role=='laureat'&& (
+      {user.role=='etudiant'&& (
       <div className='w-full rounded-3xl bg-white flex flex-col items-start justify-start pt-[30px] px-[60px] pb-10 box-border gap-[38px] max-w-[1000px] text-center text-xs font-avenir'>
         <div className='self-stretch flex flex-row items-start justify-center gap-[6px]'>
           <div className='shrink-0 flex flex-col items-center justify-center gap-[8px]'>
