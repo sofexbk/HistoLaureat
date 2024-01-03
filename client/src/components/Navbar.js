@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import profilePic from '../assets/profilepic.png'
 import Logo from '../assets/Logo.png'
 import { useLogout } from '../hooks/useLogout'
-import { ButtonIcon } from '../components/ButtonIcon'
-import { DeconnexionBtn } from '../components/DeconnexionBtn'
-import { Button } from '../components/ButtonComponent'
+import { ButtonIcon } from './ButtonIcon'
+import { DeconnexionBtn } from './DeconnexionBtn'
+import { Button } from './ButtonComponent'
 import * as Icons from '@heroicons/react/24/solid'
 import { useAuthContext } from '../hooks/useAuthContext'
 import axios from 'axios'
@@ -15,6 +15,7 @@ export const Navbar = () => {
   const [userName, setUserName] = useState("");
   const [userRole, setUserRole] = useState("");
   const [photo, setPhoto] = useState(null);
+  const { logout } = useLogout();
 
   const fetchUserProfile = async () => {
     try {
@@ -33,11 +34,17 @@ export const Navbar = () => {
     } catch (error) {
       console.error('Error fetching user profile:', error);
     }
+
+  };
+  const handleLogoutClick = () => {
+    logout();
   };
 
   useEffect(() => {
     fetchUserProfile();
   }, [user?.token]); 
+
+  
   return (
     <>
       <div className='relative w-full flex bg-aliceblue-100 flex-row flex-wrap items-center justify-between py-[12px] px-[60px] box-border gap-[40px] text-left text-[20px] text-black font-poppins'>
@@ -49,13 +56,6 @@ export const Navbar = () => {
               className='submit'
               icon={Icons.HomeIcon}
               src='/landing'
-            />
-
-            <ButtonIcon //mon profile
-              property1='default'
-              className='submit'
-              icon={Icons.UserCircleIcon}
-              src='/mon-profile'
             />
             <Button // ajouter post
               property1='default'
@@ -101,7 +101,8 @@ export const Navbar = () => {
                   {userRole}
                 </div>
               </div>
-              <DeconnexionBtn //deconnexion
+              <DeconnexionBtn 
+              onClick={handleLogoutClick}
                 property1='default'
                 className='ml-3'
                 icon={Icons.ArrowRightStartOnRectangleIcon}
@@ -136,3 +137,10 @@ export const Navbar = () => {
 }
 
 export default Navbar
+/*
+          <ButtonIcon //mon profile
+              property1='default'
+              className='submit'
+              icon={Icons.UserCircleIcon}
+              src='/mon-profile'
+            />*/
