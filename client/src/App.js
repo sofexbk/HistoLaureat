@@ -18,15 +18,19 @@ import NewStage from './pages/newStage' // Import NewStage component
 import { Navbar } from './components/Navbar'
 import CreatePost from './components/CreatePost'
 import CreateStage from './components/CreateStage'
+import ResetPasswordForm from './components/resetPassword'
+import ForgotPassword from './components/ForgotPassword';
+import { useParams } from 'react-router-dom';
 
 function App () {
-  const { user } = useAuthContext()
+  const { user,hasProfile } = useAuthContext()
+  const { token } = useParams();
   return (
     <Router>
       <div className='App'>
         <Navbar
           // ajouter connextion if connected
-          connexion={user}
+          connexion={hasProfile}
         />
         <Routes>
           <Route
@@ -46,6 +50,9 @@ function App () {
           <Route path='/create-stage' element={<CreateStage />} />
           <Route path='/new-post' element={<NewPost/>} />
           <Route path='/new-stage' element={<NewStage />} />
+          <Route path="/reset-password/:token" element={<ResetPasswordForm />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
+
         </Routes>
       </div>
     </Router>

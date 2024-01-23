@@ -3,7 +3,7 @@ import Logo from '../assets/Logo.png'
 import * as Icons from '@heroicons/react/24/solid'
 import React, { useState } from 'react'
 import { useLogin } from '../hooks/useLogin'
-
+import { Link } from 'react-router-dom';
 
 function Login () {
   const [email, setEmail] = useState('')
@@ -57,6 +57,11 @@ function Login () {
                 className='w-60 h-12 px-3 border rounded focus:outline-none focus:border-blue-500'
               />
             </div>
+          </div>
+          <div className='mb-4'>
+            <Link to='/forgot-password' className='text-blue-500 hover:underline'>
+              Mot de passe oublié ?
+            </Link>
           </div>
           <button
             type="submit"
