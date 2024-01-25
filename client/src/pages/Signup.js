@@ -17,17 +17,16 @@ function Signup () {
   const Navigate = useNavigate()
   const handleSubmit = async e => {
     e.preventDefault()
-
     if (password !== confirmPassword) {
       setError('Les mots de passe ne correspondent pas')
       return
     }
-
     try {
       await handleSignup(email, password, confirmPassword, role)
       Navigate('/create-profile')
     } catch (err) {
-      setError("L'adresse e-mail doit se terminer par \"@etu.uae.ac.ma\" pour les étudiants.")
+      console.log(err.message);
+      setError(err)
     }
   }
 
@@ -220,8 +219,11 @@ function Signup () {
             >
               Valider
             </button>
-            {error && <div className="text-red-500 mt-4">{error}</div>}
-          </div>
+            {error && (
+          <div className="text-red-500 mt-4">
+           {error.message ? error.message : "An error occurred"}
+         </div>
+      )}          </div>
         </div>
       </div>
     </form>
