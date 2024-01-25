@@ -1,12 +1,16 @@
-import { useAuthContext } from "./useAuthContext"
+// useLogout.js
+import { useAuthContext } from "./useAuthContext";
+import { useNavigate } from "react-router-dom";
 
+export const useLogout = () => {
+  const { dispatch } = useAuthContext();
+  const navigate = useNavigate();
 
- export const useLogout=()=>{
-    const {dispatch} =useAuthContext();
-    const logout=()=>{
-        localStorage.removeItem('user');
-        dispatch({type:'LOGOUT'})
-    }
+  const logout = () => {
+    localStorage.removeItem('user');
+    dispatch({ type: 'LOGOUT' });
+    navigate('/'); // Redirect to the home page or any other page after logout
+  }
 
-    return {logout}
+  return { logout };
 }

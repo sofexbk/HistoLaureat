@@ -1,23 +1,21 @@
-import React, { useState } from 'react'
-import axios from "axios";
-import { useAuthContext } from "../hooks/useAuthContext";
-import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
-import { useEffect } from 'react';
-
-import { Button } from '../components/ButtonComponent'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useAuthContext } from '../hooks/useAuthContext';
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import Swal from 'sweetalert2';  
 import * as Icons from '@heroicons/react/24/solid';
-
+import { Button } from '../components/ButtonComponent'
 
 export default function CreatePost() {
-  const {user} = useAuthContext();
-  const Navigate=useNavigate();
-  const [error,setError]=useState(null);
-  const [post , setPost] = useState({
+  const { user } = useAuthContext();
+  const Navigate = useNavigate();
+  const [error, setError] = useState(null);
+  const [post, setPost] = useState({
     title: '',
-    content: ''
-   })
-    
+    content: '',
+  });
+
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
@@ -30,48 +28,55 @@ export default function CreatePost() {
 
     getUserIdFromToken();
   }, [user]);
-  
-    const getProfileId = async () => {
-      try{
-        const response = await axios.get(
-          `/api/profile/${userId}`,
-          {
-            headers: { Authorization: `Bearer ${user.token}` },
-          });
-         return (response.data.profile._id);
-          
-      }catch (error) {
-        console.error('Erreur lors de la requête :', error);
+
+  const getProfileId = async () => {
+    try {
+      const response = await axios.get(`/api/profile/${userId}`, {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+      return response.data.profile._id;
+    } catch (error) {
+      console.error('Erreur lors de la requête :', error);
     }
   };
-  
-  const handleInput = (e) => {
-    setPost({...post,[e.target.name]: e.target.value})
-   }
 
-   const handleSubmit = async (e) => {
+  const handleInput = (e) => {
+    setPost({ ...post, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const profileId = await getProfileId();
     try {
-    const response = await axios.post(
-      `api/poste/${profileId}/createPoste`,
-      {...post},
-      {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      }
-    );
+      const response = await axios.post(
+        `api/poste/${profileId}/createPoste`,
+        { ...post },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
 
-    console.log("Post Created with success",response.data);
-    Navigate('/landing');
-    }catch (error) {
-      setError(error.response ? error.response.data : "An error occurred");
+      console.log('Post Created with success', response.data);
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Post created successfully!',
+      });
+
+      Navigate('/landing');
+    } catch (error) {
+      setError(error.response ? error.response.data : 'An error occurred');
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: error.response?.data?.message || 'An error occurred while creating the post.',
+      });
     }
-
-   };
-
-
+  };
 
 
 
@@ -124,13 +129,14 @@ export default function CreatePost() {
           </div>
         </div>
       </div>
-      <button type="submit">Créer poste</button>
+      <button
+       type="submit"
+       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+      >Créer poste
+       </button>
       {error && <div className="text-red-500 mt-4">{error.error}</div>}
     </div>
     </form>
     </>
-    
-      
-    
   )
 }

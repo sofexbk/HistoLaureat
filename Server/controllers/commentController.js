@@ -99,6 +99,7 @@ exports.getCommentsByPoste = async (req, res) => {
     }
 
     const comments = await Comment.find({ posteId }).sort({ creationDate: -1 });
+    console.log('Comments retrieved for post ID:', posteId, comments);
 
     res.status(200).json({ message: 'Commentaires récupérés avec succès', comments });
   } catch (error) {

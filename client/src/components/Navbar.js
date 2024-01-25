@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react';
 import profilePic from '../assets/profilepic.png'
 import Logo from '../assets/Logo.png'
 import { useLogout } from '../hooks/useLogout'
@@ -10,13 +10,14 @@ import { useAuthContext } from '../hooks/useAuthContext'
 import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
 
+
 export const Navbar = () => {
-  const { user } = useAuthContext();
+  const { user,dispatch,hasProfile } = useAuthContext();
   const [userName, setUserName] = useState("");
   const [userRole, setUserRole] = useState("");
   const [photo, setPhoto] = useState(null);
   const { logout } = useLogout();
-
+  const [searchInput, setSearchInput] = useState('');
   const fetchUserProfile = async () => {
     try {
       if (user && user.token) {
@@ -26,30 +27,37 @@ export const Navbar = () => {
             Authorization: `Bearer ${user.token}`,
           },
         });
-        console.log(response.data);
-        setUserName(response.data.profile.firstName);
-        setPhoto(response.data.profile.image);
-        setUserRole(user.role);
+        console.log(response.data.profile);
+
+        dispatch({
+          type: 'PROFILE_STATUS',
+          payload: response.data.profile ? true : false,
+        });
+        if (response.data.profile) {
+          setUserName(response.data.profile.firstName);
+          setPhoto(response.data.profile.image);
+          setUserRole(user.role);
+        }
       }
     } catch (error) {
       console.error('Error fetching user profile:', error);
     }
-
   };
   const handleLogoutClick = () => {
     logout();
   };
-
   useEffect(() => {
     fetchUserProfile();
-  }, [user?.token]); 
-
+  }, [user?.token]);
   
+  
+
+
   return (
     <>
       <div className='relative w-full flex bg-aliceblue-100 flex-row flex-wrap items-center justify-between py-[12px] px-[60px] box-border gap-[40px] text-left text-[20px] text-black font-poppins'>
         <img src={Logo} alt='Logo' className='object-contain h-28 w-24' />
-        {user ? (
+        {user && hasProfile  ? (
           <>
             <ButtonIcon //home
               property1='default'
@@ -64,19 +72,24 @@ export const Navbar = () => {
               icon={Icons.PlusIcon}
               src='/create-post'
             />
-            <Button // proposer stage
-              property1='default'
-              className='submit'
-              buttonTxt='Stage'
-              icon={Icons.PlusIcon}
-              src='/create-stage'
-            />
+           {userRole === 'laureat' && (
+              <Button // proposer stage
+                property1='default'
+                className='submit'
+                buttonTxt='Stage'
+                icon={Icons.PlusIcon}
+                src='/create-stage'
+              />
+            )}
 
             <div className='relative rounded-xl box-border border-[#017cc5] w-[485.14px] h-[60px] overflow-hidden shrink-0 min-w-[300px] max-w-[700px] border-[1px]  border-solid border-dimgray'>
               <input
                 type='text'
                 id='recherche'
                 name='recherche'
+                placeholder='Search a post'
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
                 className='w-full h-full px-2 appearance-none bg-transparent border-none text-lg'
               />
             </div>

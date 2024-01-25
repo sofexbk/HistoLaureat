@@ -5,98 +5,120 @@ import { OneStage } from '../components/OneStage'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useAuthContext } from '../hooks/useAuthContext'
+import { RingLoader } from 'react-spinners';
+import { ClockLoader } from 'react-spinners';
 
 const Landing =  () => {
   const [stages,setStages]=useState([]);
   const {user}=useAuthContext();
-  const fetchAllstage = async()=>{
+  const [postes, setPosts] = useState([]);
+  const [commentaires,setCommentaires]=useState([])
+  const [loading, setLoading] = useState(true); 
+
+  const fetchProfileData = async (profileId) => {
     try {
+      const response = await axios.get(`/api/profile/pr/${profileId}`,{
+        headers: {
+    Authorization: `Bearer ${user.token}`,
+  },
+});      
+return response.data;
+    } catch (error) {
+      console.error('Error fetching profile data:', error);
+      return null;
+    }
+  };
+    const fetchAllData = async () => {
+    try {
+      setLoading(true);
       if (user && user.token) {
-        const response = await axios.get(`/api/stageLaureat/getAllStages`, {
+
+        const postsResponse = await axios.get('/api/poste/getAllPostes', {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
+        
+        setPosts(postsResponse.data.postes || []);
+
+        const postIDs = postsResponse.data.postes.map((post) => post._id);
+        const commentsPromises = postIDs.map(async (postID) => {
+          const commentsResponse = await axios.get(`/api/comment/getCommentsByPoste/${postID}`, {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          });
+
+
+          return { postID, comments: commentsResponse.data.comments || [] };
+        });
+        
+        const commentsData = await Promise.all(commentsPromises);
+        setCommentaires(commentsData);
+
+         const profilePromises = postsResponse.data.postes.map((post) => fetchProfileData(post.profileId));
+          const profilesData = await Promise.all(profilePromises);
+
+          const combinedPosts = postsResponse.data.postes.map((post, index) => ({
+                 ...post,profileData: profilesData[index],}));
+          setPosts(combinedPosts);  
+        const stagesResponse = await axios.get('/api/stageLaureat/getAllStages', {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },
         });
-        setStages(response.data.stages)
+        setStages(stagesResponse.data.stages || []);
       }
     } catch (error) {
-      console.error('Error fetching stages:', error);
+      console.error('Error fetching data:', error);
+    }finally {
+      setLoading(false);
     }
-  }
+  };
+
   useEffect(() => {
-    fetchAllstage();
-  },[user]);
-  console.log(stages);
+    fetchAllData();
+  }, [user]);
+  
   return (
     <>
-      <div className='bg-aliceblue-100 w-full h-[2078px] flex flex-row flex-wrap items-start justify-between py-[10px] px-0 box-border text-left text-21xl text-steelblue-200 font-poppins'>
-        {/* CONTENENTS GLOBAL */}
+    <div className='bg-aliceblue-100 min-h-screen min-w-screen flex flex-row flex-wrap items-start justify-between py-[10px] px-0 box-border text-left text-21xl text-steelblue-200 font-poppins'>
         <div className='flex-1 shrink-0 flex flex-row flex-wrap items-start justify-center gap-[10px] '>
-          {/* CONTENENTS  */}
-          {/* 1 - POSTS */}
           <div className='flex-1 flex flex-col items-start justify-start py-0 px-10 box-border gap-[20px] min-w-[600px] max-w-[1200px]'>
             <div className='self-stretch relative font-extrabold '>Posts</div>
-            {/* 1.1 - CONTENAIRE POSTES */}
             <div className='self-stretch flex flex-col items-start justify-start text-xl text-black gap-[20px] '>
-              {/* 1.2 --- start ONE POSTE */}
-              {/* 1.2.1 - POST CONTENT */}
-              <OnePost
-                profileName='Soufian'
-                profileStatus='Il y a 35 min'
-                description='Je suis anass'
-                commentaires={
-                  <>
-                    <OneComment
-                      commentOwner='Anass'
-                      commentTime='Il y a 3 min'
-                      commentDescription='hada commentaire'
-                    />
-                    <OneComment
-                      commentOwner='Anass'
-                      commentTime='Il y a 3 min'
-                      commentDescription='hada commentaire'
-                    />
-                  </>
-                }
-              />
-              <OnePost
-                profileName='Soufian'
-                profileStatus='Il y a 35 min'
-                description='Je suis anass'
-                commentaires={
-                  <>
-                    <OneComment
-                      commentOwner='Anass'
-                      commentTime='Il y a 3 min'
-                      commentDescription='hada commentaire'
-                    />
-                    <OneComment
-                      commentOwner='Anass'
-                      commentTime='Il y a 3 min'
-                      commentDescription='hada commentaire'
-                    />
-                  </>
-                }
-              />
-              <OnePost
-                profileStatus='Il y a 35 min'
-                description='Je suis anass'
-                profileName='Soufian'
-                commentaires={<OneCommentInput />}
-              />
-            </div>
-            {/* 1.2 --- end ONE POSTE */}
-          </div>
+        {loading ? (
+          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'right', height: '100%' }}>
+          <ClockLoader color='#000000' loading={loading} size={500} />
         </div>
-        {/* 2 - OFFRE DE STAGES */}
+        ) : (
+           <>
+            {commentaires.map((commentaire, index) => (
+             <OnePost
+              key={postes[index]._id}
+              postID={postes[index]._id}
+              profileName={`${postes[index].profileData?.firstName || ''} ${postes[index].profileData?.lastName || ''}`}
+              profileStatus={new Date(postes[index].creationDate).toLocaleString()}
+               title={postes[index].title}
+              description={postes[index].content}
+               profilePic={postes[index].profileData?.image}
+               comments={commentaire.comments || []}  
+                />
+                 ))}
+              </>
+            )}
+          </div>
+      </div>
+        </div>
         <div className='shrink-0 flex flex-col items-start justify-start py-0 px-28 gap-[20px]'>
           <div className='self-stretch relative font-extrabold'>
             Offres de Stages
           </div>
-          {/* 2.1 - CONTENAIRE STAGES */}
           <div className='self-stretch flex flex-col items-start justify-start gap-[30px] text-center text-xl text-black'>
-            {/* 2.1 - start ONE STAGE */}
-            {stages.map((stage) => (
+          {loading ? (
+            <RingLoader color='#000000' loading={loading} size={100} />
+            ) : (
+            stages.map((stage) => (
               <OneStage
                 key={stage._id}
                 company={stage.company}
@@ -106,13 +128,13 @@ const Landing =  () => {
                 endDate={stage.endDate}
                 description={stage.description}
               />
-            ))}
-            {/* 2.2 - end ONE STAGE */}
-          </div>
+            ))
+          )}
         </div>
       </div>
+    </div>
     </>
   )
 }
 
-export default Landing
+export default Landing;

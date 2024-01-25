@@ -126,3 +126,12 @@ exports.getProfile = async (req, res) => {
     res.status(500).json({ error: 'Erreur interne du serveur' });
   }
 };
+exports.getProfileById = async (req, res) => {
+  try {
+    const profile = await Profile.findById(req.params.id);
+    res.json(profile);
+  } catch (error) {
+    console.error('Error fetching profile:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
