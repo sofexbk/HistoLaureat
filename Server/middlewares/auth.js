@@ -43,8 +43,17 @@ const authMiddleware = async (req, res, next) => {
     res.status(500).json({ message: 'Erreur interne du serveur' });
   }
 };
+const isAdmin = (req, res, next) => {
+  const user = req.user;
+  if (user && user.role === 'admin') {
+    next();
+  } else {
+    res.status(403).json({ error: 'Access forbidden. Admin privileges required.' });
+  }
+};
 
 module.exports = {
   verifyToken,
-  authMiddleware
+  authMiddleware,
+  isAdmin,
 };

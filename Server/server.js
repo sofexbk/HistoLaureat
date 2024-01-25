@@ -7,16 +7,15 @@ const profileRoutes=require('./routes/profileRoute')
 const stageRoutes=require('./routes/stageRoute')
 const commentRoutes=require('./routes/commentRoute')
 const posteRoutes=require('./routes/posteRoute')
-const router = express.Router();
-const bcrypt = require('bcrypt');
-const User = require('../Server/models/userModel');
+const adminRoutes=require('./routes/adminRoute')
 const path=require('path')
 const ur=require('./controllers/userController')
-
 const app=express()
+
 app.use(bodyParser.json());
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+const router = express.Router(); 
 
 router.use(express.urlencoded({ extended: true }));
 app.use(express.json())
@@ -27,6 +26,9 @@ app.use((req,res,next)=>{
 });
 app.use(express.static("uploads"));
 
+
+
+app.use('/api/admin', adminRoutes);
 app.use('/api/user',userRoutes)
 app.use('/api/profile',profileRoutes)
 app.use('/api/stageLaureat',stageRoutes)
@@ -42,4 +44,4 @@ mongoose.connect(process.env.MONGO_URI)
     })
     .catch((error) => {
         console.log(error);
-    });
+});
