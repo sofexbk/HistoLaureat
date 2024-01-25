@@ -15,7 +15,7 @@ exports.createProfile = async (req, res) => {
     const { userId, role } = req;
     console.log(req.file);
     if (!userId) {
-      return res.status(400).json({ message: 'userId and image are required in the request.' });
+      return res.status(400).json({ message: 'userId et image sont requis dans la requête.' });
     }
     const image = req.file ? req.file.filename : null;    
     const { firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee,promotion} = req.body;
@@ -37,7 +37,7 @@ exports.createProfile = async (req, res) => {
     res.status(201).json({ message: 'Profile créé avec succès', profile: newProfile });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error', error: error.message });
+    res.status(500).json({ message: 'Erreur interne du serveur', error: error.message });
   }
 };
 
@@ -45,7 +45,7 @@ exports.updateProfile = async (req, res) => {
   try {
     const { userId, role } = req;
     if (!userId) {
-      return res.status(400).json({ message: 'userId and image are required in the request.' });
+      return res.status(400).json({ message: 'userId et image sont requis dans la requête.' });
     }
 
     let new_image = '';
@@ -68,7 +68,7 @@ exports.updateProfile = async (req, res) => {
     const existingProfile = await Profile.findOne({ userId });
 
     if (!existingProfile) {
-      return res.status(404).json({ message: 'Profile not found for the given userId.' });
+      return res.status(404).json({ message: 'Profil non trouvé pour l\'userId donné.' });
     }
 
     existingProfile.firstName = firstName;
@@ -93,7 +93,7 @@ exports.updateProfile = async (req, res) => {
     res.status(200).json({ message: 'Profile modifié avec succès', profile: existingProfile });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error', error: error.message });
+    res.status(500).json({ message: 'Erreur interne du serveur', error: error.message });
   }
 };
 
@@ -108,8 +108,8 @@ exports.checkProfile = async (req, res) => {
       res.json({ hasProfile: false });
     }
   } catch (error) {
-    console.error('Error checking profile:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error('Erreur lors de la vérification du profil :', error);
+    res.status(500).json({ error: 'Erreur interne du serveur' });
   }
 };
 exports.getProfile = async (req, res) => {
@@ -119,10 +119,19 @@ exports.getProfile = async (req, res) => {
     if (profile) {
       res.json({profile });
     } else {
-      res.json({message:"error in getting profile"})
+      res.json({ message: "Erreur lors de la récupération du profil" });
     }
   } catch (error) {
-    console.error('Error checking profile:', error);
+    console.error('Erreur lors de la vérification du profil :', error);
+    res.status(500).json({ error: 'Erreur interne du serveur' });
+  }
+};
+exports.getProfileById = async (req, res) => {
+  try {
+    const profile = await Profile.findById(req.params.id);
+    res.json(profile);
+  } catch (error) {
+    console.error('Error fetching profile:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };

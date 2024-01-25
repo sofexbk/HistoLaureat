@@ -25,8 +25,11 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
-      dispatch({ type: 'LOGIN', payload: { email: user.email, role: user.role, token: user.token } });
-      dispatch({type:'PROFILE_STATUS',payload:user.hasProfile})
+      dispatch({
+        type: 'LOGIN',
+        payload: { email: user.email, role: user.role, token: user.token }
+      });
+      dispatch({ type: 'PROFILE_STATUS', payload: user.hasProfile });
     }
   }, []);
   

@@ -25,7 +25,9 @@ exports.createComment = async (req, res) => {
     });
 
     await newComment.save();
-
+    const post = await Poste.findById(posteId);
+    post.comments.push(newComment._id);
+    await post.save();
     res.status(201).json({ message: 'Commentaire créé avec succès', comment: newComment });
   } catch (error) {
     console.error(error);
@@ -97,6 +99,7 @@ exports.getCommentsByPoste = async (req, res) => {
     }
 
     const comments = await Comment.find({ posteId }).sort({ creationDate: -1 });
+    console.log('Comments retrieved for post ID:', posteId, comments);
 
     res.status(200).json({ message: 'Commentaires récupérés avec succès', comments });
   } catch (error) {

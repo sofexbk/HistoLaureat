@@ -11,12 +11,12 @@ exports.createPoste= async (req, res) => {
     const profileObjectId = new ObjectId(profileId);
     const profile = await Profile.findById(profileObjectId);
     if (!profile) {
-      return res.status(404).json({ message: 'Le profile not found.' });
+      return res.status(404).json({ message: 'Le profile n\'est pas trouvé.' });
     }
     const image = req.file;
     const user = await User.findById(profile.userId);
     if (!user ) {
-      return res.status(404).json({ message: 'Le profile  or user not found .' });
+      return res.status(404).json({ message: 'Le profil ou l\'utilisateur n\'existe pas.' });
     }
 
     const creationDate= new Date();
@@ -27,13 +27,12 @@ exports.createPoste= async (req, res) => {
       content,
       image,
       creationDate
-      
     });
     await newPoste.save();
-    res.status(201).json({ message: 'Poste created successfully', poste: newPoste });
+    res.status(201).json({ message: 'Poste créé avec succès', poste: newPoste });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error', error: error.message });
+    res.status(500).json({ message: 'Erreur interne du serveur', error: error.message });
   }
 };
 
@@ -44,7 +43,7 @@ exports.updatePoste = async (req, res) => {
     const { title, content } = req.body;
 
     if (!postId) {
-      return res.status(400).json({ message: 'postId is required in the request parameters.' });
+      return res.status(400).json({ message: 'L\'identifiant du poste est requis dans les paramètres de la requête.' });
     }
 
     const creationDate = new Date();
@@ -53,7 +52,7 @@ exports.updatePoste = async (req, res) => {
     const existingPoste = await Poste.findById(postId);
 
     if (!existingPoste) {
-      return res.status(404).json({ message: 'Poste not found.' });
+      return res.status(404).json({ message: 'Poste non trouvé.' });
     }
 
     // Vérifier si l'utilisateur actuel est l'auteur du poste
@@ -73,10 +72,10 @@ exports.updatePoste = async (req, res) => {
 
     const updatedPoste = await existingPoste.save();
 
-    res.status(200).json({ message: 'Poste mis à jour avec succès', poste: updatedPoste });
+    res.status(200).json({  message: 'Poste mis à jour avec succès', poste: updatedPoste });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error', error: error.message });
+    res.status(500).json({ message: 'Erreur interne du serveur', error: error.message });
   }
 };
 
@@ -85,19 +84,19 @@ exports.deletePoste = async (req, res) => {
     const { profileId, postId } = req.params;
 
     if (!postId) {
-      return res.status(400).json({ message: 'postId is required in the request parameters.' });
+      return res.status(400).json({ message: 'L\'identifiant du poste est requis dans les paramètres de la requête.' });
     }
 
     const result = await Poste.deleteOne({ _id: postId, profileId });
 
     if (result.deletedCount === 0) {
-      return res.status(404).json({ message: 'Poste not found or you are not authorized to delete it.' });
+      return res.status(404).json({ message: 'Poste non trouvé ou vous n\'êtes pas autorisé à le supprimer.' });
     }
 
     res.status(200).json({ message: 'Poste supprimé avec succès' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error', error: error.message });
+    res.status(500).json({ message: 'Erreur interne du serveur', error: error.message });
   }
 };
 
@@ -106,7 +105,7 @@ exports.deletePoste = async (req, res) => {
       const { profileId } = req.params;
   
       if (!profileId) {
-        return res.status(400).json({ message: 'profileId is required in the request parameters.' });
+        return res.status(400).json({ message: 'L\'identifiant du profil est requis dans les paramètres de la requête.' });
       }
   
       const postes = await Poste.find({ profileId }).sort({ creationDate: -1 });
@@ -114,17 +113,16 @@ exports.deletePoste = async (req, res) => {
       res.status(200).json({ message: 'Postes récupérés avec succès', postes });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Internal server error', error: error.message });
+      res.status(500).json({ message: 'Erreur interne du serveur', error: error.message });
     }
   };
   exports.getAllPostes = async (req, res) => {
     try {
       // Récupérer tous les postes
-      const postes = await Poste.find().sort({ creationDate: -1 });
-  
+      const postes = await Poste.find().sort({ creationDate: -1 }).populate('comments', 'content creationDate');
       res.status(200).json({ message: 'Tous les postes récupérés avec succès', postes });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Internal server error', error: error.message });
+      res.status(500).json({ message: 'Erreur interne du serveur', error: error.message });
     }
   };

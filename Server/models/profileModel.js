@@ -18,7 +18,7 @@ const profileSchema = new mongoose.Schema({
             const user = await mongoose.model('User').findById(this.userId);
             this.role = user.role;
         } catch (error) {
-            throw new Error('Error fetching associated user role.');
+            throw new Error('Erreur lors de la récupération du rôle utilisateur associé.');
         }
     }
     next();
