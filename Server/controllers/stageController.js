@@ -21,6 +21,10 @@ exports.createStage = async (req, res) => {
     }
     const start = new Date(startDate);
     const end = new Date(endDate);
+    const currentDate = new Date();
+        if (start.getTime() <= currentDate.getTime() || end.getTime() <= currentDate.getTime()) {
+      return res.status(400).json({ message: 'Les dates de début et de fin doivent être dans le futur.' });
+    }
     if (start >= end) {
       return res.status(400).json({ message: 'Plage de dates invalide. La date de début doit être antérieure à la date de fin.' });
     }

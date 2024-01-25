@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import Swal from 'sweetalert2';
 const CreateProfile = () => {
   const { user, dispatch } = useAuthContext();
   const [error, setError] = useState(null);
@@ -18,6 +18,9 @@ const CreateProfile = () => {
     experiencesPassee: "",
     promotion: "",
   });
+  useEffect(() => {
+    console.log('CreateProfile component mounted');
+  }, []);
 
   const handleInputChange = (e) => {
     setFormData({
@@ -30,21 +33,21 @@ const CreateProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log({ ...formData, role: user.role, image: profilePicture });
-
+  
     const formDataWithImage = new FormData();
-    formDataWithImage.append("image", profilePicture);
-    formDataWithImage.append("firstName", formData.firstName);
-    formDataWithImage.append("lastName", formData.lastName);
-    formDataWithImage.append("filiere", formData.filiere);
-    formDataWithImage.append("niveau", formData.niveau);
-    formDataWithImage.append("experiences", formData.experiences);
-    formDataWithImage.append("posteActuel", formData.posteActuel);
-    formDataWithImage.append("experiencesPassee", formData.experiencesPassee);
-    formDataWithImage.append("promotion", formData.promotion);
-
+    formDataWithImage.append('image', profilePicture);
+    formDataWithImage.append('firstName', formData.firstName);
+    formDataWithImage.append('lastName', formData.lastName);
+    formDataWithImage.append('filiere', formData.filiere);
+    formDataWithImage.append('niveau', formData.niveau);
+    formDataWithImage.append('experiences', formData.experiences);
+    formDataWithImage.append('posteActuel', formData.posteActuel);
+    formDataWithImage.append('experiencesPassee', formData.experiencesPassee);
+    formDataWithImage.append('promotion', formData.promotion);
+  
     try {
       const response = await axios.post(
-        "api/profile/createProfile",
+        'api/profile/createProfile',
         formDataWithImage,
         {
           headers: {
@@ -52,22 +55,33 @@ const CreateProfile = () => {
           },
         }
       );
-
-      console.log("Profile creation successful:", response.data);
+        Swal.fire({
+        title: 'Profile Created!',
+        icon: 'success',
+        text: 'Your profile has been successfully created.',
+      });
+  
+      console.log('Profile creation successful:', response.data);
       localStorage.setItem(
-        "user",
+        'user',
         JSON.stringify({
           ...user,
           hasProfile: true,
+          userName: response.data.profile.firstName,
+          photo: response.data.profile.image,
+          userRole: user.role,
         })
       );
-      dispatch({ type: "PROFILE_STATUS", payload: true });
-
-      Navigate("/home");
+      dispatch({ type: 'PROFILE_STATUS', payload: true });
+      Navigate('/landing');
+      window.location.reload();
     } catch (error) {
-      setError(
-        error.response ? error.response.data : "An error occurred"
-      );
+      Swal.fire({
+        title: 'Error',
+        icon: 'error',
+        text: error.response ? error.response.data : 'An error occurred',
+      });
+      setError(error.response ? error.response.data : 'An error occurred');
     }
   };
   return (
@@ -79,9 +93,6 @@ const CreateProfile = () => {
               Mon Profile
             </div>
             <div className='self-stretch relative h-[27px]'>
-        <label htmlFor='image' className='top-0 left-0'>
-          Photo de profil
-        </label>
       </div>
 
       <div className='w-full rounded-3xl bg-white flex flex-col items-start justify-center py-[30px] px-10 box-border gap-[38px] max-w-[1000px] text-base'>
@@ -339,6 +350,7 @@ const CreateProfile = () => {
                   name='promotion'
                   onChange={handleInputChange}
                   className='w-full h-full px-6 appearance-none bg-transparent border-none'
+                  placeholder='example: 2023-2024'
                 />
               </div>
             </div>

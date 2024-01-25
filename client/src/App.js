@@ -25,6 +25,7 @@ import { useParams } from 'react-router-dom';
 function App () {
   const { user,hasProfile } = useAuthContext()
   const { token } = useParams();
+  const isCreateProfilePage = window.location.pathname.includes('create-profile');
   return (
     <Router>
       <div className='App'>

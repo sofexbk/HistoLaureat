@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import Swal from "sweetalert2";
 
 export const useLogin = () => {
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { dispatch } = useAuthContext();
 
   const checkProfile = async (data) => {
@@ -22,29 +22,34 @@ export const useLogin = () => {
 
   const Login = async (email, password) => {
     setIsLoading(true);
-    setError(null);
-    const requestData = { email, password };
-
     try {
-      const response = await axios.post("/api/user/login", requestData);
+      const response = await axios.post("/api/user/login", { email, password });
       const { data } = response;
       console.log(data);
+
       dispatch({ type: "LOGIN", payload: data });
-      
-      // Check profile status after a successful login
+
       const profileResponse = await checkProfile(data);
       const hasProfile = profileResponse.data.hasProfile;
-      
-      // Update the context with the profile status
+
       dispatch({ type: "PROFILE_STATUS", payload: hasProfile });
-      localStorage.setItem("user", JSON.stringify({...data,hasProfile}));
+      localStorage.setItem("user", JSON.stringify({ ...data, hasProfile }));
 
       setIsLoading(false);
+      Swal.fire({
+        icon: "success",
+        title: "Login Successful",
+        text: "You have successfully logged in!",
+      });
     } catch (error) {
       setIsLoading(false);
-      setError(error.response.data.error);
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text: error.response?.data?.error || "An error occurred during login.",
+      });
     }
   };
 
-  return { Login, isLoading, error };
+  return { Login, isLoading };
 };
