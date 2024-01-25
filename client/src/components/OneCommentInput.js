@@ -12,9 +12,13 @@ export const OneCommentInput = ({ postID, commentOwner, className }) => {
   const [commentContent, setCommentContent] = useState('');
   const [comments, setComments] = useState([]);
   const [lastFetchTime, setLastFetchTime] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [newComment, setNewComment] = useState(null);
+
 
   const createComment = async (posteId, profileId, commentContent, authToken) => {
     try {
+      setIsLoading(true);
       const response = await axios.post(
         `/api/comment/createComment/${posteId}/${profileId}`,
         { content: commentContent },
@@ -24,19 +28,24 @@ export const OneCommentInput = ({ postID, commentOwner, className }) => {
           },
         }
       );
-      console.log('Comment created successfully:', response.data);
-      Swal.fire({
+      setNewComment(response.data); 
+      await Swal.fire({
         icon: 'success',
         title: 'Comment Created Successfully!',
-        showConfirmButton: false,
-        timer: 2000,
+        showConfirmButton: true,
+        showCancelButton: false,
+        confirmButtonText: 'OK',
+      }).then(() => {
+        // Perform the reload after the user clicks "OK"
+        window.location.reload();
       });
       setCommentContent('');
       setComments((prevComments) => {
         const newComments = Array.isArray(prevComments) ? [...prevComments, response.data] : [response.data];
         return newComments;
       });
-        setLastFetchTime(Date.now());
+      setLastFetchTime(Date.now());
+
     } catch (error) {
       console.error('Error creating comment:', error);
       Swal.fire({
@@ -44,11 +53,14 @@ export const OneCommentInput = ({ postID, commentOwner, className }) => {
         title: 'Error Creating Comment',
         text: 'An error occurred while creating the comment.',
       });
+    }finally {
+      setIsLoading(false); 
     }
   };
 
   const fetchComments = useCallback(async () => {
     try {
+      setIsLoading(true);
       const response = await axios.get(`/api/comment/getCommentsByPoste/${postID}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
