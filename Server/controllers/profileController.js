@@ -126,3 +126,55 @@ exports.getProfile = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+
+exports.getAllProfiles = async (req, res) => {
+  try {
+    console.log("pourquoi");
+    const profiles = await Profile.find({});
+    res.status(200).json({ message: 'Tous les profils récupérés avec succès', profiles });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erreur interne du serveur', error: error.message });
+  }
+};
+const User = require('../models/userModel'); 
+const Poste = require('../models/posteModel');
+const Comment = require('../models/commentModel');
+const Stage = require('../models/stageModel');
+
+exports.deleteProfile = async (req, res) => {
+    const profileId = req.params.profileId;
+
+    try {
+        // Trouver le profil à supprimer
+        const profileToDelete = await Profile.findById(profileId);
+
+       if (!profileToDelete) {
+            return res.status(404).json({ message: 'Profil non trouvé' });
+        }
+
+        // Supprimer les postes liés au profil
+      
+        await Poste.deleteMany({ profileId: profileToDelete._id });
+        
+        // Supprimer les commentaires liés au profil
+      await Comment.deleteMany({ profileId: profileToDelete._id });
+      
+        // Supprimer les stages liés au profil
+
+        await Stage.deleteMany({ laureatId: profileToDelete._id });
+        
+        //Supprimer le profil
+        await Profile.deleteOne({ _id: profileToDelete._id });
+
+        // Supprimer l'utilisateur associé
+        await User.findByIdAndDelete(profileToDelete.userId);
+
+      
+        res.status(200).json({ message: 'Profil, utilisateur associé, postes, commentaires et stages liés supprimés avec succès'});
+    } catch (error) {
+        console.error('Erreur lors de la suppression du profil et de l\'utilisateur associé:', error);
+        res.status(500).json({ message: 'Erreur interne du serveur' });
+    }
+};

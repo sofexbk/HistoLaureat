@@ -18,6 +18,11 @@ const upload = multer({ storage: storage });
 
 router.post('/createProfile',authMiddleware.verifyToken, upload.single('image'),profileController.createProfile);
 router.patch('/updateProfile',authMiddleware.verifyToken,upload.single('image'), profileController.updateProfile);
+router.get('/getAllProfiles', authMiddleware.verifyToken, profileController.getAllProfiles);
 router.get('/:userId/profile',authMiddleware.verifyToken,profileController.checkProfile);
+router.delete('/deleteProfile/:profileId',authMiddleware.verifyToken, profileController.deleteProfile);
 router.get('/:userId',authMiddleware.verifyToken,profileController.getProfile);
+
+
+
 module.exports = router;
