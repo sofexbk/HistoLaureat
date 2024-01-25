@@ -135,6 +135,7 @@ export const OneCommentInput = ({ postID, commentOwner, className }) => {
           <input
             type='text'
             id='commentInput'
+            placeholder='Ajouter un commentaire'
             className='block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-lg focus:ring-blue-500 focus:border-blue-500'
             value={commentContent}
             onChange={(e) => setCommentContent(e.target.value)}

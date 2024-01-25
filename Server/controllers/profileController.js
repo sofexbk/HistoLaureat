@@ -164,7 +164,6 @@ exports.deleteProfile = async (req, res) => {
         }
 
         // Supprimer les postes liés au profil
-      
         await Poste.deleteMany({ profileId: profileToDelete._id });
         
         // Supprimer les commentaires liés au profil
