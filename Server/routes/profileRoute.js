@@ -16,9 +16,12 @@ const storage=multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+
 router.post('/createProfile', authMiddleware.verifyToken, upload.single('image'), profileController.createProfile);
 router.patch('/updateProfile', authMiddleware.verifyToken, upload.single('image'), profileController.updateProfile);
 router.get('/:userId/profile', authMiddleware.verifyToken, profileController.checkProfile);
+router.get('/getAllProfiles', authMiddleware.verifyToken, profileController.getAllProfiles);
+router.delete('/deleteProfile/:profileId',authMiddleware.verifyToken, profileController.deleteProfile);
 router.get('/pr/:id',authMiddleware.verifyToken,profileController.getProfileById)
 router.get('/:userId', authMiddleware.verifyToken, profileController.getProfile);
 
