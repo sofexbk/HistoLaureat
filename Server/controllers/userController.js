@@ -36,7 +36,17 @@ const signupUser=async (req,res)=>{
 }}
 
 
+async function createAdminUser() {
+  try {
+    const email = 'admin@admin.fr';
+    const password = 'admin123';
 
+    const adminUser = await User.createAdmin(email, password);
+    console.log('Admin user created:', adminUser);
+  } catch (error) {
+    console.error('Error creating admin user:', error.message);
+  }
+}
 
 
 
@@ -125,7 +135,6 @@ const resetPassword = async (req, res) => {
       return res.status(400).json({ error: 'Invalid or expired token' });
     }
 
-    // Reset the password
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(newPassword, salt);
     user.password = hash;
@@ -143,5 +152,5 @@ const resetPassword = async (req, res) => {
 
 
 module.exports={
-    signupUser,loginUser,resetPassword,forgotPassword
+    signupUser,loginUser,resetPassword,forgotPassword,createAdminUser
 }

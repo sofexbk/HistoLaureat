@@ -51,4 +51,17 @@ userSchema.statics.login=async function(email,password){
     }
     return user
 }
+
+userSchema.statics.createAdmin = async function (email, password) {
+  const adminRole = 'admin';
+  const adminExists = await this.findOne({ email, role: adminRole });
+  if (adminExists) {
+    throw Error('Admin with this email already exists');
+  }
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(password, salt);
+  const adminUser = await this.create({ email, password: hash, role: adminRole });
+  return adminUser;
+}
+
 module.exports=mongoose.model('User',userSchema)

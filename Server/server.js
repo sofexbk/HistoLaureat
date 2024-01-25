@@ -11,6 +11,8 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../Server/models/userModel');
 const path=require('path')
+const ur=require('./controllers/userController')
+
 const app=express()
 app.use(bodyParser.json());
 
@@ -30,6 +32,7 @@ app.use('/api/profile',profileRoutes)
 app.use('/api/stageLaureat',stageRoutes)
 app.use('/api/comment',commentRoutes)
 app.use('/api/poste',posteRoutes)
+//ur.createAdminUser();
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {

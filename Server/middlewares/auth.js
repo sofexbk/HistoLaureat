@@ -18,8 +18,7 @@ const verifyToken = async (req, res, next) => {
       return res.status(401).json({ message: 'Le jeton d\'autorisation est manquant.' });
     }
     const userId = await getUserIdFromToken(token);
-    //console.log('Jeton décodé :', jwt.verify(token, process.env.SECRET));
-    //console.log('ID utilisateur :', userId);
+
     if (!userId) {
       return res.status(401).json({ message: 'Jeton invalide ou expiré.' });
     }
