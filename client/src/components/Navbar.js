@@ -16,8 +16,10 @@ export const Navbar = () => {
   const [userName, setUserName] = useState("");
   const [userRole, setUserRole] = useState("");
   const [photo, setPhoto] = useState(null);
-  const { logout } = useLogout();
-  const [searchInput, setSearchInput] = useState('');
+   const[niveau,setNiveau]=useState("")
+   const[filiere,setFiliere]=useState("")
+
+   const { logout } = useLogout();
   const fetchUserProfile = async () => {
     try {
       if (user && user.token) {
@@ -27,7 +29,6 @@ export const Navbar = () => {
             Authorization: `Bearer ${user.token}`,
           },
         });
-        console.log(response.data.profile);
 
         dispatch({
           type: 'PROFILE_STATUS',
@@ -37,6 +38,8 @@ export const Navbar = () => {
           setUserName(`${response.data.profile.firstName} ${response.data.profile.lastName}`);
           setPhoto(response.data.profile.image);
           setUserRole(user.role);
+          setNiveau(response.data.profile.niveau)
+          setFiliere(response.data.profile.filiere)
         }
       }
     } catch (error) {
@@ -50,7 +53,7 @@ export const Navbar = () => {
     fetchUserProfile();
   }, [user?.token]);
   
-  
+  console.log("1",niveau)
 
 
   return (
@@ -81,6 +84,7 @@ export const Navbar = () => {
                 src='/create-stage'
               />
             )}
+            
             <div className=' shrink-0 flex flex-row items-center justify-center gap-[11px]'>
               <div className='relative w-[75.05px] h-[65px]'>
                 {photo &&
@@ -98,8 +102,21 @@ export const Navbar = () => {
               <div className='shrink-0 flex flex-col items-start justify-start gap-[8px]'>
                 <b className='relative'>{userName}</b>
                 <div className='relative text-[17px] font-light text-darkgray'>
+                  {user.email}
+                </div>
+                <div className='text-[17px] font-light text-darkgray'>
                   {userRole}
                 </div>
+                {userRole === 'etudiant' && (
+                <div className='relative flex flex-row items-center justify-start gap-[8px]'>
+                <div className='text-[17px] font-light text-darkgray'>
+                {userRole}
+                </div>
+                 <div className='text-[17px] font-light text-darkgray'>
+                ({niveau},{filiere})
+                </div>
+               </div>
+               )}
               </div>
               <DeconnexionBtn 
               onClick={handleLogoutClick}
@@ -144,3 +161,6 @@ export default Navbar
               icon={Icons.UserCircleIcon}
               src='/mon-profile'
             />*/
+
+
+

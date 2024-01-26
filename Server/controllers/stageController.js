@@ -46,7 +46,7 @@ exports.createStage = async (req, res) => {
 };
 exports.getAllStages = async (req, res) => {
     try {
-      const stages = await Stage.find({}, { laureatId: 0 });
+      const stages = await Stage.find({});
       res.status(200).json({ stages });
     } catch (error) {
       console.error(error);

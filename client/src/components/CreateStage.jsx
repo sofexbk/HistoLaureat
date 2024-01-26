@@ -6,6 +6,8 @@ import { jwtDecode } from 'jwt-decode';
 import Swal from 'sweetalert2';  // Import SweetAlert
 import * as Icons from '@heroicons/react/24/solid';
 
+
+
 export default function CreateStage() {
   const { user } = useAuthContext();
   const Navigate = useNavigate();

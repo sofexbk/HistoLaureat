@@ -4,8 +4,9 @@ import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { useAuthContext } from '../hooks/useAuthContext';
 import Swal from 'sweetalert2';
+import Skeleton from 'react-loading-skeleton'
 
-export const OneCommentInput = ({ postID, commentOwner, className }) => {
+export const OneCommentInput = ({ postID, commentOwner, className,fetchAllData }) => {
   const [userData, setUserData] = useState(null);
   const [userId, setUserId] = useState(null);
   const { user } = useAuthContext();
@@ -41,10 +42,9 @@ export const OneCommentInput = ({ postID, commentOwner, className }) => {
         showCancelButton: false,
         confirmButtonText: 'OK',
       }).then(() => {
-        window.location.reload();
+        fetchAllData()
       });
       setLastFetchTime(Date.now());
-
     } catch (error) {
       console.error('Error creating comment:', error);
       Swal.fire({
@@ -65,7 +65,6 @@ export const OneCommentInput = ({ postID, commentOwner, className }) => {
           Authorization: `Bearer ${user.token}`,
         },
       });
-      console.log('Fetched comments:', response.data);
       setComments(response.data);
     } catch (error) {
       console.error('Error fetching comments:', error);
@@ -109,25 +108,33 @@ export const OneCommentInput = ({ postID, commentOwner, className }) => {
     }
 
     try {
+      setIsLoading(true);
       await createComment(postID, userData._id, commentContent, user.token);
     } catch (error) {
       console.error('Error submitting comment:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className='self-stretch rounded-3xs bg-white shadow-[13px_9px_28.1px_-13px_rgba(0,_0,_0,_0.05)] flex flex-col items-start justify-start py-[29px] px-10 gap-[25px] '>
       <div className='flex flex-row flex-wrap items-center justify-start gap-[16px]'>
-        {userData && userData.image && (
+        {userData && userData.image ? (
           <img
             className='relative rounded-21xl w-[60px] h-[60px] object-cover'
             alt=''
             src={userData.image}
           />
+        ) : (
+          <Skeleton width={60} height={60} circle={true} />
         )}
-        
         <div className='shrink-0 flex flex-col items-center justify-start gap-[6px]'>
-          <b className='relative'>{`${userData && userData.firstName} ${userData && userData.lastName}`}</b>
+          {userData ? (
+            <b className='relative'>{`${userData.firstName} ${userData.lastName}`}</b>
+          ) : (
+            <Skeleton width={80} />
+          )}
         </div>
       </div>
       <div className='self-stretch flex flex-col items-center justify-center  py-0 pr-0 pl-3.5 text-[17px] '>
@@ -149,6 +156,12 @@ export const OneCommentInput = ({ postID, commentOwner, className }) => {
           </button>
         </b>
       </div>
+      {/* Condition pour afficher le squelette seulement lors de la création du commentaire */}
+      {isLoading && (
+        <div className="loading-skeleton">
+          {/* Votre squelette de chargement ici */}
+        </div>
+      )}
     </div>
   );
 };
