@@ -1,14 +1,20 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import profilePic from '../assets/profilepic.png'
-
+import Swal from 'sweetalert2';
+import axios from 'axios'
+import { useAuthContext } from '../hooks/useAuthContext'
 export const OneComment = ({
   commentDescription,
   commentTime,
   commentOwner,
   profilePic='',
+  commentId,
+  onDeleteClick,
+  isCurrentUserCommentOwner,
+  getProfileId,
 }) => {
-  
+
   return (
     <div className=' self-stretch relative rounded-3xs bg-white shadow-[13px_9px_28.1px_-13px_rgba(0,_0,_0,_0.05)] flex flex-col items-start justify-start py-[29px] px-10 gap-[25px] '>
       <div className='flex flex-row flex-wrap items-center justify-start gap-[16px]'>
@@ -23,6 +29,13 @@ export const OneComment = ({
             {commentTime}
           </div>
         </div>
+        {isCurrentUserCommentOwner&&
+            <button 
+            onClick={onDeleteClick}           
+             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue active:bg-blue-800"  >
+            <span>Delete</span>
+            </button>
+         }
       </div>
       <div className='self-stretch flex flex-col items-start justify-start py-0 pr-0 pl-3.5 text-[17px] '>
         <b className='self-stretch relative'>{`${commentDescription}`}</b>
@@ -34,6 +47,8 @@ export const OneComment = ({
 OneComment.propTypes = {
   commentDescription: PropTypes.string,
   commentTime: PropTypes.string,
-  commentOwner: PropTypes.string
-  
+  commentOwner: PropTypes.string,
+  onDeleteClick: PropTypes.func,
+  isCurrentUserCommentOwner: PropTypes.bool,
+
 }

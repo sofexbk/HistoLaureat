@@ -21,11 +21,14 @@ import CreateStage from './components/CreateStage'
 import ResetPasswordForm from './components/resetPassword'
 import ForgotPassword from './components/ForgotPassword';
 import { useParams } from 'react-router-dom';
+import NotFound from './pages/NotFound'
+
 
 function App () {
   const { user,hasProfile } = useAuthContext()
   const { token } = useParams();
-  const isCreateProfilePage = window.location.pathname.includes('create-profile');
+  const isAuthenticatedWithProfile = user && hasProfile;
+  
   return (
     <Router>
       <div className='App'>
@@ -53,6 +56,7 @@ function App () {
           <Route path='/new-stage' element={<NewStage />} />
           <Route path="/reset-password/:token" element={<ResetPasswordForm />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path='*' element={<NotFound />} />
 
         </Routes>
       </div>

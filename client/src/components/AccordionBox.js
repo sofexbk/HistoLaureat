@@ -1,15 +1,43 @@
 import React, { useState, useEffect } from 'react';
 import { OneComment } from './OneComment';
 import { OneCommentInput } from './OneCommentInput';
-import { Button } from '../components/ButtonComponent';
-import * as Icons from '@heroicons/react/24/solid';
 import { useAuthContext } from '../hooks/useAuthContext';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import Swal from 'sweetalert2';
 
 export const AccordionBox = ({ postID, commentaires }) => {
   const [accordionOpen, setAccordionOpen] = useState(false);
   const [profileData, setProfileData] = useState(null);
   const { user } = useAuthContext();
+  const [userId, setUserId] = useState(null);
+  const [profileId, setProfileId] = useState(null);
+  const [comments, setComments] = useState(commentaires); 
+
+  useEffect(() => {
+    const getUserIdFromToken = () => {
+      if (user && user.token) {
+        const id = jwtDecode(user.token)._id;
+        setUserId(id);
+      }
+    };
+    
+    const fetchData = async () => {
+      getUserIdFromToken();
+      if (userId) {
+        try {
+          const response = await axios.get(`/api/profile/${userId}`, {
+            headers: { Authorization: `Bearer ${user.token}` },
+          });
+          setProfileId(response.data.profile._id);
+        } catch (error) {
+          console.error('Erreur lors de la requête :', error);
+        }
+      }
+    };
+    
+    fetchData();
+  }, [userId, user]);
 
   const fetchProfileData = async (profileId) => {
     try {
@@ -28,7 +56,7 @@ export const AccordionBox = ({ postID, commentaires }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const profileIds = commentaires.map(comment => comment.profileId);
+        const profileIds = commentaires.map((comment) => comment.profileId);
         const profilesData = await Promise.all(profileIds.map(fetchProfileData));
         setProfileData(profilesData);
       } catch (error) {
@@ -41,6 +69,34 @@ export const AccordionBox = ({ postID, commentaires }) => {
 
   const rotationDegree = accordionOpen ? 'rotate-180' : 'rotate-0';
 
+  const handleDeleteComment = async (commentId) => {
+    try {
+      const response = await axios.delete(
+        `/api/comment/deleteCommentByPost/${postID}/${commentId}/${profileId}/`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+      setComments((prevComments) => prevComments.filter((comment) => comment._id !== commentId));
+        //fetchAllData()
+      Swal.fire('Deleted!', 'Your comment has been deleted.', 'success');
+
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+      if (error.response) {
+        console.error('Server responded with:', error.response.data);
+      } else if (error.request) {
+        console.error('No response received:', error.request);
+      } else {
+        console.error('Error setting up the request:', error.message);
+      }
+    }
+  };
+  
+  
+  
   return (
     <>
       <button
@@ -79,7 +135,9 @@ export const AccordionBox = ({ postID, commentaires }) => {
          commentTime={new Date(comment.creationDate).toLocaleString()}
           commentDescription={comment.content}
           profilePic={(profileData && profileData[index]) ? profileData[index].image : ''}
-         />
+          isCurrentUserCommentOwner={profileId === comment?.profileId} 
+          onDeleteClick={() => handleDeleteComment(comment._id)}          
+          />
           ))}
         <OneCommentInput postID={postID}/>
         </div>

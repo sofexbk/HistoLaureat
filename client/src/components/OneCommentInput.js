@@ -28,7 +28,12 @@ export const OneCommentInput = ({ postID, commentOwner, className }) => {
           },
         }
       );
-      setNewComment(response.data); 
+      setNewComment(response.data);
+      setCommentContent('');
+      setComments((prevComments) => {
+        const newComments = Array.isArray(prevComments) ? [...prevComments, response.data] : [response.data];
+        return newComments;
+      }); 
       await Swal.fire({
         icon: 'success',
         title: 'Comment Created Successfully!',
@@ -36,13 +41,7 @@ export const OneCommentInput = ({ postID, commentOwner, className }) => {
         showCancelButton: false,
         confirmButtonText: 'OK',
       }).then(() => {
-        // Perform the reload after the user clicks "OK"
         window.location.reload();
-      });
-      setCommentContent('');
-      setComments((prevComments) => {
-        const newComments = Array.isArray(prevComments) ? [...prevComments, response.data] : [response.data];
-        return newComments;
       });
       setLastFetchTime(Date.now());
 
@@ -126,6 +125,7 @@ export const OneCommentInput = ({ postID, commentOwner, className }) => {
             src={userData.image}
           />
         )}
+        
         <div className='shrink-0 flex flex-col items-center justify-start gap-[6px]'>
           <b className='relative'>{`${userData && userData.firstName} ${userData && userData.lastName}`}</b>
         </div>
