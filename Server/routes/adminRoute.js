@@ -20,6 +20,6 @@ router.get('/getAllProfiles', authMiddleware.verifyToken, authMiddleware.isAdmin
 router.delete('/deleteProfile/:profileId', authMiddleware.verifyToken, authMiddleware.isAdmin, profileController.deleteProfile);
 router.delete('/:profileId/deletePoste/:postId', authMiddleware.verifyToken, authMiddleware.isAdmin, posteController.deletePoste);
 router.get('/pr/:id', authMiddleware.verifyToken, authMiddleware.isAdmin, profileController.getProfileById);
-router.delete('/:laureatId/:stageId/deleteStage',authMiddleware.verifyToken,authMiddleware.isAdmin,stage.deleteStage)
+router.delete('/:laureatId/:stageId/deleteStage',authMiddleware.verifyToken,authMiddleware.isAdmin,stage.deleteStage);
 
 module.exports = router;
