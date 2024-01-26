@@ -22,7 +22,7 @@ import ResetPasswordForm from './components/resetPassword'
 import ForgotPassword from './components/ForgotPassword';
 import { useParams } from 'react-router-dom';
 import NotFound from './pages/NotFound'
-
+import UpdateProfile from './components/UpdateProfile'
 
 function App () {
   const { user,hasProfile } = useAuthContext()
@@ -33,7 +33,7 @@ function App () {
     <Router>
       <div className='App'>
         <Navbar
-          // ajouter connextion if connected
+          //ajouter connextion if connected
           connexion={hasProfile}
         />
         <Routes>
@@ -54,6 +54,7 @@ function App () {
           <Route path='/create-stage' element={<CreateStage />} />
           <Route path='/new-post' element={<NewPost/>} />
           <Route path='/new-stage' element={<NewStage />} />
+          <Route path='/update-profile' element={<UpdateProfile/>} />
           <Route path="/reset-password/:token" element={<ResetPasswordForm />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route path='*' element={<NotFound />} />

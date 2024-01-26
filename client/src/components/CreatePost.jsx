@@ -124,7 +124,7 @@ export default function CreatePost() {
             <textarea
             name ='content' id='desc' onChange={handleInput}
             value={post.content}
-            className='w-full h-auto px-6 text-base appearance-none bg-transparent border border-solid border-[#BFC6C9] rounded-lg'
+            className='w-full h-96 px-6 text-base appearance-none bg-transparent border border-solid border-[#BFC6C9] rounded-lg'
             />
           </div>
         </div>

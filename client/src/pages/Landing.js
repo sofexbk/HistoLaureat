@@ -10,8 +10,8 @@ import { ClockLoader } from 'react-spinners';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import Swal from 'sweetalert2';
-
 import { jwtDecode } from "jwt-decode";
+import { StageProvider,useStageContext } from '../context/StageContext'
 
 export const Landing =  () => {
   const [stages,setStages]=useState([]);
@@ -20,6 +20,8 @@ export const Landing =  () => {
   const [commentaires,setCommentaires]=useState([])
   const [loading, setLoading] = useState(true); 
   const [userId, setUserId] = useState(null);
+  const [resolvedProfileId, setResolvedProfileId] = useState(''); 
+  //const { stages, deleteStage } = useStageContext();
 
   const decodeToken = () => {
     try {
@@ -46,39 +48,44 @@ export const Landing =  () => {
       const response = await axios.get(`/api/profile/${userId}`, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
+      setResolvedProfileId(response.data.profile._id)
       return response.data.profile._id;
     } catch (error) {
       console.error('Erreur lors de la requête :', error);
     }
   };
+  
   const fetchProfileData = async (profileId) => {
     try {
       const response = await axios.get(`/api/profile/pr/${profileId}`,{
         headers: {
     Authorization: `Bearer ${user.token}`,
       },
-      });      
-         return response.data;
+      });  
+      console.log(response.data)    
+    return response.data;
     } catch (error) {
       console.error('Error fetching profile data:', error);
       return null;
     }
   };
-
+  const ProfileId = async () => {
+    const profileId = await getProfileId();
+    return profileId;
+  };
   
-const fetchAllData = async () => {
+  const fetchAllData = async () => {
     try {
       setLoading(true);
       if (user && user.token) {
-        console.log('hada user',user)
         const postsResponse = await axios.get('/api/poste/getAllPostes', {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },
-        })
-        
+        });
+  
         setPosts(postsResponse.data.postes || []);
-
+  
         const postIDs = postsResponse.data.postes.map((post) => post._id);
         const commentsPromises = postIDs.map(async (postID) => {
           const commentsResponse = await axios.get(`/api/comment/getCommentsByPoste/${postID}`, {
@@ -86,21 +93,21 @@ const fetchAllData = async () => {
               Authorization: `Bearer ${user.token}`,
             },
           });
-
-
+  
           return { postID, comments: commentsResponse.data.comments || [] };
         });
-        
+  
         const commentsData = await Promise.all(commentsPromises);
         setCommentaires(commentsData);
-
-         const profilePromises = postsResponse.data.postes.map((post) => fetchProfileData(post.profileId));
-          const profilesData = await Promise.all(profilePromises);
-          const combinedPosts = postsResponse.data.postes.map((post, index) => ({
-                 ...post,profileData: profilesData[index],}));
-          setPosts(combinedPosts);  
-          console.log(combinedPosts)
-
+  
+        const profilePromises = postsResponse.data.postes.map((post) => fetchProfileData(post.profileId));
+        const profilesData = await Promise.all(profilePromises);
+        const combinedPosts = postsResponse.data.postes.map((post, index) => ({
+          ...post,  userEmail: profilesData[index].email,
+          profileData: profilesData[index],
+        }));
+        setPosts(combinedPosts);
+        console.log("dsfgg",profilesData)
         const stagesResponse = await axios.get('/api/stageLaureat/getAllStages', {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -110,10 +117,11 @@ const fetchAllData = async () => {
       }
     } catch (error) {
       console.error('Error fetching data:', error);
-    }finally {
+    } finally {
       setLoading(false);
     }
   };
+
 
   useEffect(() => {
     fetchAllData();
@@ -183,28 +191,38 @@ const fetchAllData = async () => {
           <div className='flex-1 flex flex-col items-start justify-start py-0 px-10 box-border gap-[20px] min-w-[600px] max-w-[1200px]'>
             <div className='self-stretch relative font-extrabold '>Postes</div>
             <div className='self-stretch flex flex-col items-start justify-start text-xl text-black gap-[20px] '>
-        {loading ? (
-          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'right', height: '100%' }}>
-          <Skeleton width={1100} height={10000} color="#000" />
-        </div>
-        ) : (
-           <>
-            {commentaires.map((commentaire, index) => (
-             <OnePost
-              key={postes[index]._id}
-              postID={postes[index]._id}
-              profileName={`${postes[index].profileData?.firstName || ''} ${postes[index].profileData?.lastName || ''}`}
-              profileStatus={new Date(postes[index].creationDate).toLocaleString()}
-               title={postes[index].title}
-              description={postes[index].content}
-               profilePic={postes[index].profileData?.image}
-               comments={commentaire.comments || []}  
-               onDeleteClick={handleDeleteClick}
-               isCurrentUserPost={postes[index].profileData?.userId === decodeToken()._id}
-               />
-                 ))}
-              </>
-            )}
+              {console.log("hh",postes)}
+            {loading ? (
+                <div>
+                  {Array.from({ length: 10 }).map((_, index) => (
+                    <SkeletonPost key={index} />
+                  ))}
+                </div>
+              ) : (
+                <>
+                  {commentaires.map((commentaire, index) => (
+                    <OnePost
+                      key={postes[index]._id}
+                      postID={postes[index]._id}
+                      profileName={`${postes[index].profileData?.firstName || ''} ${postes[index].profileData?.lastName || ''}`}
+                      profileStatus={new Date(postes[index].creationDate).toLocaleString()}
+                      title={postes[index].title}
+                      description={postes[index].content}
+                      profilePic={postes[index].profileData?.image}
+                      comments={commentaire.comments || []}
+                      onDeleteClick={handleDeleteClick}
+                      isCurrentUserPost={postes[index].profileData?.userId === decodeToken()._id}
+                      user={user}
+                      profileId={ProfileId()}
+                      loading={loading}
+                      fetchAllData={fetchAllData}
+                      resolvedProfileId={resolvedProfileId}
+                      email={postes[index].profileData?.email}
+                      userId={userId}
+                    />
+                  ))}
+                </>
+              )}
           </div>
       </div>
         </div>
@@ -214,24 +232,51 @@ const fetchAllData = async () => {
           </div>
           <div className='self-stretch flex flex-col items-start justify-start gap-[30px] text-center text-xl text-black'>
           {loading ? (
-          <Skeleton width={350} height={10000} color="#000" />
-          ) : (
-            stages.map((stage) => (
-              <OneStage
-                key={stage._id}
-                company={stage.company}
-                titreStage={stage.title}
-                typeStage={stage.type}
-                startDate={stage.startDate}
-                endDate={stage.endDate}
-                description={stage.description}
-              />
-            ))
-          )}
-        </div>
-      </div>
+              Array.from({ length: 7 }).map((_, index) => (
+                <SkeletonStage key={index} />
+              ))
+            ) : (
+              stages.length > 0 && (
+                <>
+                  {stages.map((stage) => (
+                    <OneStage
+                      key={stage._id}
+            company={stage.company}
+            titreStage={stage.title}
+            typeStage={stage.type}
+            startDate={stage.startDate}
+            endDate={stage.endDate}
+            description={stage.description}
+            isCurrentUserStage={stage.laureatId === resolvedProfileId}
+            stage={stage}
+            fetchAllData={fetchAllData}
+            />
+            ))}
+          </>
+        )
+      )}
     </div>
-    </>
-  )
-}
+  </div>
+</div>
+</>
+);
+};
+const SkeletonPost = () => (
+  <>
+    <div style={{ width: '300%', height: '100px', borderRadius: '50%', marginBottom: '10px' }}>
+      <Skeleton circle={true} height={60} width={60} />
+    </div>
+    <div style={{ width: '300%', height: '100px', marginBottom: '200px' }}>
+      <Skeleton height={190} width='650%' />
+    </div>
+  </>
+);
+const SkeletonStage = () => (
+  <div className='self-stretch flex flex-col items-start justify-start gap-[20px]'>
+    <div style={{ width: '100%', height: '100px', borderRadius: '5px', marginBottom: '20px' }}>
+      <Skeleton height={120} width='100%' />
+    </div>
+  </div>
+);
+
 export default Landing;

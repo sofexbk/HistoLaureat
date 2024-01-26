@@ -55,7 +55,8 @@ exports.updateProfile = async (req, res) => {
         try {
           fs.unlinkSync('./uploads/' + req.body.old_image);
         } catch (err) {
-          console.log(err);
+          console.error(err);
+          return res.status(500).json({ message: 'Error deleting old image', error: err.message });
         }
       }
     } else {
@@ -112,12 +113,21 @@ exports.checkProfile = async (req, res) => {
     res.status(500).json({ error: 'Erreur interne du serveur' });
   }
 };
+const mongoose = require('mongoose');
+
 exports.getProfile = async (req, res) => {
   try {
-    const userId = req.params.userId; 
+    const userId = req.params.userId;
     const profile = await Profile.findOne({ userId });
+
     if (profile) {
-      res.json({profile });
+      const user = await mongoose.model('User').findById(profile.userId);
+      if (user) {
+        const { email, ...userData } = user.toObject();
+        res.json({ profile: { ...profile.toObject(), userEmail: email, user: userData } });
+      } else {
+        res.json({ message: "Erreur lors de la récupération de l'utilisateur associé au profil" });
+      }
     } else {
       res.json({ message: "Erreur lors de la récupération du profil" });
     }
