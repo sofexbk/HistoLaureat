@@ -163,6 +163,7 @@ export const AccordionBox = ({ postID, commentaires,fetchAllData,resolvedProfile
                     commentId={comment._id}
                     fetchAllData={fetchAllData}
                     loading={loading}
+                    comment={comment}
                   />
                 ) : (
                   <div className="flex flex-col gap-4">
@@ -171,7 +172,6 @@ export const AccordionBox = ({ postID, commentaires,fetchAllData,resolvedProfile
               </React.Fragment>
             ))
           )}
-
           <OneCommentInput postID={postID} fetchAllData={fetchAllData} />
         </div>
       </div>

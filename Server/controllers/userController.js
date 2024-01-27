@@ -7,7 +7,8 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto'); 
 const fs = require('fs');
 const path = require('path');
-
+const mongoose = require('mongoose');
+const Profile=require('../models/profileModel')
 router.use(express.urlencoded({ extended: true }));
 
 const createToken=(_id)=> {
@@ -19,7 +20,7 @@ const loginUser=async (req,res)=>{
     try{
      const user=await User.login(email,password)
      const token=createToken(user._id)
-     res.status(200).json({email,token,role:user.role})
+     res.status(200).json({email,token,role:user.role,userId: user._id})
    }catch (error) {
     res.status(400).json({error:error.message})
 }}
@@ -147,8 +148,47 @@ const resetPassword = async (req, res) => {
   }
 };
 
+const getUserById = async (req, res) => {
+  try {
+    const { userId } = req.params;
 
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: 'Invalid ObjectId' });
+    }
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json({ email: user.email });
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+
+const getUserEmail = async (req, res) => {
+  try {
+    const { profileId } = req.params;
+    const profile = await Profile.findById(profileId);
+    if (!profile) {
+      return res.status(404).json({ error: 'Profile not found' });
+    }
+    const userId = profile.userId;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    return res.status(200).json({ email: user.email });
+  } catch (error) {
+    console.error('Error fetching user email by profileId:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+};
 
 module.exports={
-    signupUser,loginUser,resetPassword,forgotPassword,createAdminUser
+    signupUser,loginUser,resetPassword,forgotPassword,createAdminUser,getUserById,getUserEmail
 }
