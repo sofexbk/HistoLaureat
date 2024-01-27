@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios'; 
+import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const ResetPasswordForm = () => {
@@ -8,12 +8,14 @@ const ResetPasswordForm = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false); 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const response = await axios.post(`/api/user/reset-password/${token}`, {
         newPassword,
         confirmPassword,
@@ -35,9 +37,10 @@ const ResetPasswordForm = () => {
       console.error('Error during password reset:', error);
       setErrorMessage('Failed to reset password. Please try again.');
       setSuccessMessage('');
+    } finally {
+      setIsLoading(false); 
     }
   };
-
 
   return (
     <div className='bg-aliceblue-100 relative h-screen flex flex-col items-center justify-center bg-gray-100'>
@@ -81,7 +84,7 @@ const ResetPasswordForm = () => {
           type='submit'
           className='text-white bg-blue-500 border border-solid border-blue-500 px-4 py-2 rounded-md transition duration-300 ease-in-out hover:bg-blue-700'
         >
-          Réinitialiser le Mot de Passe
+          {isLoading ? 'Réinitialisation en cours...' : 'Réinitialiser le Mot de Passe'}
         </button>
 
         {successMessage && <div className='text-green-500 mt-4'>{successMessage}</div>}
