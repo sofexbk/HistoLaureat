@@ -4,6 +4,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        "dark-purple": "#081A51",
+        "light-white": "rgba(255,255,255,0.17)",
         aliceblue: {
           "100": "#eff9ff",
           "200": "#e4f5ff",

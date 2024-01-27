@@ -9,7 +9,7 @@ export const useLogout = () => {
   const logout = () => {
     localStorage.removeItem('user');
     dispatch({ type: 'LOGOUT' });
-    navigate('/'); // Redirect to the home page or any other page after logout
+    navigate('/'); 
   }
 
   return { logout };

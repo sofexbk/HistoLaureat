@@ -3,10 +3,12 @@ import { useAuthContext } from "../hooks/useAuthContext";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom"; // Importer useNavigate depuis react-router-dom
 
 export const useLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { dispatch } = useAuthContext();
+  const navigate = useNavigate(); // Initialiser useNavigate
 
   const checkProfile = async (data) => {
     try {
@@ -41,6 +43,12 @@ export const useLogin = () => {
         title: "Login Successful",
         text: "You have successfully logged in!",
       });
+
+      // Rediriger en fonction du rôle de l'utilisateur
+      if (data.role === "admin") {
+        navigate("/admin-panel");
+      
+      }
     } catch (error) {
       setIsLoading(false);
       Swal.fire({

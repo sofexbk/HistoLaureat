@@ -21,6 +21,7 @@ import CreateStage from './components/CreateStage'
 import ResetPasswordForm from './components/resetPassword'
 import ForgotPassword from './components/ForgotPassword';
 import { useParams } from 'react-router-dom';
+import AdminPanel from './pages/AdminPanel.jsx'
 
 function App () {
   const { user,hasProfile } = useAuthContext()
@@ -29,10 +30,11 @@ function App () {
   return (
     <Router>
       <div className='App'>
+        {(!user || (user && user.role!="admin")) && 
         <Navbar
-          // ajouter connextion if connected
-          connexion={hasProfile}
+          connexion={hasProfile}   
         />
+      }
         <Routes>
           <Route
             path='/login'
@@ -42,6 +44,7 @@ function App () {
             path='/signup'
             element={!user ? <Signup /> : <Navigate to='/home' />}
           />
+          <Route path='/'>
           <Route path='/' element={<Home />} />
           <Route path='/home' element={<Home />} />
           <Route path='/create-profile' element={<CreateProfile />} />
@@ -53,6 +56,8 @@ function App () {
           <Route path='/new-stage' element={<NewStage />} />
           <Route path="/reset-password/:token" element={<ResetPasswordForm />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path='/admin-panel' element={<AdminPanel />} />
+          </Route>
 
         </Routes>
       </div>
