@@ -1,6 +1,7 @@
 const Poste = require('../models/posteModel');
 const Profile = require('../models/profileModel');
 const User = require('../models/userModel');
+const Comment=require('../models/commentModel')
 const { Types: { ObjectId } } = require('mongoose');
 const { v4: uuidv4 } = require('uuid'); 
 
@@ -82,18 +83,19 @@ exports.updatePoste = async (req, res) => {
 exports.deletePoste = async (req, res) => {
   try {
     const { profileId, postId } = req.params;
-
     if (!postId) {
       return res.status(400).json({ message: 'L\'identifiant du poste est requis dans les paramètres de la requête.' });
     }
-
-    const result = await Poste.deleteOne({ _id: postId, profileId });
-
-    if (result.deletedCount === 0) {
+    const post = await Poste.findById(postId);
+    if (!post) {
       return res.status(404).json({ message: 'Poste non trouvé ou vous n\'êtes pas autorisé à le supprimer.' });
     }
-
-    res.status(200).json({ message: 'Poste supprimé avec succès' });
+    const commentIds = post.comments;
+    for (const commentId of commentIds) {
+      await Comment.deleteOne({ _id: commentId });
+    }
+    await Poste.deleteOne({ _id: postId, profileId });
+    res.status(200).json({ message: 'Poste et commentaires supprimés avec succès' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Erreur interne du serveur', error: error.message });

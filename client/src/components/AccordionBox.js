@@ -1,15 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { OneComment } from './OneComment';
 import { OneCommentInput } from './OneCommentInput';
-import { Button } from '../components/ButtonComponent';
-import * as Icons from '@heroicons/react/24/solid';
 import { useAuthContext } from '../hooks/useAuthContext';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import Swal from 'sweetalert2';
+import Skeleton from 'react-loading-skeleton'
 
-export const AccordionBox = ({ postID, commentaires }) => {
+export const AccordionBox = ({ postID, commentaires,fetchAllData,resolvedProfileId }) => {
   const [accordionOpen, setAccordionOpen] = useState(false);
   const [profileData, setProfileData] = useState(null);
   const { user } = useAuthContext();
+  const [userId, setUserId] = useState(null);
+  const [profileId, setProfileId] = useState(null);
+  const [comments, setComments] = useState(commentaires); 
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getUserIdFromToken = () => {
+      if (user && user.token) {
+        const id = jwtDecode(user.token)._id;
+        setUserId(id);
+      }
+    };
+    
+    const fetchData = async () => {
+      getUserIdFromToken();
+      if (userId) {
+        try {
+          const response = await axios.get(`/api/profile/${userId}`, {
+            headers: { Authorization: `Bearer ${user.token}` },
+          });
+          setProfileId(response.data.profile._id);
+        } catch (error) {
+          console.error('Erreur lors de la requête :', error);
+        }
+      }
+    };
+    
+    fetchData();
+  }, [userId, user]);
 
   const fetchProfileData = async (profileId) => {
     try {
@@ -28,9 +58,10 @@ export const AccordionBox = ({ postID, commentaires }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const profileIds = commentaires.map(comment => comment.profileId);
+        const profileIds = commentaires.map((comment) => comment.profileId);
         const profilesData = await Promise.all(profileIds.map(fetchProfileData));
         setProfileData(profilesData);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching profile data:', error);
       }
@@ -41,6 +72,43 @@ export const AccordionBox = ({ postID, commentaires }) => {
 
   const rotationDegree = accordionOpen ? 'rotate-180' : 'rotate-0';
 
+  const handleDeleteComment = async (commentId) => {
+    const confirmationResult = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    });
+      if (confirmationResult.isConfirmed) {
+      try {
+        const response = await axios.delete(
+          `/api/comment/deleteCommentByPost/${postID}/${commentId}/${profileId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        );
+        fetchAllData()
+        setComments((prevComments) => prevComments.filter((comment) => comment._id !== commentId));
+        Swal.fire('Deleted!', 'Your comment has been deleted.', 'success');
+      } catch (error) {
+        console.error('Error deleting comment:', error);
+        if (error.response) {
+          console.error('Server responded with:', error.response.data);
+        } else if (error.request) {
+          console.error('No response received:', error.request);
+        } else {
+          console.error('Error setting up the request:', error.message);
+        }
+      }
+    }
+  };
+  
+  
   return (
     <>
       <button
@@ -72,16 +140,39 @@ export const AccordionBox = ({ postID, commentaires }) => {
         style={{ height: accordionOpen ? 'auto' : 0 }}
       >
         <div className='bg-aliceblue-200 self-stretch relative flex flex-col items-center justify-start p-4 gap-4 rounded-b-2xl'>
-        {commentaires.map((comment, index) => (
-        <OneComment
-         key={comment._id}
-          commentOwner={`${(profileData && profileData[index]) ? profileData[index].firstName || '' : ''} ${profileData && profileData[index] ? profileData[index].lastName || '' : ''}`}
-         commentTime={new Date(comment.creationDate).toLocaleString()}
-          commentDescription={comment.content}
-          profilePic={(profileData && profileData[index]) ? profileData[index].image : ''}
-         />
-          ))}
-        <OneCommentInput postID={postID}/>
+          {loading ? (
+            Array.from({ length: 5 }).map((_, index) => (
+              <div key={index} className="flex flex-col gap-4">
+                <Skeleton height={100} width={600} />
+              </div>
+            ))
+          ) : (
+            commentaires.map((comment, index) => (
+              <React.Fragment key={comment._id}>
+                {profileData && profileData[index] ? (
+                  <OneComment
+                    commentOwner={`${profileData[index].firstName || ''} ${profileData[index].lastName || ''}`}
+                    commentTime={new Date(comment.creationDate).toLocaleString()}
+                    commentDescription={comment.content}
+                    profilePic={profileData[index].image}
+                    isCurrentUserCommentOwner={profileId === comment.profileId}
+                    onDeleteClick={() => handleDeleteComment(comment._id)}
+                    user={user}
+                    postID={postID}
+                    resolvedProfileId={resolvedProfileId}
+                    commentId={comment._id}
+                    fetchAllData={fetchAllData}
+                    loading={loading}
+                  />
+                ) : (
+                  <div className="flex flex-col gap-4">
+                  </div>
+                )}
+              </React.Fragment>
+            ))
+          )}
+
+          <OneCommentInput postID={postID} fetchAllData={fetchAllData} />
         </div>
       </div>
     </>

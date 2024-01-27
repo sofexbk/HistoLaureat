@@ -4,7 +4,7 @@ import * as Icons from '@heroicons/react/24/solid'
 import { useNavigate } from 'react-router-dom'
 import Logo from '../assets/Logo1.png'
 import { Button } from '../components/ButtonComponent'
-
+import Swal from 'sweetalert2';
 
 function Signup () {
   const [email, setEmail] = useState('')
@@ -17,18 +17,33 @@ function Signup () {
   const Navigate = useNavigate()
   const handleSubmit = async e => {
     e.preventDefault()
+    setError('')
     if (password !== confirmPassword) {
-      setError('Les mots de passe ne correspondent pas')
-      return
+      setError('Les mots de passe ne correspondent pas');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Les mots de passe ne correspondent pas',
+      });
+      return;
     }
     try {
-      await handleSignup(email, password, confirmPassword, role)
-      Navigate('/create-profile')
+      await handleSignup(email, password, confirmPassword, role);
+      Swal.fire({
+        icon: 'success',
+        title: 'Signup Successful',
+        text: 'You have successfully signed up!',
+      });
+      Navigate('/create-profile');
     } catch (err) {
-      console.log(err.message);
-      setError(err)
+      setError(err.message);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: err.message,
+      });
     }
-  }
+  };
 
   return (
     <>
@@ -221,7 +236,7 @@ function Signup () {
             </button>
             {error && (
           <div className="text-red-500 mt-4">
-           {error.message ? error.message : "An error occurred"}
+           {error ? error : "An error occurred"}
          </div>
       )}          </div>
         </div>

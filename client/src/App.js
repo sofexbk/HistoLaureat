@@ -22,11 +22,14 @@ import ResetPasswordForm from './components/resetPassword'
 import ForgotPassword from './components/ForgotPassword';
 import { useParams } from 'react-router-dom';
 import AdminPanel from './pages/AdminPanel.jsx'
+import NotFound from './pages/NotFound'
+import UpdateProfile from './components/UpdateProfile'
 
 function App () {
   const { user,hasProfile } = useAuthContext()
   const { token } = useParams();
-  const isCreateProfilePage = window.location.pathname.includes('create-profile');
+  const isAuthenticatedWithProfile = user && hasProfile;
+  
   return (
     <Router>
       <div className='App'>
@@ -54,10 +57,13 @@ function App () {
           <Route path='/create-stage' element={<CreateStage />} />
           <Route path='/new-post' element={<NewPost/>} />
           <Route path='/new-stage' element={<NewStage />} />
+          <Route path='/update-profile' element={<UpdateProfile/>} />
           <Route path="/reset-password/:token" element={<ResetPasswordForm />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route path='/admin-panel' element={<AdminPanel />} />
           </Route>
+          <Route path='*' element={<NotFound />} />
+
 
         </Routes>
       </div>

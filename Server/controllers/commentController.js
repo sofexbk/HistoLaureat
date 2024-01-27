@@ -107,7 +107,7 @@ exports.getCommentsByPoste = async (req, res) => {
     res.status(500).json({ message: 'Erreur interne du serveur', error: error.message });
   }
 };
-// Récupérer un commentaire par ID
+
 exports.getCommentById = async (req, res) => {
   try {
     const { profileId, commentId } = req.params;
@@ -130,5 +130,49 @@ exports.getCommentById = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Erreur interne du serveur', error: error.message });
+  }
+};
+
+
+exports.deleteCommentByPost = async (req, res) => {
+  try {
+    const { postID,profileID ,commentID } = req.params;
+    console.log('Received delete request:', { postID, commentID, profileID });
+    if (!postID || !commentID || !profileID) {
+      return res.status(400).json({ message: 'postID, commentID, and profileID are required parameters in the request.' });
+    }
+    const result = await Comment.deleteOne({ _id: commentID, posteId: postID, profileId: profileID });
+    if (result.deletedCount === 0) {
+      console.log('Comment not found or not authorized to delete:', { commentID });
+      return res.status(404).json({ message: 'Comment not found or you are not authorized to delete it.', commentID });
+    }
+    await Poste.updateOne({ _id: postID }, { $pull: { comments: commentID } });
+    console.log('Comment deleted successfully:', { commentID });
+    res.status(200).json({ message: 'Comment deleted successfully', commentID });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+};
+exports.updateCommentByPost = async (req, res) => {
+  try {
+    const { postID, profileID, commentID } = req.params;
+    console.log('Received delete request:', { postID, commentID, profileID });
+    const { content } = req.body;
+    if (!postID || !profileID || !commentID) {
+      return res.status(400).json({ message: 'postID, profileID, and commentID are required parameters in the request.' });
+    }
+    const existingComment = await Comment.findOneAndUpdate(
+      { _id: commentID, posteId: postID, profileId: profileID },
+      { content, creationDate: new Date() },
+      { new: true }
+    );
+    if (!existingComment) {
+      return res.status(404).json({ message: 'Comment not found or you are not authorized to update it.', commentID });
+    }
+    res.status(200).json({ message: 'Comment updated successfully', comment: existingComment });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };

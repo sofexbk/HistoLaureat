@@ -23,4 +23,5 @@ router.get('/pr/:id', authMiddleware.verifyToken, profileController.getProfileBy
 router.delete('/:laureatId/:stageId/deleteStage',authMiddleware.verifyToken,stage.deleteStage)
 router.get('/stats', authMiddleware.verifyToken, userController.getStats);
 
+
 module.exports = router;
