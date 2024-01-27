@@ -15,7 +15,7 @@ const profileSchema = new mongoose.Schema({
   profileSchema.pre('save', async function (next) {
     if (this.isNew) {
         try {
-            const user = await mongoose.maodel('User').findById(this.userId);
+            const user = await mongoose.model('User').findById(this.userId);
             this.role = user.role;
         } catch (error) {
             throw new Error('Erreur lors de la récupération du rôle utilisateur associé.');
