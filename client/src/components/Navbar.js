@@ -109,9 +109,9 @@ export const Navbar = () => {
                 </div>
                 {userRole === 'etudiant' && (
                 <div className='relative flex flex-row items-center justify-start gap-[8px]'>
-                <div className='text-[17px] font-light text-darkgray'>
+                {/* <div className='text-[17px] font-light text-darkgray'>
                 {userRole}
-                </div>
+                </div> */}
                  <div className='text-[17px] font-light text-darkgray'>
                 ({niveau},{filiere})
                 </div>
