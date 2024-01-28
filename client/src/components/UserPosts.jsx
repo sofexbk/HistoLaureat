@@ -2,9 +2,61 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import Swal from 'sweetalert2';
-import './UserStages.css'
 
 function UserPosts() {
+    const styles = `
+        .container-stages {
+            margin-top: 20px;
+        }
+
+        .stages-table {
+            width: 100%;
+            background-color: #fff;
+            border-collapse: collapse;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .stages-table th, .stages-table td {
+            padding: 16px;
+            text-align: left;
+        }
+
+        .stages-table th {
+            background-color: #f3f4f6;
+            color: #4b5563;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        .stages-table tbody tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+
+        .stages-table tbody tr:hover {
+            background-color: #edf2f7;
+        }
+
+        .delete-button {
+            margin: 0 4px;
+            padding: 8px 16px;
+            border-radius: 9999px;
+            outline: none;
+            cursor: pointer;
+            background-color: #ffffff;
+            border: 1px solid #d1d5db;
+            color: #374151;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+
+        .delete-button.active {
+            background-color: #1e40af;
+            color: #ffffff;
+            border-color: #1e40af;
+        }
+    `;
+
     const [posts, setPosts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
@@ -71,7 +123,8 @@ function UserPosts() {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container-stages mx-auto px-4 py-8">
+             <style>{styles}</style>
             <input
                 type="text"
                 placeholder="Search..."
@@ -80,13 +133,13 @@ function UserPosts() {
                 className="mb-4 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-200"
             />
             <div className="overflow-x-auto">
-                <table className="w-full bg-white shadow-md rounded-lg overflow-hidden">
+                <table className="stages-table">
                     <thead>
                         <tr className="bg-gray-200 text-gray-600 uppercase text-sm">
                             <th className="py-3 px-6 text-left">Title</th>
                             <th className="py-3 px-6 text-left">Content</th>
                             <th className="py-3 px-6 text-left">Creation Date</th>
-                            <th className="py-3 px-6 text-left">Actions</th> {/* Ajout de la colonne Actions */}
+                            <th className="py-3 px-6 text-left">Actions</th>
                         </tr>
                     </thead>
                     <tbody className="text-gray-600 text-sm">
@@ -98,7 +151,18 @@ function UserPosts() {
                                 <td className="py-4 px-6">
                                     <button
                                         onClick={() => handleDeletePost(post.profileId, post._id)}
-                                        className="px-3 py-1 rounded-full focus:outline-none bg-red-500 text-white"
+                                        className="delete-button"
+                                        style={{
+                                            margin: '0 4px',
+                                            padding: '8px 16px',
+                                            borderRadius: '9999px',
+                                            outline: 'none',
+                                            cursor: 'pointer',
+                                            backgroundColor: '#e53e3e', /* Couleur rouge */
+                                            border: '1px solid #d1d5db',
+                                            color: '#ffffff', /* Couleur texte blanc */
+                                            transition: 'background-color 0.3s, border-color 0.3s, color 0.3s'
+                                        }}
                                     >
                                         Delete
                                     </button>
