@@ -7,6 +7,10 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto'); 
 const fs = require('fs');
 const path = require('path');
+const Stage = require('../models/stageModel');
+const Poste = require('../models/posteModel');
+const Comment = require('../models/commentModel');
+
 const mongoose = require('mongoose');
 const Profile=require('../models/profileModel')
 router.use(express.urlencoded({ extended: true }));
@@ -147,6 +151,24 @@ const resetPassword = async (req, res) => {
     return res.status(500).json({ error: 'Failed to reset password' });
   }
 };
+const getStats = async (req, res) => {
+  try {
+    const usersCount = await User.countDocuments();
+    const stagesCount = await Stage.countDocuments();
+    const postesCount = await Poste.countDocuments();
+    const commentsCount = await Comment.countDocuments();
+
+    res.status(200).json({
+      usersCount,
+      stagesCount,
+      postesCount,
+      commentsCount
+    });
+  } catch (error) {
+    console.error('Error fetching stats:', error);
+    res.status(500).json({ error: 'Failed to fetch statistics' });
+  }
+};
 
 const getUserById = async (req, res) => {
   try {
@@ -190,5 +212,5 @@ const getUserEmail = async (req, res) => {
 };
 
 module.exports={
-    signupUser,loginUser,resetPassword,forgotPassword,createAdminUser,getUserById,getUserEmail
+    signupUser,loginUser,resetPassword,forgotPassword,createAdminUser,getUserById,getUserEmail,getStats
 }

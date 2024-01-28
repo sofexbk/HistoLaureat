@@ -21,6 +21,7 @@ import CreateStage from './components/CreateStage'
 import ResetPasswordForm from './components/resetPassword'
 import ForgotPassword from './components/ForgotPassword';
 import { useParams } from 'react-router-dom';
+import AdminPanel from './pages/AdminPanel.jsx'
 import NotFound from './pages/NotFound'
 import UpdateProfile from './components/UpdateProfile'
 
@@ -32,10 +33,11 @@ function App () {
   return (
     <Router>
       <div className='App'>
+        {(!user || (user && user.role!="admin")) && 
         <Navbar
-          //ajouter connextion if connected
-          connexion={hasProfile}
+          connexion={hasProfile}   
         />
+      }
         <Routes>
           <Route
             path='/login'
@@ -46,19 +48,37 @@ function App () {
             element={!user ? <Signup /> : <Navigate to='/home' />}
           />
           <Route path='/' element={<Home />} />
-          <Route path='/home' element={<Home />} />
-          <Route path='/create-profile' element={<CreateProfile />} />
-          <Route path='/landing' element={<Landing />} />
-          <Route path='/mon-profile' element={<MonProfile />} />
-          <Route path='/create-post' element={<CreatePost />} />
-          <Route path='/create-stage' element={<CreateStage />} />
-          <Route path='/new-post' element={<NewPost/>} />
-          <Route path='/new-stage' element={<NewStage />} />
-          <Route path='/update-profile' element={<UpdateProfile/>} />
-          <Route path="/reset-password/:token" element={<ResetPasswordForm />} />
-          <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path='/home' element={ (user && user.role==="admin") ? <AdminPanel/> : <Landing/>} />
+          {(user && user.role !== "admin") && (
+            <>
+              <Route path='/home' element={<Home />} />
+              <Route path='/create-profile' element={<CreateProfile />} />
+              <Route path='/landing' element={<Landing />} />
+              <Route path='/mon-profile' element={<MonProfile />} />
+              <Route path='/create-post' element={<CreatePost />} />
+              <Route
+                path='/create-stage'
+                element={
+                  user && user.role === "laureat" ? (
+                    <CreateStage />
+                  ) : (
+                    <Navigate to='/landing' />
+                  )
+                }
+              />             
+              <Route path='/new-post' element={<NewPost />} />
+              <Route path='/new-stage' element={<NewStage />} />
+              <Route path='/update-profile' element={<UpdateProfile />} />
+              <Route path="/reset-password/:token" element={<ResetPasswordForm />} />
+            </>
+          )}
+          
+          <Route
+            path='/admin-panel'
+            element={user && user.role === "admin" ? <AdminPanel /> : <Navigate to='/login' />}
+          />
           <Route path='*' element={<NotFound />} />
-
+          <Route path='/forgot-password' element={<ForgotPassword />} />
         </Routes>
       </div>
     </Router>

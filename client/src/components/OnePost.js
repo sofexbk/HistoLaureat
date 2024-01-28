@@ -156,7 +156,7 @@ export const OnePost = ({
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)',
-      width: '400px', // Adjusted width
+      width: '500px', // Adjusted width
       maxHeight: '80vh',
       overflow: 'auto',
       padding: '20px',
@@ -166,8 +166,8 @@ export const OnePost = ({
     },
   }}
 >
-  <div className="bg-blue-500 text-white p-4 rounded-t-lg">
-    <h2 className="text-lg font-semibold">Edit Post</h2>
+  <div className="bg-blue-500 text-white p-[3px] mt-2 rounded-lg">
+    <h2 className="text-lg font-semibold pl-4">Edit Post</h2>
   </div>
   <div className="p-4">
     <label className="block text-sm font-medium text-gray-700 mb-2">Title:</label>
