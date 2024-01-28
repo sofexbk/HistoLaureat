@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Logo from '../assets/Logo.png';
 import Control from "../assets/control.png";
 import Chart from '../assets/Chart.png';
@@ -26,7 +26,15 @@ const SideBar = ({ children }) => {
   const [open, setOpen] = useState(true);
   const Menus = [
     { title: "Dashboard", src: Chart },
-    { title: "Déconnexion", onClick: logout },
+    {
+      title: "Déconnexion",
+      onClick: logout,
+      icon: <LogoutIcon />,
+      style: {
+        color: '#e53e3e', 
+        fontWeight: 'bold', 
+      },
+    },
   ];
 
   return (
@@ -60,15 +68,18 @@ const SideBar = ({ children }) => {
           {Menus.map((Menu, index) => (
             <li
               key={index}
-              className={`flex text-white rounded-md ${open ? "py-2" : "py-0"} cursor-pointer mb-[500px] hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 ${
+              className={`flex text-white rounded-md ${open ? "py-2" : "py-0"} cursor-pointer  hover:bg-light-white text-gray-300 text-sm items-center gap-x-4 ${
                 Menu.gap ? "mt-9" : "mt-2"
               } ${
                 index === 0 && "bg-light-white"
               }`}
               onClick={Menu.onClick}
             >
-              {Menu.title === "Déconnexion" ? <LogoutIcon /> : <img src={Menu.src} alt={Menu.title} />}
-              <span className={`${!open ? "hidden" : ""} origin-left duration-200 `}>
+              {Menu.icon || <img src={Menu.src} alt={Menu.title} />}
+              <span
+                style={Menu.style}
+                className={`${!open ? "hidden" : ""} origin-left duration-200 `}
+              >
                 {Menu.title}
               </span>
             </li>
