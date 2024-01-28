@@ -69,7 +69,6 @@ function App () {
               <Route path='/new-post' element={<NewPost />} />
               <Route path='/new-stage' element={<NewStage />} />
               <Route path='/update-profile' element={<UpdateProfile />} />
-              <Route path="/reset-password/:token" element={<ResetPasswordForm />} />
             </>
           )}
           
@@ -79,6 +78,8 @@ function App () {
           />
           <Route path='*' element={<NotFound />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPasswordForm />} />
+
         </Routes>
       </div>
     </Router>
