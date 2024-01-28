@@ -19,10 +19,33 @@ export const OneComment = ({
   postID,
   resolvedProfileId,
   fetchAllData,
+  comment
 }) => {
+  console.log("dsds",comment)
   const [isEditing, setIsEditing] = useState(false);
   const [editedComment, setEditedComment] = useState(commentDescription);
   const [loading, setLoading] = useState(true); 
+  const [email,setEmail]=useState('')
+  const id=comment.profileId
+  useEffect(() => {
+    if (comment) {
+      const fetchUserEmail = async () => {
+        try {
+          const response = await axios.get(`/api/user/getemail/${id}`);
+          if (response.status === 200) {
+            setEmail(response.data.email);
+          } else {
+            console.error('Failed to fetch user email:', response.data);
+          }
+        } catch (error) {
+          console.error('Error fetching user email:', error);
+        }
+      };
+  
+      fetchUserEmail();
+    }
+  }, [email]);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,11 +97,14 @@ export const OneComment = ({
             />
             <div className='shrink-0 flex flex-col items-center justify-start gap-[6px]'>
               <b className='relative'>{commentOwner}</b>
+
+              <div className='relative text-smi font-light text-darkgray'>
+                {email}
+              </div>
               <div className='relative text-smi font-light text-darkgray'>
                 {commentTime}
               </div>
             </div>
-
             {loading ? (
           <div className="flex gap-4">
             <Skeleton height={36} width={100} />

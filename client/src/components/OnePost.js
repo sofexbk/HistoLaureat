@@ -24,7 +24,7 @@ export const OnePost = ({
   user,
   fetchAllData,
   loading,  
-  email = '',
+  userEmail,
   userId,
 })  => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,25 +32,28 @@ export const OnePost = ({
     title,
     description,
   });
-  const [userEmail, setUserEmail] = useState('');
+  const [userE,setUserE]=useState('')
+  
   useEffect(() => {
-    const fetchUserEmail = async () => {
-      try {
-        const response = await axios.get(`/api/profile/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        });
-        setUserEmail(response.data.profile.userEmail || '');
-      } catch (error) {
-        console.error('Error fetching user email:', error);
-      }
-    };
+    if (userEmail) {
+      console.log("ggg",userEmail)
 
-    if (userId) {
+      const fetchUserEmail = async () => {
+        try {
+          const response = await axios.get(`/api/user/getuserbyemail/${userEmail}`);
+          if (response.status === 200) {
+            setUserE(response.data.email);
+          } else {
+            console.error('Failed to fetch user email:', response.data);
+          }
+        } catch (error) {
+          console.error('Error fetching user email:', error);
+        }
+      };
+  
       fetchUserEmail();
     }
-  }, [userId, user.token]);
+  }, [isModalOpen, userEmail]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -59,7 +62,7 @@ export const OnePost = ({
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
+  
   const handleEditClick = () => {
     console.log('Modifier button clicked');
    openModal();
@@ -123,7 +126,7 @@ export const OnePost = ({
                 {profileName}
               </b>
               <div className='relative text-smi font-light text-darkgray'>
-                gfdff
+                {userE}
               </div>
               <div className='relative text-smi font-light text-darkgray'>
                 {profileStatus}
@@ -153,7 +156,7 @@ export const OnePost = ({
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)',
-      width: '400px', // Adjusted width
+      width: '500px', // Adjusted width
       maxHeight: '80vh',
       overflow: 'auto',
       padding: '20px',
@@ -163,8 +166,8 @@ export const OnePost = ({
     },
   }}
 >
-  <div className="bg-blue-500 text-white p-4 rounded-t-lg">
-    <h2 className="text-lg font-semibold">Edit Post</h2>
+  <div className="bg-blue-500 text-white p-[3px] mt-2 rounded-lg">
+    <h2 className="text-lg font-semibold pl-4">Edit Post</h2>
   </div>
   <div className="p-4">
     <label className="block text-sm font-medium text-gray-700 mb-2">Title:</label>
@@ -219,5 +222,4 @@ OnePost.propTypes = {
   profileData: PropTypes.object,
   comments: PropTypes.array,
   title: PropTypes.string,
-  email: PropTypes.string,
 };

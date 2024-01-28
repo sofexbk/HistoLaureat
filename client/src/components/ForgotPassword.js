@@ -5,22 +5,27 @@ function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-
+  const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
     try {
+      setMessage('')
       const response = await axios.post('api/user/forgot-password', { email });
-
+  
       if (response.status === 200) {
         setMessage('Reset email sent successfully. Check your email for instructions.');
+        setError('')
       } else {
         setError('Failed to send reset email. Please try again.');
       }
     } catch (error) {
       console.error('Error:', error);
       setError('Failed to send reset email. Please try again.');
+    }finally {
+      setIsLoading(false);
     }
+    
   };
 
   return (
@@ -54,7 +59,8 @@ function ForgotPassword() {
           type='submit'
           className='text-blue-500 border border-solid border-blue-500 bg-white px-4 py-2 rounded-md transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white hover:border-blue-700'
         >
-          Envoyer le lien de réinitialisation
+          {isLoading ? 'Envoi en cours...' : 'Envoyer le lien de réinitialisation'}
+          
         </button>
 
         {message && <div className='text-green-500 mt-4'>{message}</div>}

@@ -103,11 +103,10 @@ export const Landing =  () => {
         const profilePromises = postsResponse.data.postes.map((post) => fetchProfileData(post.profileId));
         const profilesData = await Promise.all(profilePromises);
         const combinedPosts = postsResponse.data.postes.map((post, index) => ({
-          ...post,  userEmail: profilesData[index].email,
+          ...post,  userEmail: profilesData[index].userId,
           profileData: profilesData[index],
         }));
         setPosts(combinedPosts);
-        console.log("dsfgg",profilesData)
         const stagesResponse = await axios.get('/api/stageLaureat/getAllStages', {
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -122,6 +121,7 @@ export const Landing =  () => {
     }
   };
 
+  console.log(postes)
 
   useEffect(() => {
     fetchAllData();
@@ -217,8 +217,8 @@ export const Landing =  () => {
                       loading={loading}
                       fetchAllData={fetchAllData}
                       resolvedProfileId={resolvedProfileId}
-                      email={postes[index].profileData?.email}
                       userId={userId}
+                      userEmail={postes[index].userEmail}
                     />
                   ))}
                 </>
