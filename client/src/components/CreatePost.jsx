@@ -6,6 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 import Swal from 'sweetalert2';  
 import * as Icons from '@heroicons/react/24/solid';
 import { Button } from '../components/ButtonComponent'
+import { SubmitButton } from './SubmitButton'
 
 export default function CreatePost() {
   const { user } = useAuthContext();
@@ -129,11 +130,15 @@ export default function CreatePost() {
           </div>
         </div>
       </div>
-      <button
-       type="submit"
-       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
-      >Créer poste
-       </button>
+
+
+       <SubmitButton 
+              property1='default'
+              className='submit'
+              buttonTxt='Créer Poste'
+              icon={Icons.PlusIcon}
+            />
+
       {error && <div className="text-red-500 mt-4">{error.error}</div>}
     </div>
     </form>

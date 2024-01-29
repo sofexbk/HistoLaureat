@@ -1,121 +1,137 @@
-import PropTypes from 'prop-types';
-import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
-import { useAuthContext } from '../hooks/useAuthContext';
-import Swal from 'sweetalert2';
+import PropTypes from 'prop-types'
+import React, { useState, useEffect, useCallback } from 'react'
+import axios from 'axios'
+import { jwtDecode } from 'jwt-decode'
+import { useAuthContext } from '../hooks/useAuthContext'
+import { SubmitButton } from './SubmitButton'
+import * as Icons from '@heroicons/react/24/solid'
+import Swal from 'sweetalert2'
 import Skeleton from 'react-loading-skeleton'
 
-export const OneCommentInput = ({ postID, commentOwner, className,fetchAllData }) => {
-  const [userData, setUserData] = useState(null);
-  const [userId, setUserId] = useState(null);
-  const { user } = useAuthContext();
-  const [commentContent, setCommentContent] = useState('');
-  const [comments, setComments] = useState([]);
-  const [lastFetchTime, setLastFetchTime] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [newComment, setNewComment] = useState(null);
+export const OneCommentInput = ({
+  postID,
+  commentOwner,
+  className,
+  fetchAllData
+}) => {
+  const [userData, setUserData] = useState(null)
+  const [userId, setUserId] = useState(null)
+  const { user } = useAuthContext()
+  const [commentContent, setCommentContent] = useState('')
+  const [comments, setComments] = useState([])
+  const [lastFetchTime, setLastFetchTime] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [newComment, setNewComment] = useState(null)
 
-
-  const createComment = async (posteId, profileId, commentContent, authToken) => {
+  const createComment = async (
+    posteId,
+    profileId,
+    commentContent,
+    authToken
+  ) => {
     try {
-      setIsLoading(true);
+      setIsLoading(true)
       const response = await axios.post(
         `/api/comment/createComment/${posteId}/${profileId}`,
         { content: commentContent },
         {
           headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
+            Authorization: `Bearer ${authToken}`
+          }
         }
-      );
-      setNewComment(response.data);
-      setCommentContent('');
-      setComments((prevComments) => {
-        const newComments = Array.isArray(prevComments) ? [...prevComments, response.data] : [response.data];
-        return newComments;
-      }); 
+      )
+      setNewComment(response.data)
+      setCommentContent('')
+      setComments(prevComments => {
+        const newComments = Array.isArray(prevComments)
+          ? [...prevComments, response.data]
+          : [response.data]
+        return newComments
+      })
       await Swal.fire({
         icon: 'success',
         title: 'Comment Created Successfully!',
         showConfirmButton: true,
         showCancelButton: false,
-        confirmButtonText: 'OK',
+        confirmButtonText: 'OK'
       }).then(() => {
         fetchAllData()
-      });
-      setLastFetchTime(Date.now());
+      })
+      setLastFetchTime(Date.now())
     } catch (error) {
-      console.error('Error creating comment:', error);
+      console.error('Error creating comment:', error)
       Swal.fire({
         icon: 'error',
         title: 'Error Creating Comment',
-        text: 'An error occurred while creating the comment.',
-      });
-    }finally {
-      setIsLoading(false); 
+        text: 'An error occurred while creating the comment.'
+      })
+    } finally {
+      setIsLoading(false)
     }
-  };
+  }
 
   const fetchComments = useCallback(async () => {
     try {
-      setIsLoading(true);
-      const response = await axios.get(`/api/comment/getCommentsByPoste/${postID}`, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      setComments(response.data);
+      setIsLoading(true)
+      const response = await axios.get(
+        `/api/comment/getCommentsByPoste/${postID}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`
+          }
+        }
+      )
+      setComments(response.data)
     } catch (error) {
-      console.error('Error fetching comments:', error);
+      console.error('Error fetching comments:', error)
     }
-  }, [postID, user.token]);
+  }, [postID, user.token])
 
   useEffect(() => {
     const getUserIdFromToken = () => {
       if (user && user.token) {
-        const id = jwtDecode(user.token)._id;
-        setUserId(id);
+        const id = jwtDecode(user.token)._id
+        setUserId(id)
       }
-    };
-    getUserIdFromToken();
-  }, [user]);
+    }
+    getUserIdFromToken()
+  }, [user])
 
   useEffect(() => {
-    fetchComments();
-  }, [postID, lastFetchTime, fetchComments]);
+    fetchComments()
+  }, [postID, lastFetchTime, fetchComments])
 
   useEffect(() => {
     const fetchProfileData = async () => {
       if (userId) {
         try {
           const response = await axios.get(`/api/profile/${userId}`, {
-            headers: { Authorization: `Bearer ${user.token}` },
-          });
-          setUserData(response.data.profile);
+            headers: { Authorization: `Bearer ${user.token}` }
+          })
+          setUserData(response.data.profile)
         } catch (error) {
-          console.error('Error fetching profile data:', error);
+          console.error('Error fetching profile data:', error)
         }
       }
-    };
+    }
 
-    fetchProfileData();
-  }, [userId, user.token]);
+    fetchProfileData()
+  }, [userId, user.token])
 
   const handleCommentSubmit = async () => {
     if (!commentContent.trim() || !userData || !userData._id) {
-      return;
+      return
     }
 
     try {
-      setIsLoading(true);
-      await createComment(postID, userData._id, commentContent, user.token);
+      setIsLoading(true)
+      await createComment(postID, userData._id, commentContent, user.token)
     } catch (error) {
-      console.error('Error submitting comment:', error);
+      console.error('Error submitting comment:', error)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   return (
     <div className='self-stretch rounded-3xs bg-white shadow-[13px_9px_28.1px_-13px_rgba(0,_0,_0,_0.05)] flex flex-col items-start justify-start py-[29px] px-10 gap-[25px] '>
@@ -139,33 +155,44 @@ export const OneCommentInput = ({ postID, commentOwner, className,fetchAllData }
       </div>
       <div className='self-stretch flex flex-col items-center justify-center  py-0 pr-0 pl-3.5 text-[17px] '>
         <b className='self-stretch relative '>
-          <input
-            type='text'
-            id='commentInput'
-            placeholder='Ajouter un commentaire'
-            className='block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-lg focus:ring-blue-500 focus:border-blue-500'
-            value={commentContent}
-            onChange={(e) => setCommentContent(e.target.value)}
-          />
-          <button
-            type='submit'
-            onClick={handleCommentSubmit}
-            className='mt-2 bg-transparent hover:bg-[#017cc5] text-[#017cc5] font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'
-          >
-            Valider
-          </button>
+          
+          <div class='sm:col-span-3'>
+            <div class='mt-2'>
+            <input
+  type='text'
+  id='commentInput'
+  name='first-name'
+  placeholder='Ajouter un commentaire'
+  autocomplete='given-name'
+  value={commentContent}
+  onChange={e => setCommentContent(e.target.value)}
+  class='block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-aliceblue-100 sm:text-sm sm:leading-6'
+></input>
+            </div>
+          </div>
+
+
+
+          <SubmitButton 
+              property1='default'
+              className='submit'
+              buttonTxt='Valider'
+              icon={Icons.ArrowRightIcon}
+              onclick={handleCommentSubmit}
+            />
+
         </b>
       </div>
       {/* Condition pour afficher le squelette seulement lors de la création du commentaire */}
       {isLoading && (
-        <div className="loading-skeleton">
+        <div className='loading-skeleton'>
           {/* Votre squelette de chargement ici */}
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
 OneCommentInput.propTypes = {
-  commentOwner: PropTypes.string,
-};
+  commentOwner: PropTypes.string
+}

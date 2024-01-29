@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { SubmitButton } from './SubmitButton'
+import * as Icons from '@heroicons/react/24/solid'
 import axios from 'axios';
 
 function ForgotPassword() {
@@ -55,15 +57,17 @@ function ForgotPassword() {
           </div>
         </div>
 
-        <button
-          type='submit'
-          className='text-blue-500 border border-solid border-blue-500 bg-white px-4 py-2 rounded-md transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white hover:border-blue-700'
-        >
-          {isLoading ? 'Envoi en cours...' : 'Envoyer le lien de réinitialisation'}
-          
-        </button>
 
-        {message && <div className='text-green-500 mt-4'>{message}</div>}
+
+        <SubmitButton 
+              property1='default'
+              className='submit'
+              buttonTxt='Envoyer le lien de réinitialisation'
+              icon={Icons.ArrowRightIcon}
+              disabled={isLoading}
+            />
+
+        {message && <div className='font-poppins text-green-500 mt-4'>{message}</div>}
         {error && <div className='text-red-500 mt-4'>{error}</div>}
       </form>
     </div>

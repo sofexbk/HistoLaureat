@@ -3,6 +3,8 @@ import Logo from '../assets/Logo.png';
 import Control from "../assets/control.png";
 import Chart from '../assets/Chart.png';
 import { useLogout } from "../hooks/useLogout";
+import { SubmitButton } from './SubmitButton'
+import * as Icons from '@heroicons/react/24/solid'
 
 const LogoutIcon = () => (
   <svg
