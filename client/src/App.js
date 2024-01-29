@@ -24,6 +24,7 @@ import { useParams } from 'react-router-dom';
 import AdminPanel from './pages/AdminPanel.jsx'
 import NotFound from './pages/NotFound'
 import UpdateProfile from './components/UpdateProfile'
+import Check from './pages/Check'
 
 function App () {
   const { user,hasProfile } = useAuthContext()
@@ -79,6 +80,7 @@ function App () {
           <Route path='*' element={<NotFound />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPasswordForm />} />
+          <Route path='/check' element={<Check/>}/>
 
         </Routes>
       </div>

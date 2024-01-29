@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { useStageContext } from '../context/StageContext';
-import Swal from 'sweetalert2';
+import { useStageContext } from '../context/StageContext'
+import Swal from 'sweetalert2'
 export const OneStage = ({
   titreStage = '',
   typeStage = '',
-  company = "",
+  company = '',
   description = '',
   startDate = '',
   endDate = '',
@@ -14,9 +14,8 @@ export const OneStage = ({
   fetchAllData,
   className
 }) => {
-  const { stages, dispatch,deleteStage } = useStageContext();
+  const { stages, dispatch, deleteStage } = useStageContext()
 
-  
   const handleDelete = async () => {
     const result = await Swal.fire({
       title: 'Are you sure?',
@@ -26,29 +25,45 @@ export const OneStage = ({
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'Cancel',
-    });
+      cancelButtonText: 'Cancel'
+    })
     if (result.isConfirmed) {
-      deleteStage(stage._id); 
+      deleteStage(stage._id)
       fetchAllData()
-      Swal.fire('Deleted!', 'Your stage has been deleted.', 'success');
+      Swal.fire('Deleted!', 'Your stage has been deleted.', 'success')
     }
-  };
+  }
 
   return (
     <>
       <div className='w-[338px] flex flex-col items-start justify-start text-center bg-transparent text-xl text-black shadow hover:shadow-xl transition-all duration-300 ease-in-out'>
         <div className='self-stretch rounded-xl bg-white shadow-[0px_4px_4px_rgba(0,_0,_0,_0.25)] flex flex-col items-center justify-start py-5 px-[25px] gap-[10px]'>
-          <div className='self-stretch flex flex-col items-center justify-start gap-[5px]'>
-          {isCurrentUserStage && (
+          <div className='self-stretch flex flex-col items-end justify-start gap-[5px]'>
+            {isCurrentUserStage && (
               <button
+                type='button'
                 onClick={handleDelete}
-                className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+                data-te-ripple-init
+                data-te-ripple-color='light'
+                class='cursor-pointer items-end h-full border-none flex rounded-lg bg-white p-2 uppercase leading-normal text-white drop-shadow-md transition duration-300 ease-in-out hover:bg-danger-600 '
               >
-                Supprimer
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke-width='1'
+                  stroke='currentColor'
+                  class='w-6 h-6 text-danger hover:text-white '
+                >
+                  <path
+                    stroke-linecap='round'
+                    strokeLinejoin='round'
+                    d='m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0'
+                  />
+                </svg>
               </button>
-            )}  
-          <b className='self-stretch relative'>{titreStage}</b>
+            )}
+            <b className='self-stretch relative'>{titreStage}</b>
             <i className='self-stretch relative text-smi font-medium text-gray text-left'>
               {typeStage}
             </i>

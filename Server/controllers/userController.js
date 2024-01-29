@@ -29,16 +29,47 @@ const loginUser=async (req,res)=>{
     res.status(400).json({error:error.message})
 }}
 
-const signupUser=async (req,res)=>{
-    const {email,password,role,confirmPassword}=req.body
-    console.log('Request Body:', req.body);
-    try{
-        const user = await User.signup(email, password, confirmPassword, role);
-        const token=createToken(user._id)
-        res.status(200).json({email,token,role})
-    }catch (error) {
-        res.status(400).json({error:error.message})
-}}
+const signupUser = async (req, res) => {
+  const { email, password, role, confirmPassword } = req.body;
+
+  try {
+    const user = await User.signup(email, password, confirmPassword, role);
+    let token;
+
+    if (role === 'etudiant' || role === 'laureat') {
+      token = createToken(user._id);
+      await sendProfileCreationEmail(email, token);
+    }
+
+    res.status(200).json({ email, role, token });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+const sendProfileCreationEmail = async (email,token) => {
+  const profileCreationLink = `http://localhost:3000/create-profile?token=${token}`;
+
+  const mailOptions = {
+    from: gmailEmail,
+    to: email,
+    subject: 'Profile Creation Confirmation',
+    html: `
+      <p>Click the button below to create your profile:</p>
+      <a href="${profileCreationLink}">
+        <button style="background-color: #4CAF50; /* Green */ border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer;">Create Profile</button>
+      </a>
+    `,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('Profile creation email sent successfully');
+  } catch (error) {
+    console.error('Failed to send profile creation email:', error);
+    console.log('Gmail response:', error.response);
+    throw error;
+  }
+};
 
 
 async function createAdminUser() {
@@ -153,7 +184,7 @@ const resetPassword = async (req, res) => {
 };
 const getStats = async (req, res) => {
   try {
-    const usersCount = await User.countDocuments();
+    const usersCount = await Profile.countDocuments();
     const stagesCount = await Stage.countDocuments();
     const postesCount = await Poste.countDocuments();
     const commentsCount = await Comment.countDocuments();

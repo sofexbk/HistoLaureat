@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { SubmitButton } from './SubmitButton'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from 'sweetalert2';
+import * as Icons from '@heroicons/react/24/solid'
+
 const CreateProfile = () => {
   const { user, dispatch } = useAuthContext();
   const [error, setError] = useState(null);
@@ -486,11 +489,14 @@ const CreateProfile = () => {
       </div>
       )}
       
-      <button
-          type="submit"
-          className="text-blue-500 border border-solid border-blue-500 bg-white px-4 py-2 rounded-md transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white hover:border-blue-700">
-             Connexion
-        </button>
+      <SubmitButton 
+              property1='default'
+              className='submit'
+              buttonTxt='Connexion'
+              icon={Icons.ArrowRightIcon}
+              onclick={handleSubmit}
+            />
+
     </form>
   )}
     </>

@@ -1,4 +1,5 @@
 import { Button } from '../components/ButtonComponent'
+import { SubmitButton } from '../components/SubmitButton'
 import Logo from '../assets/Logo.png'
 import * as Icons from '@heroicons/react/24/solid'
 import React, { useState } from 'react'
@@ -63,13 +64,16 @@ function Login () {
               Mot de passe oublié ?
             </Link>
           </div>
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="text-blue-500 border border-solid border-blue-500 bg-white px-4 py-2 rounded-md transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white hover:border-blue-700"
-          >
-            Connexion
-          </button>
+
+          <SubmitButton // ajouter post
+              property1='default'
+              className='submit'
+              buttonTxt='Connexion'
+              icon={Icons.ArrowRightIcon}
+              onclick={handleSubmit}
+              disabled={isLoading}
+            />
+
           {error && <div className="text-red-500 mt-4">{error}</div>}
         </form>
         
