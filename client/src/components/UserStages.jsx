@@ -1,75 +1,84 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
-import { AuthContext } from '../context/AuthContext';
-import Swal from 'sweetalert2';
+import React, { useState, useEffect, useContext } from 'react'
+import axios from 'axios'
+import { AuthContext } from '../context/AuthContext'
+import Swal from 'sweetalert2'
 
-function UserStages() {
-    const { user } = useContext(AuthContext);
-    const [stages, setStages] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
-    const [stagesPerPage] = useState(5);
+function UserStages () {
+  const { user } = useContext(AuthContext)
+  const [stages, setStages] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [stagesPerPage] = useState(5)
 
-    const fetchStages = async () => {
-        try {
-            const response = await axios.get('/api/admin/getAllStages', {
-                headers: {
-                    Authorization: `Bearer ${user.token}`
-                }
-            });
-            setStages(response.data.stages);
-        } catch (error) {
-            console.error('Error fetching stages:', error);
+  const fetchStages = async () => {
+    try {
+      const response = await axios.get('/api/admin/getAllStages', {
+        headers: {
+          Authorization: `Bearer ${user.token}`
         }
-    };
+      })
+      setStages(response.data.stages)
+    } catch (error) {
+      console.error('Error fetching stages:', error)
+    }
+  }
 
-    useEffect(() => {
-        fetchStages();
-    }, [user]);
+  useEffect(() => {
+    fetchStages()
+  }, [user])
 
-    const filteredStages = stages.filter(stage =>
-        Object.values(stage).some(value =>
-            typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredStages = stages.filter(stage =>
+    Object.values(stage).some(
+      value =>
+        typeof value === 'string' &&
+        value.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  )
+
+  const indexOfLastStage = currentPage * stagesPerPage
+  const indexOfFirstStage = indexOfLastStage - stagesPerPage
+  const currentStages = filteredStages.slice(
+    indexOfFirstStage,
+    indexOfLastStage
+  )
+
+  const totalPages = Math.ceil(filteredStages.length / stagesPerPage)
+
+  const paginate = pageNumber => setCurrentPage(pageNumber)
+
+  const handleDeleteStage = async (laureatId, stageId) => {
+    const confirmed = await Swal.fire({
+      title: 'Êtes-vous sûr?',
+      text: 'Cette action ne peut pas être annulée!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Oui, supprimer!'
+    })
+
+    if (confirmed.isConfirmed) {
+      try {
+        await axios.delete(`/api/admin/${laureatId}/${stageId}/deleteStage`, {
+          headers: {
+            Authorization: `Bearer ${user.token}`
+          }
+        })
+        // Refresh stages after deletion
+        fetchStages()
+        Swal.fire('Supprimé!', 'Le stage a été supprimé.', 'success')
+      } catch (error) {
+        console.error('Error deleting stage:', error)
+        Swal.fire(
+          'Erreur!',
+          "Une erreur s'est produite lors de la suppression du stage.",
+          'error'
         )
-    );
+      }
+    }
+  }
 
-    const indexOfLastStage = currentPage * stagesPerPage;
-    const indexOfFirstStage = indexOfLastStage - stagesPerPage;
-    const currentStages = filteredStages.slice(indexOfFirstStage, indexOfLastStage);
-
-    const totalPages = Math.ceil(filteredStages.length / stagesPerPage);
-
-    const paginate = pageNumber => setCurrentPage(pageNumber);
-
-    const handleDeleteStage = async (laureatId, stageId) => {
-        const confirmed = await Swal.fire({
-            title: 'Êtes-vous sûr?',
-            text: 'Cette action ne peut pas être annulée!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Oui, supprimer!'
-        });
-
-        if (confirmed.isConfirmed) {
-            try {
-                await axios.delete(`/api/admin/${laureatId}/${stageId}/deleteStage`, {
-                    headers: {
-                        Authorization: `Bearer ${user.token}`
-                    }
-                });
-                // Refresh stages after deletion
-                fetchStages();
-                Swal.fire('Supprimé!', 'Le stage a été supprimé.', 'success');
-            } catch (error) {
-                console.error('Error deleting stage:', error);
-                Swal.fire('Erreur!', 'Une erreur s\'est produite lors de la suppression du stage.', 'error');
-            }
-        }
-    };
-
-    const styles = `
+  const styles = `
         .container-stages {
             margin-top: 20px;
         }
@@ -92,7 +101,7 @@ function UserStages() {
             background-color: #f3f4f6;
             color: #4b5563;
             text-transform: uppercase;
-            font-size: 12px;
+            
         }
 
         .stages-table tbody tr:nth-child(even) {
@@ -120,95 +129,144 @@ function UserStages() {
             color: #ffffff;
             border-color: #1e40af;
         }
-    `;
+    `
 
-    return (
-        
-        <div className="container-stages mx-auto px-4 py-8">
-            
-            <style>{styles}</style>
-            <input
-                type="text"
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-                className="mb-4 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:ring-blue-200"
-            />
-            <div className="overflow-x-auto">
-                <table className="stages-table w-full bg-white shadow-md rounded-lg overflow-hidden">
-                    <thead>
-                        <tr className="bg-gray-200 text-gray-600 uppercase text-sm">
-                            <th className="py-3 px-6 text-left">Company</th>
-                            <th className="py-3 px-6 text-left">Type</th>
-                            <th className="py-3 px-6 text-left">Title</th>
-                            <th className="py-3 px-6 text-left">Description</th>
-                            <th className="py-3 px-6 text-left">Start Date</th>
-                            <th className="py-3 px-6 text-left">End Date</th>
-                            <th className="py-3 px-6 text-left">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody className="text-gray-600 text-sm">
-                        {currentStages.map(stage => (
-                            <tr key={stage._id} className="border-b border-gray-200 hover:bg-gray-100">
-                                <td className="py-4 px-6">{stage.company}</td>
-                                <td className="py-4 px-6">{stage.type}</td>
-                                <td className="py-4 px-6">{stage.title}</td>
-                                <td className="py-4 px-6">{stage.description}</td>
-                                <td className="py-4 px-6">{stage.startDate}</td>
-                                <td className="py-4 px-6">{stage.endDate}</td>
-                                <td className="py-4 px-6">
-                                    <button
-                                        onClick={() => handleDeleteStage(stage.laureatId, stage._id)}
-                                        className="delete-button px-3 py-1 rounded-full focus:outline-none bg-red-500 text-white"
-                                        style={{
-                                            margin: '0 4px',
-                                            padding: '8px 16px',
-                                            borderRadius: '9999px',
-                                            outline: 'none',
-                                            cursor: 'pointer',
-                                            backgroundColor: '#e53e3e', 
-                                            border: '1px solid #d1d5db',
-                                            color: '#ffffff',
-                                            transition: 'background-color 0.3s, border-color 0.3s, color 0.3s'
-                                        }}
-                                    >
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-            <div className="flex justify-center mt-4">
-                <button
-                    onClick={() => paginate(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="mx-1 px-3 py-1 rounded-full focus:outline-none bg-gray-300 text-gray-800"
-                >
-                    Previous
-                </button>
-                {Array.from({ length: totalPages }, (_, i) => (
-                    <button
-                        key={i}
-                        onClick={() => paginate(i + 1)}
-                        className={`mx-1 px-3 py-1 rounded-full focus:outline-none ${
-                            currentPage === i + 1 ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'
-                        }`}
-                    >
-                        {i + 1}
-                    </button>
-                ))}
-                <button
-                    onClick={() => paginate(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="mx-1 px-3 py-1 rounded-full focus:outline-none bg-gray-300 text-gray-800"
-                >
-                    Next
-                </button>
-            </div>
+  return (
+    <div className='container-stages mx-auto px-4 py-0'>
+      <style>{styles}</style>
+
+      <div class='mb-3'>
+        <div class='relative mb-4 flex w-1/2 flex-wrap items-stretch '>
+          <input
+            type='search'
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+            class='font-poppins relative m-0 -mr-0.5 block min-w-0 flex-auto rounded-l border  border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:focus:border-primary'
+            placeholder='Rechercher'
+            aria-label='Search'
+            aria-describedby='button-addon1'
+          />
+
+          <button
+            class='cursor-pointer relative z-[2] flex items-center border-none rounded-r bg-indigo-500 px-6 py-2.5 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-indigo-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg'
+            type='button'
+            id='button-addon1'
+            data-te-ripple-init
+            data-te-ripple-color='light'
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 20 20'
+              fill='currentColor'
+              class='h-5 w-5'
+            >
+              <path
+                fill-rule='evenodd'
+                d='M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z'
+                clip-rule='evenodd'
+              />
+            </svg>
+          </button>
         </div>
-    );
+      </div>
+      <div className='overflow-x-auto'>
+        <table className='stages-table w-full bg-white shadow-md rounded-lg overflow-hidden'>
+          <thead>
+            <tr className='bg-gray-200 text-gray-600 uppercase text-lg'>
+              <th className='py-3 px-6 text-left'>Company</th>
+              <th className='py-3 px-6 text-left'>Type</th>
+              <th className='py-3 px-6 text-left'>Title</th>
+              <th className='py-3 px-6 text-left'>Description</th>
+              <th className='py-3 px-6 text-left'>Start Date</th>
+              <th className='py-3 px-6 text-left'>End Date</th>
+              <th className='py-3 px-6 text-left'>Actions</th>
+            </tr>
+          </thead>
+          <tbody className='text-gray-600 text-lg'>
+            {currentStages.map(stage => (
+              <tr
+                key={stage._id}
+                className='border-b border-gray-200 hover:bg-gray-100'
+              >
+                <td className='py-4 px-6'>{stage.company}</td>
+                <td className='py-4 px-6'>{stage.type}</td>
+                <td className='py-4 px-6'>{stage.title}</td>
+                <td className='py-4 px-6'>{stage.description}</td>
+                <td className='py-4 px-6'>{stage.startDate}</td>
+                <td className='py-4 px-6'>{stage.endDate}</td>
+                <td className='py-4 px-6'>
+                  <button
+                    type='button'
+                    className='delete-button'
+                    onClick={() =>
+                      handleDeleteStage(stage.laureatId, stage._id)
+                    }
+                    data-te-ripple-init
+                    data-te-ripple-color='light'
+                    class='cursor-pointer items-end h-full border-none flex rounded-lg bg-white p-2 uppercase leading-normal text-white drop-shadow-md transition duration-300 ease-in-out hover:bg-danger-600 '
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke-width='1'
+                      stroke='currentColor'
+                      class='w-6 h-6 text-danger hover:text-white '
+                    >
+                      <path
+                        stroke-linecap='round'
+                        strokeLinejoin='round'
+                        d='m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0'
+                      />
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className='flex mt-4 justify-end'>
+  <a
+    onClick={() => paginate(currentPage - 1)}
+    disabled={currentPage === 1}
+    className={`relative block rounded bg-transparent px-3 py-1.5 text-md ${
+      currentPage === 1
+        ? 'pointer-events-none text-neutral-500'
+        : 'text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white'
+    }`}
+  >
+    Previous
+  </a>
+  {Array.from({ length: totalPages }, (_, i) => (
+    <a
+      key={i}
+      onClick={() => paginate(i + 1)}
+      className={`relative block rounded bg-transparent px-3 py-1.5 text-lg ${
+        currentPage === i + 1
+          ? 'bg-primary-100 text-primary-700 font-medium transition-all duration-300'
+          : 'text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white'
+      }`}
+    >
+      {i + 1}
+      {currentPage === i + 1 && (
+        <span className="absolute -m-px h-px w-px overflow-hidden whitespace-nowrap border-0 p-0 [clip:rect(0,0,0,0)]">(current)</span>
+      )}
+    </a>
+  ))}
+  <a
+    onClick={() => paginate(currentPage + 1)}
+    disabled={currentPage === totalPages}
+    className={`relative block rounded bg-transparent px-3 py-1.5 text-md ${
+      currentPage === totalPages
+        ? 'pointer-events-none text-neutral-500'
+        : 'text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white'
+    }`}
+  >
+    Next
+  </a> </div>
+    </div>
+  )
 }
 
-export default UserStages;
+export default UserStages

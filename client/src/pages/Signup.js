@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useSignup } from '../hooks/useSignup'
+import { SubmitButton } from '../components/SubmitButton'
 import * as Icons from '@heroicons/react/24/solid'
 import { useNavigate } from 'react-router-dom'
 import Logo from '../assets/Logo1.png'
@@ -29,12 +30,18 @@ function Signup () {
     }
     try {
       await handleSignup(email, password, confirmPassword, role);
-      Swal.fire({
+     
+      /*Swal.fire({
         icon: 'success',
         title: 'Signup Successful',
         text: 'You have successfully signed up!',
-      });
-      Navigate('/create-profile');
+      });*/
+      //console.log('fdf',role)
+      if (role === 'etudiant') {
+        Navigate('/check');
+      } else {
+        Navigate('/create-profile');
+      }
     } catch (err) {
       setError(err.message);
       Swal.fire({
@@ -227,13 +234,14 @@ function Signup () {
                 </i>
               </div>
             </div>
-            <button
-              type="submit"
+            <SubmitButton 
+              property1='default'
+              className='submit'
+              buttonTxt='Valider'
+              icon={Icons.ArrowRightIcon}
+              onclick={handleSubmit}
               disabled={isLoading}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md"
-            >
-              Valider
-            </button>
+            />
             {error && (
           <div className="text-red-500 mt-4">
            {error ? error : "An error occurred"}

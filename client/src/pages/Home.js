@@ -72,7 +72,14 @@ function Home () {
               </p>
             </div>
           </div>
-          <div className='self-stretch flex flex-row flex-wrap items-start justify-start gap-[30px] text-5xl text-black'>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Home
+/*          <div className='self-stretch flex flex-row flex-wrap items-start justify-start gap-[30px] text-5xl text-black'>
             <img
               className='relative w-[55px] h-[55px] object-cover'
               alt=''
@@ -86,11 +93,4 @@ function Home () {
                 Visualisation géographique de la localisation des lauréats,
               </p>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-export default Home
+          </div>*/

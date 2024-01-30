@@ -62,7 +62,6 @@ export const Landing =  () => {
     Authorization: `Bearer ${user.token}`,
       },
       });  
-      console.log(response.data)    
     return response.data;
     } catch (error) {
       console.error('Error fetching profile data:', error);
@@ -121,7 +120,6 @@ export const Landing =  () => {
     }
   };
 
-  console.log(postes)
 
   useEffect(() => {
     fetchAllData();
@@ -186,12 +184,11 @@ export const Landing =  () => {
   
   return (
     <>
-    <div className='bg-aliceblue-100 min-h-screen min-w-screen flex flex-row flex-wrap items-start justify-between py-[10px] px-0 box-border text-left text-21xl text-steelblue-200 font-poppins'>
+    <div className='bg-aliceblue-100  min-h-screen min-w-screen flex flex-row flex-wrap items-start justify-between py-[10px] px-0 box-border text-left text-21xl text-steelblue-200 font-poppins'>
         <div className='flex-1 shrink-0 flex flex-row flex-wrap items-start justify-center gap-[10px] '>
           <div className='flex-1 flex flex-col items-start justify-start py-0 px-10 box-border gap-[20px] min-w-[600px] max-w-[1200px]'>
             <div className='self-stretch relative font-extrabold '>Postes</div>
             <div className='self-stretch flex flex-col items-start justify-start text-xl text-black gap-[20px] '>
-              {console.log("hh",postes)}
             {loading ? (
                 <div>
                   {Array.from({ length: 10 }).map((_, index) => (
