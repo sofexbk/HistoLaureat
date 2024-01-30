@@ -30,11 +30,12 @@ function Signup () {
     }
     try {
       await handleSignup(email, password, confirmPassword, role);
-      Swal.fire({
+     
+      /*Swal.fire({
         icon: 'success',
         title: 'Signup Successful',
         text: 'You have successfully signed up!',
-      });
+      });*/
       //console.log('fdf',role)
       if (role === 'etudiant') {
         Navigate('/check');

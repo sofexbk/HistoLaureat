@@ -53,7 +53,6 @@ export const Navbar = () => {
     fetchUserProfile();
   }, [user?.token]);
   
-  console.log("1",niveau)
 
 
   return (
