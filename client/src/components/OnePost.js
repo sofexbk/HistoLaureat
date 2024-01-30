@@ -109,11 +109,11 @@ export const OnePost = ({
               alt='test'
               src={profilePic}
             />
-            
+
             <div className='flex flex-row items-center justify-between w-full'>
-              <div className='flex flex-col' >
+              <div className='flex flex-col'>
                 <b className='relative'>{profileName}</b>
-                <div className='flex flex-row gap-6 ' > 
+                <div className='flex flex-row gap-6 '>
                   <div className='relative text-smi font-light text-darkgray'>
                     {userE}
                   </div>
@@ -206,25 +206,27 @@ export const OnePost = ({
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            width: '500px', // Adjusted width
-            maxHeight: '80vh',
+            width: '900px', 
+            minHeight: '480px',
             overflow: 'auto',
             padding: '20px',
             boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // Adjusted shadow
             borderRadius: '10px', // Slightly increased border radius
-            backgroundColor: '#fff' // Added background color
+            backgroundColor: '#fff' ,// Added background color
+            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
+            
           }
         }}
       >
-        <div className='font-poppins bg-blue-500 text-white p-[3px] mt-2 rounded-lg'>
-          <h2 className='text-lg font-semibold pl-4'>Edit Post</h2>
+        <div className='font-poppins bg-blue-500 shadow-4 text-white p-[3px] m-2 mb-4 rounded-lg'>
+          <h2 className='text-3xl font-bold pl-4'>Edit Post</h2>
         </div>
         <div className='p-4'>
-          <label className='block text-sm font-medium text-gray-700 mb-2'>
-            Title:
+          <label className='font-poppins font-semibold block text-xl  text-gray-700 mb-2'>
+            Title :
           </label>
           <input
-            className='w-full border rounded-md p-2 mb-4 focus:outline-none focus:border-blue-500' // Added focus styles
+            className='w-full font-poppins border rounded-md p-2 mb-4 text-lg focus:outline-none focus:border-blue-500' // Added focus styles
             type='text'
             value={editedPostData.title}
             onChange={e =>
@@ -235,11 +237,11 @@ export const OnePost = ({
             }
           />
 
-          <label className='block text-sm font-medium text-gray-700 mb-2'>
-            Description:
+          <label className='font-poppins  font-semibold block text-xl text-gray-700 mb-2'>
+            Description  :
           </label>
           <textarea
-            className='w-full border rounded-md p-2 mb-4 h-32 focus:outline-none focus:border-blue-500' // Added focus styles
+            className='font-poppins w-full border rounded-md p-2 mb-4 h-32 text-lg focus:outline-none focus:border-blue-500' // Added focus styles
             value={editedPostData.description}
             onChange={e =>
               setEditedPostData(prevData => ({
@@ -248,21 +250,56 @@ export const OnePost = ({
               }))
             }
           />
-
-          <div className='flex justify-end'>
-            <button
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 focus:outline-none' // Added focus styles
-              onClick={handleSaveChanges}
-            >
-              Save Changes
-            </button>
-            <button
-              className='bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none' // Added focus styles
-              onClick={closeModal}
-            >
-              Cancel
-            </button>
-          </div>
+          <div className='flex justify-end space-x-4'>
+              <button
+                type='button'
+                onClick={closeModal}
+                data-te-ripple-init
+                data-te-ripple-color='light'
+                class='cursor-pointer flex items-center h-full border-none rounded-lg bg-danger-600 p-2  leading-normal text-white drop-shadow-md transition duration-300 ease-in-out hover:bg-danger-700'
+              >
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke-width='2'
+                  stroke='currentColor'
+                  class='w-6 h-6 text-white transition duration-300 ease-in-out mr-2'
+                >
+                  <path
+                    stroke-linecap='round'
+                    strokeLinejoin='round'
+                    d='M6 18 18 6M6 6l12 12'
+                  />
+                </svg>
+                <span className='mr-3 font-poppins font-medium '>Annuler</span>
+              </button>
+              <button
+                type='button'
+                onClick={handleSaveChanges}
+                data-te-ripple-init
+                data-te-ripple-color='light'
+                class='cursor-pointer flex items-center h-full border-none rounded-lg bg-emerald-500 p-2  leading-normal text-white drop-shadow-md transition duration-300 ease-in-out hover:bg-emerald-600'
+              >
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke-width='2'
+                  stroke='currentColor'
+                  class='w-6 h-6 text-white transition duration-300 ease-in-out mr-2'
+                >
+                  <path
+                    stroke-linecap='round'
+                    strokeLinejoin='round'
+                    d='m4.5 12.75 6 6 9-13.5'
+                  />
+                </svg>
+                <span className='mr-3 font-poppins font-medium'>
+                  Enregistrer
+                </span>
+              </button>
+            </div>
         </div>
       </Modal>
     </>

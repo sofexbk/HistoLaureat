@@ -115,7 +115,7 @@ export const AccordionBox = ({ postID, commentaires,fetchAllData,resolvedProfile
         onClick={() => setAccordionOpen(!accordionOpen)}
         className='border-none relative w-full flex flex-col items-start bg-[#DBF2FF] justify-start text-left text-[20px] text-steelblue font-poppins hover:cursor-pointer hover:shadow-lg transition-all duration-300 ease-in-out'
       >
-        <div className='self-stretch rounded-t-none bg-[#DBF2FF] rounded-b-xl bg-aliceblue flex flex-row items-center justify-start py-5 pr-0 pl-[50px]'>
+        <div className='self-stretch rounded-t-none  bg-[#DBF2FF] rounded-b-xl bg-aliceblue flex flex-row items-center justify-start py-5 pr-0 pl-[50px]'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'

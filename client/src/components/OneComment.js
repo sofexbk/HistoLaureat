@@ -121,7 +121,7 @@ export const OneComment = ({
                     onClick={handleEditClick}
                     data-te-ripple-init
                     data-te-ripple-color='light'
-                    class=' items-center h-full border-none flex rounded-lg bg-white p-2 uppercase leading-normal text-white drop-shadow-md transition duration-300 ease-in-out hover:bg-success-600 '
+                    class='cursor-pointer items-center h-full border-none flex rounded-lg bg-white p-2 uppercase leading-normal text-white drop-shadow-md transition duration-300 ease-in-out hover:bg-success-600 '
                   >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
@@ -144,7 +144,7 @@ export const OneComment = ({
                     onClick={onDeleteClick}
                     data-te-ripple-init
                     data-te-ripple-color='light'
-                    class=' items-center h-full border-none flex rounded-lg bg-white p-2 uppercase leading-normal text-white drop-shadow-md transition duration-300 ease-in-out hover:bg-danger-600 '
+                    class=' cursor-pointer items-center h-full border-none flex rounded-lg bg-white p-2 uppercase leading-normal text-white drop-shadow-md transition duration-300 ease-in-out hover:bg-danger-600 '
                   >
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
@@ -176,30 +176,6 @@ export const OneComment = ({
               onChange={handleEditChange}
             />
             <div className='flex space-x-4'>
-
-
-              <button
-                type='button'
-                onClick={handleSaveEdit}
-                data-te-ripple-init
-                data-te-ripple-color='light'
-                class='cursor-pointer flex items-center h-full border-none rounded-lg bg-[#017cc5] p-2  leading-normal text-white drop-shadow-md transition duration-300 ease-in-out hover:bg-[#017dc5dd]'
-              >
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  stroke-width='1'
-                  stroke='currentColor'
-                  class='w-6 h-6 text-white transition duration-300 ease-in-out mr-2'
-                >
-                 <path stroke-linecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-
-                  
-                </svg>
-                <span className='mr-3'>Enregistrer</span>
-              </button>
-
               <button
                 type='button'
                 onClick={handleCancelEdit}
@@ -211,7 +187,7 @@ export const OneComment = ({
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
                   viewBox='0 0 24 24'
-                  stroke-width='1'
+                  stroke-width='2'
                   stroke='currentColor'
                   class='w-6 h-6 text-white transition duration-300 ease-in-out mr-2'
                 >
@@ -221,7 +197,32 @@ export const OneComment = ({
                     d='M6 18 18 6M6 6l12 12'
                   />
                 </svg>
-                <span className='mr-1 font-medium '>Annuler</span>
+                <span className='mr-3 font-poppins font-medium '>Annuler</span>
+              </button>
+              <button
+                type='button'
+                onClick={handleSaveEdit}
+                data-te-ripple-init
+                data-te-ripple-color='light'
+                class='cursor-pointer flex items-center h-full border-none rounded-lg bg-emerald-500 p-2  leading-normal text-white drop-shadow-md transition duration-300 ease-in-out hover:bg-emerald-600'
+              >
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke-width='2'
+                  stroke='currentColor'
+                  class='w-6 h-6 text-white transition duration-300 ease-in-out mr-2'
+                >
+                  <path
+                    stroke-linecap='round'
+                    strokeLinejoin='round'
+                    d='m4.5 12.75 6 6 9-13.5'
+                  />
+                </svg>
+                <span className='mr-3 font-poppins font-medium'>
+                  Enregistrer
+                </span>
               </button>
             </div>
           </>
