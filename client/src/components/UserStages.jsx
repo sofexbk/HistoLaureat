@@ -101,7 +101,7 @@ function UserStages () {
             background-color: #f3f4f6;
             color: #4b5563;
             text-transform: uppercase;
-            font-size: 12px;
+            
         }
 
         .stages-table tbody tr:nth-child(even) {
@@ -172,7 +172,7 @@ function UserStages () {
       <div className='overflow-x-auto'>
         <table className='stages-table w-full bg-white shadow-md rounded-lg overflow-hidden'>
           <thead>
-            <tr className='bg-gray-200 text-gray-600 uppercase text-sm'>
+            <tr className='bg-gray-200 text-gray-600 uppercase text-lg'>
               <th className='py-3 px-6 text-left'>Company</th>
               <th className='py-3 px-6 text-left'>Type</th>
               <th className='py-3 px-6 text-left'>Title</th>
@@ -182,7 +182,7 @@ function UserStages () {
               <th className='py-3 px-6 text-left'>Actions</th>
             </tr>
           </thead>
-          <tbody className='text-gray-600 text-sm'>
+          <tbody className='text-gray-600 text-lg'>
             {currentStages.map(stage => (
               <tr
                 key={stage._id}

@@ -27,7 +27,6 @@ function UserProfiles () {
             background-color: #f3f4f6;
             color: #4b5563;
             text-transform: uppercase;
-            font-size: 12px;
         }
 
         .stages-table tbody tr:nth-child(even) {
@@ -171,8 +170,8 @@ function UserProfiles () {
       </div>
       <div className='overflow-x-auto'>
         <table className='stages-table'>
-          <thead>
-            <tr className='bg-gray-200 text-gray-600 uppercase text-sm'>
+          <thead className=''>
+            <tr className='bg-gray-200 text-gray-600 uppercase text-lg '>
               <th className='py-3 px-6 text-left'>First Name</th>
               <th className='py-3 px-6 text-left'>Last Name</th>
               <th className='py-3 px-6 text-left'>Filiere</th>
@@ -181,7 +180,7 @@ function UserProfiles () {
               <th className='py-3 px-6 text-left'>Actions</th>
             </tr>
           </thead>
-          <tbody className='text-gray-600 text-sm'>
+          <tbody className='text-gray-400 text-lg'>
             {currentProfiles.map(profile => (
               <tr
                 key={profile._id}

@@ -27,7 +27,6 @@ function UserPosts () {
             background-color: #f3f4f6;
             color: #4b5563;
             text-transform: uppercase;
-            font-size: 12px;
         }
 
         .stages-table tbody tr:nth-child(even) {
@@ -169,14 +168,14 @@ function UserPosts () {
       <div className='overflow-x-auto'>
         <table className='stages-table'>
           <thead>
-            <tr className='bg-gray-200 text-gray-600 uppercase text-sm'>
+            <tr className='bg-gray-200 text-gray-600 uppercase text-lg'>
               <th className='py-3 px-6 text-left'>Title</th>
               <th className='py-3 px-6 text-left'>Content</th>
               <th className='py-3 px-6 text-left'>Creation Date</th>
               <th className='py-3 px-6 text-left'>Actions</th>
             </tr>
           </thead>
-          <tbody className='text-gray-600 text-sm'>
+          <tbody className='text-gray-600 text-lg'>
             {currentPosts.map(post => (
               <tr
                 key={post._id}
