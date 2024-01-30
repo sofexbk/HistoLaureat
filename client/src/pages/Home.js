@@ -93,4 +93,4 @@ export default Home
                 Visualisation géographique de la localisation des lauréats,
               </p>
             </div>
-          </div>*/p
+          </div>*/
