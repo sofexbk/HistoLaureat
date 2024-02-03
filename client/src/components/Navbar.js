@@ -57,15 +57,13 @@ export const Navbar = () => {
 
   return (
     <>
-      <div className='flex flex-row flex-wrap items-center justify-between py-4 px-[60px] box-border text-left text-[20px] text-black font-poppins'>
-        
-        
+      <div className='w-full flex flex-row items-center sm:justify-between justify-between  py-4 px-[60px] box-border text-left text-[20px] text-black font-poppins '>
         {user && hasProfile  ? (
           <>
           
-          <div className='flex flex-row  relative gap-10 '> 
+          <div className='flex flex-row relative gap-10 md:flex-row md:justify-between sm:flex-col sm:gap-8 '> 
                     <img src={Logo} alt='Logo' className='object-contain w-24 ' />
-                    <div className="flex flex-row gap-10 ">
+                    <div className="flex flex-row gap-10 sm:flex sm:flex-col sm:items-start sm:space-x-0 sm:gap-4 ">
                       <ButtonIcon //home
                         property1='default'
                         className='submit'
@@ -140,9 +138,9 @@ export const Navbar = () => {
           // if not connected
           <>
 
-            <div className='flex items-center h-full w-full justify-between'>
-                <img src={Logo} alt='Logo' className='object-contain w-24' />
-                <div className='space-x-10'>
+            <div className='flex items-center h-full w-full justify-between md:flex-row sm:flex-col sm:gap-4   '>
+                <img src={Logo} alt='Logo' className='object-contain w-24 sm:flex sm:flex-col md:flex md:flex-row ' />
+                <div className='space-x-10 sm:flex sm:flex-col sm:items-center sm:space-x-0 sm:gap-4'>
                   <Button // connexion
                     property1='default'
                     className='submit'

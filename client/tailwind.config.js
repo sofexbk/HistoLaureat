@@ -2,6 +2,12 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    screens: {
+      'sm': {'max': '639px'},
+      'lg': {'min': '930px'},
+      'lgg': {'max': '930px'},
+      
+    },
     extend: {
       colors: {
         "dark-purple": "#081A51",
