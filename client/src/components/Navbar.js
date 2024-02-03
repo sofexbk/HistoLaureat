@@ -57,35 +57,40 @@ export const Navbar = () => {
 
   return (
     <>
-      <div className=' relative w-full flex bg-aliceblue-100 flex-row  items-center justify-between py-[12px] px-[60px] box-border gap-[40px] text-left text-[20px] text-black font-poppins'>
+      <div className='flex flex-row flex-wrap items-center justify-between py-4 px-[60px] box-border text-left text-[20px] text-black font-poppins'>
         
-        <img src={Logo} alt='Logo' className='object-contain h-28 w-24' />
+        
         {user && hasProfile  ? (
           <>
-          <div className="flex flex-row  w-screen gap-10">
-            <ButtonIcon //home
-              property1='default'
-              className='submit'
-              icon={Icons.HomeIcon}
-              src='/landing'
-            />
-            <Button // ajouter post
-              property1='default'
-              className='submit'
-              buttonTxt='Post'
-              icon={Icons.PlusIcon}
-              src='/create-post'
-            />
-           {userRole === 'laureat' && (
-              <Button // proposer stage
-                property1='default'
-                className='submit'
-                buttonTxt='Stage'
-                icon={Icons.PlusIcon}
-                src='/create-stage'
-              />
-            )}
+          
+          <div className='flex flex-row  relative gap-10 '> 
+                    <img src={Logo} alt='Logo' className='object-contain w-24 ' />
+                    <div className="flex flex-row gap-10 ">
+                      <ButtonIcon //home
+                        property1='default'
+                        className='submit'
+                        icon={Icons.HomeIcon}
+                        src='/landing'
+                      />
+                      <Button // ajouter post
+                        property1='default'
+                        className='submit'
+                        buttonTxt='Post'
+                        icon={Icons.PlusIcon}
+                        src='/create-post'
+                      />
+                    {userRole === 'laureat' && (
+                        <Button // proposer stage
+                          property1='default'
+                          className='submit'
+                          buttonTxt='Stage'
+                          icon={Icons.PlusIcon}
+                          src='/create-stage'
+                        />
+                      )}
+                      </div>
             </div>
+          
             <div className="">
             <div className=' shrink-0 flex flex-row items-center justify-center gap-[11px]'>
               <div className='relative w-[75.05px] h-[65px]'>
@@ -134,21 +139,25 @@ export const Navbar = () => {
         ) : (
           // if not connected
           <>
-            <div className='space-x-10'>
-              <Button // connexion
-                property1='default'
-                className='submit'
-                buttonTxt='Connexion'
-                icon={Icons.ChevronDoubleRightIcon}
-                src='/login'
-              />
-              <Button // inscription
-                property1='default'
-                className='submit'
-                buttonTxt='Inscription'
-                icon={Icons.UserPlusIcon}
-                src='/signup'
-              />
+
+            <div className='flex items-center h-full w-full justify-between'>
+                <img src={Logo} alt='Logo' className='object-contain w-24' />
+                <div className='space-x-10'>
+                  <Button // connexion
+                    property1='default'
+                    className='submit'
+                    buttonTxt='Connexion'
+                    icon={Icons.ChevronDoubleRightIcon}
+                    src='/login'
+                  />
+                  <Button // inscription
+                    property1='default'
+                    className='submit'
+                    buttonTxt='Inscription'
+                    icon={Icons.UserPlusIcon}
+                    src='/signup'
+                  />
+                  </div>
             </div>
           </>
         )}
