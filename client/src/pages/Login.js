@@ -18,8 +18,8 @@ function Login () {
 
   return (
     <>
-      <div className='bg-aliceblue-100 relative h-[1078px] flex flex-col items-center justify-center bg-gray-100 '>
-        <form onSubmit={handleSubmit} className='bg-white p-16 h-auto rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out w-[650px] '>
+      <div className='bg-aliceblue-100 relative  flex flex-col items-center justify-center bg-gray-100 h-screen '>
+        <form onSubmit={handleSubmit} className='bg-white p-16 h-auto rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out w-[650px]'>
           <img src={Logo} alt='Logo' className='object-contain' />
 
           <h3 className='text-2xl font-bold mb-10 text-[#017CC6] font-poppins '>

@@ -54,7 +54,7 @@ function Signup () {
 
   return (
     <>
-    <form onSubmit={handleSubmit} className='bg-aliceblue-100 relative  bg-aliceblue w-full h-[1117px] overflow-hidden flex flex-col items-center justify-center  px-[20%] box-border min-w-[1080px] text-center text-[32px] text-white font-poppins'>
+    <form onSubmit={handleSubmit} className='bg-aliceblue-100 relative bg-aliceblue w-full h-fit overflow-hidden flex flex-col items-center justify-center  px-[20%] box-border min-w-[1080px] text-center text-[32px] text-white font-poppins'>
       <div className='self-stretch flex flex-col items-center justify-center'>
         <div className='self-stretch rounded-t-3xl rounded-b-none [background:linear-gradient(91.7deg,_#017cc5,_#8248f5)] shadow-[4px_4px_27.8px_rgba(102,_102,_102,_0.47)] flex flex-row flex-wrap items-center justify-center py-[9px] px-0 gap-[46px]'>
           <img
