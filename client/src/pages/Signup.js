@@ -37,11 +37,7 @@ function Signup () {
         text: 'You have successfully signed up!',
       });*/
       //console.log('fdf',role)
-      if (role === 'etudiant') {
-        Navigate('/check');
-      } else {
         Navigate('/create-profile');
-      }
     } catch (err) {
       setError(err.message);
       Swal.fire({

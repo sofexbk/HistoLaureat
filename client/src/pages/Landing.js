@@ -72,7 +72,7 @@ export const Landing =  () => {
     const profileId = await getProfileId();
     return profileId;
   };
-  
+
   const fetchAllData = async () => {
     try {
       setLoading(true);
@@ -197,6 +197,7 @@ export const Landing =  () => {
                 </div>
               ) : (
                 <>
+                {console.log("ddf",postes)}
                   {commentaires.map((commentaire, index) => (
                     <OnePost
                       key={postes[index]._id}
@@ -216,6 +217,7 @@ export const Landing =  () => {
                       resolvedProfileId={resolvedProfileId}
                       userId={userId}
                       userEmail={postes[index].userEmail}
+                      profileID={postes[index]?.profileId}
                     />
                   ))}
                 </>
