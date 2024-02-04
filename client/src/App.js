@@ -25,7 +25,8 @@ import AdminPanel from './pages/AdminPanel.jsx'
 import NotFound from './pages/NotFound'
 import UpdateProfile from './components/UpdateProfile'
 import Check from './pages/Check'
-
+import MyPosts from './pages/MyPosts.js'
+import OthersProfiles from './pages/OthersProfiles.js'
 function App () {
   const { user,hasProfile } = useAuthContext()
   const { token } = useParams();
@@ -38,7 +39,7 @@ function App () {
         <Navbar
           connexion={hasProfile}   
         />
-      }
+      }                                                    
         <Routes>
           <Route
             path='/login'
@@ -57,6 +58,8 @@ function App () {
               <Route path='/landing' element={<Landing />} />
               <Route path='/mon-profile' element={<MonProfile />} />
               <Route path='/create-post' element={<CreatePost />} />
+              <Route path='/my-posts' element={<MyPosts/>}/>
+              <Route path='/othersprofiles/:id' element={<OthersProfiles/>} />
               <Route
                 path='/create-stage'
                 element={

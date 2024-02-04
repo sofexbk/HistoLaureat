@@ -40,12 +40,13 @@ const signupUser = async (req, res) => {
       token = createToken(user._id);
       await sendProfileCreationEmail(email, token);
     }
-
     res.status(200).json({ email, role, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
+
 const sendProfileCreationEmail = async (email,token) => {
   const profileCreationLink = `http://localhost:3000/create-profile?token=${token}`;
 
@@ -235,13 +236,40 @@ const getUserEmail = async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    return res.status(200).json({ email: user.email });
+    const { email, role } = user; 
+    return res.status(200).json({ email, role });
   } catch (error) {
     console.error('Error fetching user email by profileId:', error);
     return res.status(500).json({ error: 'Internal server error' });
   }
 };
 
+const getLaureats = async (req, res) => {
+  try {
+    const laureats = await User.find({ role: 'laureat' });
+
+    const laureatProfiles = [];
+    for (const laureat of laureats) {
+      const profile = await Profile.findOne({ userId: laureat._id });
+      if (profile) {
+        const { _id, userId, firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee, promotion, image } = profile;
+        const user = await User.findById(laureat._id);
+        const email = user.email;
+        laureatProfiles.push({ _id, userId, firstName, lastName, filiere, niveau, experiences, posteActuel, experiencesPassee, promotion, image, email });
+      }
+    }
+
+    return res.json(laureatProfiles);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des profils de lauréats avec email :', error);
+    return res.status(500).json({ message: "Erreur serveur lors de la récupération des profils de lauréats avec email." });
+  }
+};
+
+
+
+
+
 module.exports={
-    signupUser,loginUser,resetPassword,forgotPassword,createAdminUser,getUserById,getUserEmail,getStats
+    signupUser,loginUser,resetPassword,forgotPassword,createAdminUser,getUserById,getUserEmail,getStats,getLaureats
 }

@@ -18,8 +18,8 @@ function Login () {
 
   return (
     <>
-      <div className='bg-aliceblue-100 relative h-[1078px] flex flex-col items-center justify-center bg-gray-100 '>
-        <form onSubmit={handleSubmit} className='bg-white p-16 h-auto rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out w-[650px] '>
+      <div className='bg-aliceblue-100 relative  flex flex-col items-center justify-center bg-gray-100 h-screen '>
+        <form onSubmit={handleSubmit} className='bg-white p-16 h-auto rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out w-[650px]'>
           <img src={Logo} alt='Logo' className='object-contain' />
 
           <h3 className='text-2xl font-bold mb-10 text-[#017CC6] font-poppins '>
@@ -38,7 +38,7 @@ function Login () {
                 id='email'
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
-                className='w-60 h-12 px-3 border rounded focus:outline-none focus:border-blue-500'
+                className='w-60 h-12 px-3 border rounded focus:outline-none focus:border-blue-500 outline-none font-poppins'
               />
             </div>
           </div>
@@ -55,12 +55,12 @@ function Login () {
                 id='password'
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
-                className='w-60 h-12 px-3 border rounded focus:outline-none focus:border-blue-500'
+                className='w-60 h-12 px-3 border rounded focus:outline-none focus:border-blue-500 outline-none font-poppins'
               />
             </div>
           </div>
-          <div className='mb-4'>
-            <Link to='/forgot-password' className='text-blue-500 hover:underline'>
+          <div className='mb-6'>
+            <Link to='/forgot-password' className='text-blue-400 hover:underline font-poppins'>
               Mot de passe oublié ?
             </Link>
           </div>

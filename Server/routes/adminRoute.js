@@ -22,6 +22,8 @@ router.delete('/:profileId/deletePoste/:postId', authMiddleware.verifyToken, pos
 router.get('/pr/:id', authMiddleware.verifyToken, profileController.getProfileById);
 router.delete('/:laureatId/:stageId/deleteStage',authMiddleware.verifyToken,stage.deleteStage)
 router.get('/stats', authMiddleware.verifyToken, userController.getStats);
+router.get('/getAllLaureats', authMiddleware.verifyToken, userController.getLaureats);
+
 
 
 module.exports = router;

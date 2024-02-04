@@ -43,7 +43,7 @@ export const OneComment = ({
 
       fetchUserEmail()
     }
-  }, [email])
+  }, [comment, id])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,7 +63,7 @@ export const OneComment = ({
   const handleSaveEdit = async () => {
     try {
       await axios.patch(
-        `api/comment/updateComment/${postID}/${commentId}/${resolvedProfileId}`,
+        `/api/comment/updateComment/${postID}/${commentId}/${resolvedProfileId}`,
         {
           content: editedComment
         },
@@ -203,7 +203,7 @@ export const OneComment = ({
                 onClick={handleSaveEdit}
                 data-te-ripple-init
                 data-te-ripple-color='light'
-                class='cursor-pointer flex items-center h-full border-none rounded-lg bg-emerald-500 p-2  leading-normal text-white drop-shadow-md transition duration-300 ease-in-out hover:bg-emerald-600'
+                className='cursor-pointer flex items-center h-full border-none rounded-lg bg-emerald-500 p-2  leading-normal text-white drop-shadow-md transition duration-300 ease-in-out hover:bg-emerald-600'
               >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'

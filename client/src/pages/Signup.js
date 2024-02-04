@@ -42,6 +42,7 @@ function Signup () {
       } else {
         Navigate('/create-profile');
       }
+      
     } catch (err) {
       setError(err.message);
       Swal.fire({
@@ -54,7 +55,7 @@ function Signup () {
 
   return (
     <>
-    <form onSubmit={handleSubmit} className='bg-aliceblue-100 relative  bg-aliceblue w-full h-[1117px] overflow-hidden flex flex-col items-center justify-center  px-[20%] box-border min-w-[1080px] text-center text-[32px] text-white font-poppins'>
+    <form onSubmit={handleSubmit} className='bg-aliceblue-100 relative bg-aliceblue w-full h-fit overflow-hidden flex flex-col items-center justify-center  px-[20%] box-border min-w-[1080px] text-center text-[32px] text-white font-poppins'>
       <div className='self-stretch flex flex-col items-center justify-center'>
         <div className='self-stretch rounded-t-3xl rounded-b-none [background:linear-gradient(91.7deg,_#017cc5,_#8248f5)] shadow-[4px_4px_27.8px_rgba(102,_102,_102,_0.47)] flex flex-row flex-wrap items-center justify-center py-[9px] px-0 gap-[46px]'>
           <img
@@ -143,7 +144,7 @@ function Signup () {
                     id="email"
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
-                    className='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
+                    className='w-full h-full px-6 appearance-none text-base bg-transparent border-none  outline-none font-poppins '
                   />
                 </div>
               </div>
@@ -157,7 +158,7 @@ function Signup () {
                       name='options'
                       onChange={(e) => setRole(e.target.value)}
                       value='etudiant'
-                      className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                      className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none font-poppins transition-all duration-300 ease-in-out hover:bg-blue-200'
                     />
                     <label htmlFor='Etudiant' className='relative cursor-pointer'>
                       Étudiant
@@ -170,7 +171,7 @@ function Signup () {
                       name='options'
                       onChange={(e) => setRole(e.target.value)}
                       value='laureat'
-                      className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                      className='appearance outline-none font-poppins border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none  transition-all duration-300 ease-in-out hover:bg-blue-200'
                     />
                     <label htmlFor='Etudiant' className='relative cursor-pointer'>
                       Laureat
@@ -203,7 +204,7 @@ function Signup () {
                         id='password'
                         onChange={(e) => setPassword(e.target.value)}
                         name='password'
-                        className='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
+                        className='outline-none font-poppins w-full h-full px-6 appearance-none text-base bg-transparent border-none'
                       />
                     </div>
                   </div>
@@ -223,7 +224,7 @@ function Signup () {
                         type="password"
                         id="confirmPassword"
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        className='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
+                        className='outline-none font-poppins w-full h-full px-6 appearance-none text-base bg-transparent border-none'
                       />
                     </div>
                   </div>

@@ -57,35 +57,45 @@ export const Navbar = () => {
 
   return (
     <>
-      <div className=' relative w-full flex bg-aliceblue-100 flex-row  items-center justify-between py-[12px] px-[60px] box-border gap-[40px] text-left text-[20px] text-black font-poppins'>
-        
-        <img src={Logo} alt='Logo' className='object-contain h-28 w-24' />
+      <div className='w-full flex flex-row items-center sm:justify-between justify-between  py-4 px-[60px] box-border text-left text-[20px] text-black font-poppins '>
         {user && hasProfile  ? (
           <>
-          <div className="flex flex-row  w-screen gap-10">
-            <ButtonIcon //home
-              property1='default'
-              className='submit'
-              icon={Icons.HomeIcon}
-              src='/landing'
-            />
-            <Button // ajouter post
-              property1='default'
-              className='submit'
-              buttonTxt='Post'
-              icon={Icons.PlusIcon}
-              src='/create-post'
-            />
-           {userRole === 'laureat' && (
-              <Button // proposer stage
-                property1='default'
-                className='submit'
-                buttonTxt='Stage'
-                icon={Icons.PlusIcon}
-                src='/create-stage'
-              />
-            )}
+          
+          <div className='flex flex-row relative gap-10 md:flex-row md:justify-between sm:flex-col sm:gap-8 '> 
+                    <img src={Logo} alt='Logo' className='object-contain w-24 ' />
+                    <div className="flex flex-row gap-10 sm:flex sm:flex-col sm:items-start sm:space-x-0 sm:gap-4 ">
+                      <ButtonIcon //home
+                        property1='default'
+                        className='submit'
+                        icon={Icons.HomeIcon}
+                        src='/landing'
+                      />
+                        <Button // ajouter post
+                       property1='default'
+                         className='submit'
+                         buttonTxt='Mon Profile'
+                        icon={Icons.UserIcon}
+                       src='/my-posts'
+                       />
+                      <Button // ajouter post
+                        property1='default'
+                        className='submit'
+                        buttonTxt='Post'
+                        icon={Icons.PlusIcon}
+                        src='/create-post'
+                      />
+                    {userRole === 'laureat' && (
+                        <Button // proposer stage
+                          property1='default'
+                          className='submit'
+                          buttonTxt='Stage'
+                          icon={Icons.PlusIcon}
+                          src='/create-stage'
+                        />
+                      )}
+                      </div>
             </div>
+          
             <div className="">
             <div className=' shrink-0 flex flex-row items-center justify-center gap-[11px]'>
               <div className='relative w-[75.05px] h-[65px]'>
@@ -104,10 +114,8 @@ export const Navbar = () => {
               </div>
               <div className='shrink-0 flex flex-col items-start justify-start gap-[8px]'>
                 <b className='relative'>{userName}</b>
-                <div className='relative text-[17px] font-light text-darkgray'>
-                  {user.email}
-                </div>
-                <div className='text-[17px] font-light text-darkgray'>
+                
+                <div className='text-[17px] font-light text-darkgray italic capitalize'>
                   {userRole}
                 </div>
                 {userRole === 'etudiant' && (
@@ -134,21 +142,25 @@ export const Navbar = () => {
         ) : (
           // if not connected
           <>
-            <div className='space-x-10'>
-              <Button // connexion
-                property1='default'
-                className='submit'
-                buttonTxt='Connexion'
-                icon={Icons.ChevronDoubleRightIcon}
-                src='/login'
-              />
-              <Button // inscription
-                property1='default'
-                className='submit'
-                buttonTxt='Inscription'
-                icon={Icons.UserPlusIcon}
-                src='/signup'
-              />
+
+            <div className='flex items-center h-full w-full justify-between md:flex-row sm:flex-col sm:gap-4   '>
+                <img src={Logo} alt='Logo' className='object-contain w-24 sm:flex sm:flex-col md:flex md:flex-row ' />
+                <div className='space-x-10 sm:flex sm:flex-col sm:items-center sm:space-x-0 sm:gap-4'>
+                  <Button // connexion
+                    property1='default'
+                    className='submit'
+                    buttonTxt='Connexion'
+                    icon={Icons.ChevronDoubleRightIcon}
+                    src='/login'
+                  />
+                  <Button // inscription
+                    property1='default'
+                    className='submit'
+                    buttonTxt='Inscription'
+                    icon={Icons.UserPlusIcon}
+                    src='/signup'
+                  />
+                  </div>
             </div>
           </>
         )}

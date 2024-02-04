@@ -127,7 +127,7 @@ const handleInput = (e) => {
                     name='company'
                     onChange={handleInput}
                     value={stage.company}
-                    className='w-full h-full px-6 appearance-none bg-transparent border-none'
+                    className='w-full h-full px-6 appearance-none bg-transparent border-none outline-none font-poppins text-lg text-zinc-700'
                   />
                 </div>
               </div>
@@ -146,7 +146,7 @@ const handleInput = (e) => {
                     name='title'
                     onChange={handleInput}
                     value={stage.title}
-                    className='w-full h-full px-6 appearance-none bg-transparent border-none'
+                    className='w-full h-full px-6 appearance-none bg-transparent border-none outline-none font-poppins text-lg text-zinc-700'
                   />
                 </div>
               </div>
@@ -165,7 +165,7 @@ const handleInput = (e) => {
                     name='description'
                     onChange={handleInput}
                     value={stage.description}
-                    className='w-full h-full px-3 appearance-none bg-transparent border-none'
+                    className='w-full h-full px-3 appearance-none bg-transparent border-none outline-none font-poppins text-lg text-zinc-700'
                   />
                 </div>
               </div>
@@ -235,7 +235,7 @@ const handleInput = (e) => {
                       name='startDate'
                       onChange={handleInput}
                       value={stage.startDate}
-                      className='w-full h-full px-6 appearance-none bg-transparent border-none'
+                      className='w-full h-full px-6 appearance-none bg-transparent border-none outline-none font-poppins text-lg text-zinc-700'
                     />
                   </div>
                 </div>
@@ -254,7 +254,7 @@ const handleInput = (e) => {
                       name='endDate'
                       onChange={handleInput}
                       value={stage.endDate}
-                      className='w-full h-full px-6 appearance-none bg-transparent border-none'
+                      className='w-full h-full px-6 appearance-none bg-transparent border-none outline-none font-poppins text-lg text-zinc-700'
                     />
                   </div>
                 </div>

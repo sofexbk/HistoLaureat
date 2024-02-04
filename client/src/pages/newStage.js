@@ -36,7 +36,7 @@ const newStage = () => {
                 type='text'
                 id='offreTitle'
                 name='offreTitle'
-                className='w-full h-full text-base px-6 appearance-none bg-transparent border-none'
+                className='outline-none font-poppins w-full h-full text-base px-6 appearance-none bg-transparent border-none'
               />
             </div>
           </div>

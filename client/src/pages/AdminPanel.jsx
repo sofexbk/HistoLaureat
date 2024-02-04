@@ -6,40 +6,50 @@ import UserProfiles from '../components/UserProfiles.jsx'
 import UserPosts from '../components/UserPosts.jsx'
 import { SubmitButton } from '../components/SubmitButton'
 import * as Icons from '@heroicons/react/24/solid'
+import UserLaureats from '../components/UserLaureats.jsx'
 
 function AdminPanel () {
-  const [showUserStages, setShowUserStages] = useState(false)
-  const [showUserProfiles, setShowUserProfiles] = useState(false)
-  const [showUserPosts, setShowUserPosts] = useState(false)
+  const [showUserStages, setShowUserStages] = useState(false);
+  const [showUserProfiles, setShowUserProfiles] = useState(false);
+  const [showUserPosts, setShowUserPosts] = useState(false);
+  const [showUserLaureats, setShowUserLaureats] = useState(false); // Ajoutez un état pour afficher UserLaureats
 
-  const toggleUserStages = () => setShowUserStages(!showUserStages)
-  const toggleUserProfiles = () => setShowUserProfiles(!showUserProfiles)
-  const toggleUserPosts = () => setShowUserPosts(!showUserPosts)
-  const [dashboardTitle, setDashboardTitle] = useState('Dashboard')
+  const toggleUserStages = () => setShowUserStages(!showUserStages);
+  const toggleUserProfiles = () => setShowUserProfiles(!showUserProfiles);
+  const toggleUserPosts = () => setShowUserPosts(!showUserPosts);
+  const toggleUserLaureats = () => setShowUserLaureats(!showUserLaureats); // Ajoutez une fonction pour basculer UserLaureats
+
+  const [dashboardTitle, setDashboardTitle] = useState('Dashboard');
 
   const handleStateBtnChange = newState => {
     if (newState === 'Dashboard') {
-      setShowUserProfiles(false)
-      setShowUserStages(false)
-      setShowUserPosts(false)
+      setShowUserProfiles(false);
+      setShowUserStages(false);
+      setShowUserPosts(false);
+      setShowUserLaureats(false); // Assurez-vous de cacher UserLaureats lorsque vous basculez vers le tableau de bord
+    } else if (newState === 'Profiles') {
+      setShowUserProfiles(true);
+      setShowUserStages(false);
+      setShowUserPosts(false);
+      setShowUserLaureats(false);
+    } else if (newState === 'Postes') {
+      setShowUserProfiles(false);
+      setShowUserStages(false);
+      setShowUserPosts(true);
+      setShowUserLaureats(false);
+    } else if (newState === 'Stages') {
+      setShowUserProfiles(false);
+      setShowUserStages(true);
+      setShowUserPosts(false);
+      setShowUserLaureats(false);
+    } else if (newState === 'Laureat') {
+      setShowUserProfiles(false);
+      setShowUserStages(false);
+      setShowUserPosts(false);
+      setShowUserLaureats(true); // Affichez UserLaureats lorsque vous sélectionnez "Laureat"
     }
-    if (newState === 'Profiles') {
-      setShowUserProfiles(true)
-      setShowUserStages(false)
-      setShowUserPosts(false)
-    }
-    if (newState === 'Postes') {
-      setShowUserProfiles(false)
-      setShowUserStages(false)
-      setShowUserPosts(true)
-    }
-    if (newState === 'Stages') {
-      setShowUserProfiles(false)
-      setShowUserStages(true)
-      setShowUserPosts(false)
-    }
-    setDashboardTitle(newState)
-  }
+    setDashboardTitle(newState);
+  };
 
   return (
     <>
@@ -57,7 +67,9 @@ function AdminPanel () {
         )}
         {showUserStages && <UserStages />}
         {showUserProfiles && <UserProfiles />}
-        {showUserPosts && <UserPosts />}
+        {showUserPosts && <UserPosts />}        
+        {showUserLaureats && <UserLaureats />}
+
       </SideBar>
     </>
   )
