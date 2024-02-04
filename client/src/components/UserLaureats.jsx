@@ -4,7 +4,8 @@ import { AuthContext } from '../context/AuthContext';
 import { HiDownload } from 'react-icons/hi';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-
+import { SubmitButton } from '../components/SubmitButton'
+import * as Icons from '@heroicons/react/24/solid'
 function UserLaureats() {
   const { user } = useContext(AuthContext);
   const [laureats, setLaureats] = useState([]);
@@ -131,9 +132,13 @@ function UserLaureats() {
       <style>{styles}</style>
       <div className='mb-3'>
         <div className='flex mt-4 justify-end'>
-          <button onClick={handleExportPDF} className='flex items-center px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600'>
-            <HiDownload className='w-6 h-6 mr-2 text-white' /> Télécharger PDF
-          </button>
+          <SubmitButton 
+              property1='default'
+              className='submit'
+              buttonTxt='Télécharger PDF'
+              icon={Icons.ArrowDownIcon}
+              onclick={handleExportPDF}
+            />       
         </div>
         <div className='relative mb-4 flex w-1/2 flex-wrap items-stretch '>
           <select

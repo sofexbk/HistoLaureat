@@ -61,11 +61,9 @@ export const OthersProfiles =  () => {
     }
   };
   
-  console.log("gg",id)
   const fetchUserDetails = async (id) => {
     try {
       const response = await axios.get(`/api/user/getemail/${id}`);
-      console.log('User details response:', response.data);
       setUserDetails({
         email: response.data.email,
         role: response.data.role,
@@ -75,7 +73,6 @@ export const OthersProfiles =  () => {
     }
   };
   
-console.log("ur",userDetails)
 
 const fetchProfileInfo = async (id) => {
   try {
@@ -91,7 +88,6 @@ const fetchProfileInfo = async (id) => {
     return null;
   }
 };
-console.log('pr',profileData)
 
 const fetchProfileData = async (profileId) => {
   try {
@@ -225,41 +221,82 @@ const fetchProfileData = async (profileId) => {
   return (
     <>
     <div className='bg-aliceblue-100  min-h-screen min-w-screen flex flex-col flex-wrap items-start justify-between py-[10px] px-0 box-border text-left text-21xl text-steelblue-200 font-poppins'>
-    <div className='flex flex-row  justify-center w-full'>
-    <div className="font-poppins border rounded-xl w-fit bg-blue-400 p-8 shadow-5 mb-4 ">
-            <h2 className="text-2xl text-white font-bold mb-4">Informations personnelles</h2>
-            <p className="text-lg text-white">
-              Nom : {profileData.firstName}
-            </p>
-            <p className="text-lg text-white">
-              Prenom :{profileData.lastName}
-            </p>
-              <p className="text-lg text-white">
-              Filiére :{profileData.filiere}
-               </p>
-             {userDetails.role==='etudiant' &&
-                <p className="text-lg text-white">
-                  Niveau :{profileData?.niveau}
-                </p>
-               }
-              {userDetails.role === 'laureat' && (
-              <>
-                <p className="text-lg text-white">
-                  Promotion:{profileData.promotion}
-                </p>
-                <p className="text-lg text-white">
-                  Experiences :{profileData.experiencesPassee}
-                </p>
-                <p className="text-lg text-white">
-                  Post Actuel :{profileData.posteActuel}
-                </p>
-              </>
-            )}
+
+    <div className='relative flex flex-row w-full h-fit justify-center overflow-hidden bg-gray-50 py-6 sm:py-12 border-none outline-0'>
+  <div className='min-w-1/4 rounded-xl border-white border-none border-transparent outline-0 group relative cursor-pointer overflow-hidden bg-white px-6 pt-10 pb-8 shadow-md ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:mx-auto sm:max-w-sm sm:rounded-lg sm:px-10'>
+    <span className='absolute top-10 z-0 h-20 w-20 rounded-full bg-sky-500 transition-all duration-300 group-hover:scale-[16] '></span>
+    <div className='relative z-10 mx-auto w-2xl '>
+      <div className='flex flex-row items-start gap-4 group-hover:text-white/90'>
+        <span className='grid h-20 w-20 place-items-center rounded-full bg-sky-500 transition-all duration-300 group-hover:bg-sky-400 '>
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            fill='none'
+            viewBox='0 0 24 24'
+            strokeWidth='1.5'
+            stroke='currentColor'
+            className='h-10 w-10 text-white transition-all'
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              d='M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z'
+            />
+          </svg>
+        </span>
+        <div className='flex flex-col items-start gap-2'>
+          <div className='text-4xl'>
+            {profileData.firstName} {profileData.lastName}
           </div>
+          <div className='uppercase text-sm border rounded-lg bg-zinc-200 pl-2 pr-2 group-hover:text-black/60'>
+            {profileData.filiere}
+          </div>
+        </div>
+      </div>
+      <div className='space-y-6 pt-5 text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-white/90'>
+        <div className='text-xl flex flex-row gap-3 items-center'>
+          {userDetails.role === 'etudiant' ? (
+            <div className='text-xl flex flex-row gap-3 items-center'>
+              <div className='text-base  opacity-80 font-semibold'>
+                Niveau
+              </div>
+              <div>{profileData?.niveau}</div>
+            </div>
+          ) : userDetails.role === 'laureat' ? (
+            <>
+              <div className='flex flex-col gap-4'>
+              <div className='text-xl flex flex-row gap-3 items-center'>
+                <div className='text-base  opacity-80 font-semibold'>
+                  Promotion
+                </div>
+                <div>{profileData.promotion}</div>
+              </div>
+              <div className='text-xl flex flex-row gap-3 items-center'>
+                <div className='text-base  opacity-80 font-semibold'>
+                  Experiences
+                </div>
+                <div>{profileData.experiencesPassee}</div>
+              </div>
+              <div className='text-xl flex flex-row gap-3 items-center'>
+                <div className='text-base  opacity-80 font-semibold'>
+                  Post Actuel
+                </div>
+                <div>{profileData.posteActuel}</div>
+              </div>
+              </div>
+            </>
+          ) : null}
+        </div>
+      </div>
     </div>
+  </div>
+</div>
+
+
+
+
+
     <div className='flex flex-row justify-between min-h-screen min-w-screen w-full'>
-     <div className='flex-1 shrink-0 flex flex-row flex-wrap items-start justify-center gap-[10px] '>
-            
+     <div className='flex-1 shrink-0 flex flex-row flex-wrap items-start justify-center gap-[10px] '>        
           <div className='flex-1 flex flex-col items-start justify-start py-0 px-10 box-border gap-[20px] min-w-[600px] max-w-[1200px]'>
             <div className='self-stretch relative font-extrabold '>Les Postes</div>
             <div className='self-stretch flex flex-col items-start justify-start text-xl text-black gap-[20px] '>

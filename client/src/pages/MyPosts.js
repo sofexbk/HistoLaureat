@@ -251,25 +251,25 @@ export const MyPosts = () => {
   return (
     <>
       <div className='bg-aliceblue-100  min-h-screen min-w-screen flex flex-col flex-wrap items-start justify-between py-[10px] px-0 box-border text-left text-21xl text-steelblue-200 font-poppins'>
-        <div class='relative flex flex-row w-full h-fit justify-center overflow-hidden bg-gray-50 py-6 sm:py-12 border-none outline-0'>
-          <div class='min-w-1/4 rounded-xl border-white border-none border-transparent outline-0 group relative cursor-pointer overflow-hidden bg-white px-6 pt-10 pb-8 shadow-md ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:mx-auto sm:max-w-sm sm:rounded-lg sm:px-10'>
-            <span class='absolute top-10 z-0 h-20 w-20 rounded-full bg-sky-500 transition-all duration-300 group-hover:scale-[16] '></span>
+        <div className='relative flex flex-row w-full h-fit justify-center overflow-hidden bg-gray-50 py-6 sm:py-12 border-none outline-0'>
+          <div className='min-w-1/4 rounded-xl border-white border-none border-transparent outline-0 group relative cursor-pointer overflow-hidden bg-white px-6 pt-10 pb-8 shadow-md ring-1 ring-gray-900/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl sm:mx-auto sm:max-w-sm sm:rounded-lg sm:px-10'>
+            <span className='absolute top-10 z-0 h-20 w-20 rounded-full bg-sky-500 transition-all duration-300 group-hover:scale-[16] '></span>
             {resolvedProfileId === profileData._id && (
               <>
-                <div class='relative z-10 mx-auto w-2xl '>
+                <div className='relative z-10 mx-auto w-2xl '>
                   <div className='flex flex-row items-start gap-4 group-hover:text-white/90'>
-                    <span class='grid h-20 w-20 place-items-center rounded-full bg-sky-500 transition-all duration-300 group-hover:bg-sky-400 '>
+                    <span className='grid h-20 w-20 place-items-center rounded-full bg-sky-500 transition-all duration-300 group-hover:bg-sky-400 '>
                       <svg
                         xmlns='http://www.w3.org/2000/svg'
                         fill='none'
                         viewBox='0 0 24 24'
-                        stroke-width='1.5'
+                        strokeWidth='1.5'
                         stroke='currentColor'
-                        class='h-10 w-10 text-white transition-all'
+                        className='h-10 w-10 text-white transition-all'
                       >
                         <path
-                          stroke-linecap='round'
-                          stroke-linejoin='round'
+                          strokeLinecap='round'
+                          strokeLinejoin='round'
                           d='M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z'
                         />
                       </svg>
@@ -283,7 +283,7 @@ export const MyPosts = () => {
                       </div>
                     </div>
                   </div>
-                  <div class='space-y-6 pt-5 text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-white/90'>
+                  <div className='space-y-6 pt-5 text-base leading-7 text-gray-600 transition-all duration-300 group-hover:text-white/90'>
                     <div className='text-xl flex flex-row gap-3 items-center'>
                       {user && user.role === 'laureat' ? null : (
                         <div className='text-xl flex flex-row gap-3 items-center'>
