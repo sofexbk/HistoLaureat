@@ -70,6 +70,13 @@ export const Navbar = () => {
                         icon={Icons.HomeIcon}
                         src='/landing'
                       />
+                        <Button // ajouter post
+                       property1='default'
+                         className='submit'
+                         buttonTxt='Mon Profile'
+                        icon={Icons.UserIcon}
+                       src='/my-posts'
+                       />
                       <Button // ajouter post
                         property1='default'
                         className='submit'

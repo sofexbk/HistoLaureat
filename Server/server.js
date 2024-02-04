@@ -15,6 +15,8 @@ const app=express()
 app.use(bodyParser.json());
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/othersprofiles', express.static(path.join(__dirname,'uploads')));
+
 const router = express.Router(); 
 
 router.use(express.urlencoded({ extended: true }));

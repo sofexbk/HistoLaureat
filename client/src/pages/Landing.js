@@ -252,6 +252,7 @@ export const Landing = () => {
                           resolvedProfileId={resolvedProfileId}
                           userId={userId}
                           userEmail={postes[index].userEmail}
+                          profileID={postes[index]?.profileId}
                         />
                       ))}
                     </>
@@ -335,6 +336,8 @@ export const Landing = () => {
                         resolvedProfileId={resolvedProfileId}
                         userId={userId}
                         userEmail={postes[index].userEmail}
+                        profileID={postes[index]?.profileId}
+
                       />
                     ))}
                   </>

@@ -42,6 +42,7 @@ function Signup () {
       } else {
         Navigate('/create-profile');
       }
+      
     } catch (err) {
       setError(err.message);
       Swal.fire({
@@ -170,7 +171,7 @@ function Signup () {
                       name='options'
                       onChange={(e) => setRole(e.target.value)}
                       value='laureat'
-                      className='appearance outline-none font-poppins border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none font-poppins transition-all duration-300 ease-in-out hover:bg-blue-200'
+                      className='appearance outline-none font-poppins border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none  transition-all duration-300 ease-in-out hover:bg-blue-200'
                     />
                     <label htmlFor='Etudiant' className='relative cursor-pointer'>
                       Laureat

@@ -44,7 +44,7 @@ const StageProvider = ({ children }) => {
         const response = await axios.get(`/api/profile/${userId}`, {
           headers: { Authorization: `Bearer ${user.token}` },
         });
-        setLaureatId(response.data.profile._id);
+        setLaureatId(response.data.profile?._id);
       } catch (error) {
         console.error('Erreur lors de la requête :', error);
       }

@@ -9,6 +9,7 @@ import { OneCommentInput } from './OneCommentInput'
 import { useEffect, useState } from 'react'
 import Modal from 'react-modal'
 import axios from 'axios'
+import { Link, useNavigate } from 'react-router-dom';
 
 export const OnePost = ({
   profileStatus = '',
@@ -25,15 +26,16 @@ export const OnePost = ({
   fetchAllData,
   loading,
   userEmail,
-  userId
+  userId,
+  profileID
 }) => {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editedPostData, setEditedPostData] = useState({
     title,
     description
   })
   const [userE, setUserE] = useState('')
-
   useEffect(() => {
     if (userEmail) {
       const fetchUserEmail = async () => {
@@ -54,7 +56,7 @@ export const OnePost = ({
       fetchUserEmail()
     }
   }, [isModalOpen, userEmail])
-
+  
   const openModal = () => {
     setIsModalOpen(true)
   }
@@ -97,6 +99,10 @@ export const OnePost = ({
     if (isModalOpen) {
     }
   }, [isModalOpen])
+
+  const handleProfileClick = () => {
+    navigate(`/othersprofiles/${profileID}`)
+  };
   return (
     <>
       <div className='self-stretch flex flex-col items-start justify-start shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out '>
@@ -104,13 +110,22 @@ export const OnePost = ({
           <div className='flex flex-row items-center gap-[16px]  w-full'>
             <img
               className='relative rounded-21xl w-[60px] h-[60px] object-cover'
-              alt='test'
+              alt=''
               src={profilePic}
             />
-
             <div className='flex flex-row items-center justify-between w-full'>
               <div className='flex flex-col'>
-                <b className='relative'>{profileName}</b>
+
+
+              <div
+                className="relative cursor-pointer"
+                 onClick={handleProfileClick}
+                 >
+              <b>{profileName}</b>
+              </div>
+
+
+              
                 <div className='flex flex-row gap-6 '>
                   <div className='relative text-smi font-light text-darkgray'>
                     {userE}
@@ -208,20 +223,20 @@ export const OnePost = ({
             minHeight: '480px',
             overflow: 'auto',
             padding: '20px',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // Adjusted shadow
-            borderRadius: '10px', // Slightly increased border radius
-            backgroundColor: '#fff' ,// Added background color
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+            borderRadius: '10px',
+            backgroundColor: '#fff' ,
             boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
             
           }
         }}
       >
         <div className='font-poppins bg-blue-500 shadow-4 text-white p-[3px] m-2 mb-4 rounded-lg'>
-          <h2 className='text-3xl font-bold pl-4'>Modifier le poste</h2>
+          <h2 className='text-3xl font-bold pl-4'>Edit Post</h2>
         </div>
         <div className='p-4'>
           <label className='font-poppins font-semibold block text-xl  text-gray-700 mb-2'>
-            Titre :
+            Title :
           </label>
           <input
             className='w-full font-poppins border rounded-md p-2 mb-4 text-lg focus:outline-none focus:border-blue-500' // Added focus styles
@@ -254,7 +269,7 @@ export const OnePost = ({
                 onClick={closeModal}
                 data-te-ripple-init
                 data-te-ripple-color='light'
-                class='cursor-pointer flex items-center h-full border-none rounded-lg bg-danger-600 p-2  leading-normal text-white drop-shadow-md transition duration-300 ease-in-out hover:bg-danger-700'
+                className='cursor-pointer flex items-center h-full border-none rounded-lg bg-danger-600 p-2  leading-normal text-white drop-shadow-md transition duration-300 ease-in-out hover:bg-danger-700'
               >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
@@ -262,7 +277,7 @@ export const OnePost = ({
                   viewBox='0 0 24 24'
                   strokeWidth='2'
                   stroke='currentColor'
-                  class='w-6 h-6 text-white transition duration-300 ease-in-out mr-2'
+                  className='w-6 h-6 text-white transition duration-300 ease-in-out mr-2'
                 >
                   <path
                     strokeLinecap='round'
@@ -277,7 +292,7 @@ export const OnePost = ({
                 onClick={handleSaveChanges}
                 data-te-ripple-init
                 data-te-ripple-color='light'
-                class='cursor-pointer flex items-center h-full border-none rounded-lg bg-emerald-500 p-2  leading-normal text-white drop-shadow-md transition duration-300 ease-in-out hover:bg-emerald-600'
+                className='cursor-pointer flex items-center h-full border-none rounded-lg bg-emerald-500 p-2  leading-normal text-white drop-shadow-md transition duration-300 ease-in-out hover:bg-emerald-600'
               >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
@@ -285,7 +300,7 @@ export const OnePost = ({
                   viewBox='0 0 24 24'
                   strokeWidth='2'
                   stroke='currentColor'
-                  class='w-6 h-6 text-white transition duration-300 ease-in-out mr-2'
+                  className='w-6 h-6 text-white transition duration-300 ease-in-out mr-2'
                 >
                   <path
                     strokeLinecap='round'
