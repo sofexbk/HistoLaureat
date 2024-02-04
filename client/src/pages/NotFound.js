@@ -1,29 +1,38 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { SubmitButton } from '../components/SubmitButton'
+import * as Icons from '@heroicons/react/24/solid'
 
-function NotFound() {
-  const navigate = useNavigate();
+function NotFound () {
+  const navigate = useNavigate()
 
   useEffect(() => {
     // Go back to the previous page after 3 seconds
     const timeoutId = setTimeout(() => {
-      navigate(-1); // Go back one step in the history
-    }, 33000);
+      navigate(-1) // Go back one step in the history
+    }, 33000)
 
     return () => {
       // Clear the timeout on component unmount
-      clearTimeout(timeoutId);
-    };
-  }, [navigate]);
+      clearTimeout(timeoutId)
+    }
+  }, [navigate])
 
   return (
-    <div>
-      <h1>404 - Not Found</h1>
-      <p>Page not found. Redirecting...</p>
-      <button  className="bg-blue-500 text-white px-4 py-2 rounded-md"
-        onClick={() => navigate(-1)}>That's a not found page , if you want to back click on me</button>
+    <div className='font-poppins'>
+      <h1 className='text-9xl opacity-10 '>404</h1>
+      <p className='text-4xl font-extrabold opacity-70'>Uh-ooh!</p>
+      <p className='text-4xl font-thin opacity-80'>Page non trouvée</p>
+      <SubmitButton // ajouter post
+              property1='default'
+              className='submit'
+              buttonTxt='Retour en arrière'
+              icon={Icons.ArrowLeftIcon}
+              onclick={() => navigate(-1)}
+            />
+      
     </div>
-  );
+  )
 }
 
-export default NotFound;
+export default NotFound

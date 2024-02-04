@@ -2,6 +2,13 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    minWidth: {
+      '0': '0',
+      '1/4': '30%',
+      '1/2': '50%',
+      '3/4': '75%',
+      'full': '100%',
+     },
     screens: {
       'sm': {'max': '639px'},
       'lg': {'min': '930px'},

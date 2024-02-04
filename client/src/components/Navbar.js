@@ -123,9 +123,6 @@ export const Navbar = () => {
                 {/* <div className='text-[17px] font-light text-darkgray'>
                 {userRole}
                 </div> */}
-                 <div className='text-[17px] font-light text-darkgray'>
-                ({niveau},{filiere})
-                </div>
                </div>
                )}
               </div>
