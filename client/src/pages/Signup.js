@@ -143,7 +143,7 @@ function Signup () {
                     id="email"
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
-                    className='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
+                    className='w-full h-full px-6 appearance-none text-base bg-transparent border-none  outline-none font-poppins '
                   />
                 </div>
               </div>
@@ -157,7 +157,7 @@ function Signup () {
                       name='options'
                       onChange={(e) => setRole(e.target.value)}
                       value='etudiant'
-                      className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                      className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none font-poppins transition-all duration-300 ease-in-out hover:bg-blue-200'
                     />
                     <label htmlFor='Etudiant' className='relative cursor-pointer'>
                       Étudiant
@@ -170,7 +170,7 @@ function Signup () {
                       name='options'
                       onChange={(e) => setRole(e.target.value)}
                       value='laureat'
-                      className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                      className='appearance outline-none font-poppins border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none font-poppins transition-all duration-300 ease-in-out hover:bg-blue-200'
                     />
                     <label htmlFor='Etudiant' className='relative cursor-pointer'>
                       Laureat
@@ -203,7 +203,7 @@ function Signup () {
                         id='password'
                         onChange={(e) => setPassword(e.target.value)}
                         name='password'
-                        className='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
+                        className='outline-none font-poppins w-full h-full px-6 appearance-none text-base bg-transparent border-none'
                       />
                     </div>
                   </div>
@@ -223,7 +223,7 @@ function Signup () {
                         type="password"
                         id="confirmPassword"
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        className='w-full h-full px-6 appearance-none text-base bg-transparent border-none'
+                        className='outline-none font-poppins w-full h-full px-6 appearance-none text-base bg-transparent border-none'
                       />
                     </div>
                   </div>

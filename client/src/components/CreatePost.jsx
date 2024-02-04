@@ -110,7 +110,7 @@ export default function CreatePost() {
               onChange={handleInput}
               value={post.title}
               required
-              className='w-full h-full text-base px-6 appearance-none bg-transparent border-none'
+              className='w-full h-full px-6 appearance-none bg-transparent border-none outline-none font-poppins text-lg text-zinc-700'
              />
             </div>
           </div>
@@ -125,7 +125,7 @@ export default function CreatePost() {
             <textarea
             name ='content' id='desc' onChange={handleInput}
             value={post.content}
-            className='w-full h-96 px-6 text-base appearance-none bg-transparent border border-solid border-[#BFC6C9] rounded-lg'
+            className='w-full h-96 px-6  appearance-none bg-transparent border border-solid border-[#BFC6C9] rounded-lg outline-none font-poppins text-lg text-zinc-700'
             />
           </div>
         </div>

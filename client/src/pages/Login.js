@@ -38,7 +38,7 @@ function Login () {
                 id='email'
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
-                className='w-60 h-12 px-3 border rounded focus:outline-none focus:border-blue-500'
+                className='w-60 h-12 px-3 border rounded focus:outline-none focus:border-blue-500 outline-none font-poppins'
               />
             </div>
           </div>
@@ -55,12 +55,12 @@ function Login () {
                 id='password'
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
-                className='w-60 h-12 px-3 border rounded focus:outline-none focus:border-blue-500'
+                className='w-60 h-12 px-3 border rounded focus:outline-none focus:border-blue-500 outline-none font-poppins'
               />
             </div>
           </div>
-          <div className='mb-4'>
-            <Link to='/forgot-password' className='text-blue-500 hover:underline'>
+          <div className='mb-6'>
+            <Link to='/forgot-password' className='text-blue-400 hover:underline font-poppins'>
               Mot de passe oublié ?
             </Link>
           </div>

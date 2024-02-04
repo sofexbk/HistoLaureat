@@ -163,7 +163,7 @@ const CreateProfile = () => {
           name='image'
           onChange={(e) => setProfilePicture(e.target.files[0])}
           accept='image/*'
-          className='w-full h-full px-6 appearance-none bg-transparent border-none'
+          className='w-full h-full px-6 appearance-none bg-transparent border-none outline-none font-poppins text-lg text-zinc-700'
         />
       </div>
         <div className='self-stretch flex flex-row items-start justify-center gap-[38px] text-dimgray-100'>
@@ -180,7 +180,7 @@ const CreateProfile = () => {
                   id='prenom'
                   name='firstName'
                   onChange={handleInputChange}
-                  className='w-full h-full px-6 appearance-none bg-transparent border-none'
+                  className='w-full h-full px-6 appearance-none bg-transparent border-none outline-none font-poppins text-lg text-zinc-700'
                 />
               </div>
             </div>
@@ -198,7 +198,7 @@ const CreateProfile = () => {
                   id='nom'
                   name='lastName'
                   onChange={handleInputChange}
-                  className='w-full h-full px-6 appearance-none bg-transparent border-none'
+                  className='w-full h-full px-6 appearance-none bg-transparent border-none outline-none font-poppins text-lg text-zinc-700'
                 />
               </div>
             </div>
@@ -214,7 +214,7 @@ const CreateProfile = () => {
                 name='filiere'
                 value='ginf'
                 onChange={handleInputChange}
-                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                className='outline-none font-poppins text-lg text-zinc-700 appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
               />
               <label htmlFor='ginf' className='relative cursor-pointer'>
                 GINF
@@ -227,7 +227,7 @@ const CreateProfile = () => {
                 name='filiere'
                 value='gind'
                 onChange={handleInputChange}
-                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200 outline-none font-poppins text-lg text-zinc-700'
               />
               <label htmlFor='gind' className='relative cursor-pointer'>
                 GIND
@@ -240,7 +240,7 @@ const CreateProfile = () => {
                 name='filiere'
                 onChange={handleInputChange}
                 value='gstr'
-                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200 outline-none font-poppins text-lg text-zinc-700'
               />
               <label htmlFor='gstr' className='relative cursor-pointer'>
                 GSTR
@@ -253,7 +253,7 @@ const CreateProfile = () => {
                 name='filiere'
                 onChange={handleInputChange}
                 value='cs'
-                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200 outline-none font-poppins text-lg text-zinc-700'
               />
               <label htmlFor='cs' className='relative cursor-pointer'>
                 CS
@@ -266,7 +266,7 @@ const CreateProfile = () => {
                 name='filiere'
                 onChange={handleInputChange}
                 value='gsea'
-                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200 outline-none font-poppins text-lg text-zinc-700'
               />
               <label htmlFor='gsea' className='relative cursor-pointer'>
                 GSEA
@@ -279,7 +279,7 @@ const CreateProfile = () => {
                 name='filiere'
                 onChange={handleInputChange}
                 value='g3ei'
-                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200'
+                className='appearance border border-gray-300 rounded-full w-5 h-5 cursor-pointer checked:bg-blue-500 checked:border-transparent focus:outline-none transition-all duration-300 ease-in-out hover:bg-blue-200 outline-none font-poppins text-lg text-zinc-700'
               />
               <label htmlFor='g3ei' className='relative cursor-pointer'>
                 G3EI
@@ -352,7 +352,7 @@ const CreateProfile = () => {
                   id='promotion'
                   name='promotion'
                   onChange={handleInputChange}
-                  className='w-full h-full px-6 appearance-none bg-transparent border-none'
+                  className='w-full h-full px-6 appearance-none bg-transparent border-none outline-none font-poppins text-lg text-zinc-700'
                   placeholder='example: 2023-2024'
                 />
               </div>
@@ -371,7 +371,7 @@ const CreateProfile = () => {
                   id='poste'
                   name='posteActuel'
                   onChange={handleInputChange}
-                  className='w-full h-full px-6 appearance-none bg-transparent border-none'
+                  className='w-full h-full px-6 appearance-none bg-transparent border-none outline-none font-poppins text-lg text-zinc-700'
                 />
               </div>
             </div>
@@ -389,7 +389,7 @@ const CreateProfile = () => {
               id='exp1'
               name='experiencesPassee'
               onChange={handleInputChange}
-              className='w-full h-full px-2 appearance-none bg-transparent border-none'
+              className='w-full h-full px-2 appearance-none bg-transparent border-none outline-none font-poppins text-lg text-zinc-700'
             />
           </div>
         </div>
@@ -457,7 +457,7 @@ const CreateProfile = () => {
                 <select
                   id='niveau'
                   name='niveau'
-                  className='w-full h-full px-6 appearance-none bg-transparent border-none'
+                  className='w-full h-full px-6 appearance-none bg-transparent border-none outline-none font-poppins text-lg text-zinc-700'
                   onChange={handleInputChange}
                 >
                   <option value='AP1'>AP1</option>
@@ -482,7 +482,7 @@ const CreateProfile = () => {
               id='exp1'
               name='experiences'
               onChange={handleInputChange}
-              className='w-full h-full px-2 appearance-none bg-transparent border-none'
+              className='w-full h-full px-2 appearance-none bg-transparent border-none outline-none font-poppins text-lg text-zinc-700'
             />
           </div>
         </div>

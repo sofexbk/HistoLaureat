@@ -25,7 +25,7 @@ const newPost = () => {
                 type='text'
                 id='titrePost'
                 name='titrePost'
-                className='w-full h-full text-base px-6 appearance-none bg-transparent border-none'
+                className='w-full h-full text-base px-6 appearance-none bg-transparent border-none outline-none font-poppins '
               />
             </div>
           </div>

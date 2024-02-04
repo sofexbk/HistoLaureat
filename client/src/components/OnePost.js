@@ -217,11 +217,11 @@ export const OnePost = ({
         }}
       >
         <div className='font-poppins bg-blue-500 shadow-4 text-white p-[3px] m-2 mb-4 rounded-lg'>
-          <h2 className='text-3xl font-bold pl-4'>Edit Post</h2>
+          <h2 className='text-3xl font-bold pl-4'>Modifier le poste</h2>
         </div>
         <div className='p-4'>
           <label className='font-poppins font-semibold block text-xl  text-gray-700 mb-2'>
-            Title :
+            Titre :
           </label>
           <input
             className='w-full font-poppins border rounded-md p-2 mb-4 text-lg focus:outline-none focus:border-blue-500' // Added focus styles

@@ -107,10 +107,8 @@ export const Navbar = () => {
               </div>
               <div className='shrink-0 flex flex-col items-start justify-start gap-[8px]'>
                 <b className='relative'>{userName}</b>
-                <div className='relative text-[17px] font-light text-darkgray'>
-                  {user.email}
-                </div>
-                <div className='text-[17px] font-light text-darkgray'>
+                
+                <div className='text-[17px] font-light text-darkgray italic capitalize'>
                   {userRole}
                 </div>
                 {userRole === 'etudiant' && (
