@@ -48,7 +48,7 @@ const signupUser = async (req, res) => {
 
 
 const sendProfileCreationEmail = async (email,token) => {
-  const profileCreationLink = `http://localhost:3000/create-profile?token=${token}`;
+  const profileCreationLink = `www.histolaureat.social/create-profile?token=${token}`;
 
   const mailOptions = {
     from: gmailEmail,
@@ -104,7 +104,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendResetEmail = async (email, resetToken) => {
-  const resetLink = `http://localhost:3000/reset-password/${resetToken}`;
+  const resetLink = `www.histolaureat.social/reset-password/${resetToken}`;
   const templatePath = path.join(__dirname, 'resetEmail.html');
   const emailTemplate = fs.readFileSync(templatePath, 'utf-8');
   const emailContent = emailTemplate.replace('{resetToken}', resetToken);

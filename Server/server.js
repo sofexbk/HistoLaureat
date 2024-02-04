@@ -38,12 +38,21 @@ app.use('/api/comment',commentRoutes)
 app.use('/api/poste',posteRoutes)
 //ur.createAdminUser();
 
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => {
-        app.listen(process.env.PORT, () => {
-            console.log('Connected To db && listening on port', process.env.PORT);
-        });
-    })
-    .catch((error) => {
-        console.log(error);
+app.use(express.static("./client/build"));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "client","build", "index.html"));
 });
+
+
+const password = "Myassi@2001";
+const encodedPassword = encodeURIComponent(password);
+
+mongoose.connect(`mongodb+srv://Myassi2001:${encodedPassword}@cluster0.8q9jbmf.mongodb.net/?retryWrites=true&w=majority`).then(()=>{
+    app.listen(4000,()=>{
+   console.log('Connected To db && listening on port',process.env.PORT)
+})
+})
+.catch((error)=>{
+   console.log(error)
+})
