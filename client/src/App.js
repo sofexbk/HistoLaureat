@@ -29,8 +29,7 @@ import MyPosts from './pages/MyPosts.js'
 import OthersProfiles from './pages/OthersProfiles.js'
 function App () {
   const { user,hasProfile } = useAuthContext()
-  const { token } = useParams();
-  const isAuthenticatedWithProfile = user && hasProfile;
+
   
   return (
     <Router>
