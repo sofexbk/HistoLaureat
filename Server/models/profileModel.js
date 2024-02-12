@@ -10,7 +10,7 @@ const profileSchema = new mongoose.Schema({
     posteActuel: { type: String, required: function () { return this.role === 'laureat'; } },
     experiencesPassee: { type: String, required: function () { return this.role === 'laureat'; } },
     promotion:{ type: String, required: function () { return this.role === 'laureat'; } },
-    image:{type:String}
+    image:{type:String},
   });
   profileSchema.pre('save', async function (next) {
     if (this.isNew) {

@@ -163,7 +163,7 @@ function UserLaureats() {
               <th className='py-3 px-6 text-left'>Image</th>
               <th className='py-3 px-6 text-left'>First Name</th>
               <th className='py-3 px-6 text-left'>Last Name</th>
-              <th className='py-3 px-6 text-left'>Conract</th>
+              <th className='py-3 px-6 text-left'>Contact</th>
               <th className='py-3 px-6 text-left'>Filiere</th>
               <th className='py-3 px-6 text-left'>Promotion</th>
               <th className='py-3 px-6 text-left'>Poste Actuel</th>

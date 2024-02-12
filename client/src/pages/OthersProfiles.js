@@ -290,11 +290,6 @@ const fetchProfileData = async (profileId) => {
     </div>
   </div>
 </div>
-
-
-
-
-
     <div className='flex flex-row justify-between min-h-screen min-w-screen w-full'>
      <div className='flex-1 shrink-0 flex flex-row flex-wrap items-start justify-center gap-[10px] '>        
           <div className='flex-1 flex flex-col items-start justify-start py-0 px-10 box-border gap-[20px] min-w-[600px] max-w-[1200px]'>
@@ -308,35 +303,35 @@ const fetchProfileData = async (profileId) => {
                 </div>
               ) : (
                 <>
-{commentaires.map((commentaire, index) => {
-  const post = postes[index];
+        {commentaires.map((commentaire, index) => {
+          const post = postes[index];
 
-  if (post.profileId === id) {
-    return (
-      <OnePost
-        key={post._id}
-        postID={post._id}
-        profileName={`${post.profileData?.firstName || ''} ${post.profileData?.lastName || ''}`}
-        profileStatus={new Date(post.creationDate).toLocaleString()}
-        title={post.title}
-        description={post.content}
-        profilePic={post.profileData?.image}
-        comments={commentaire.comments || []}
-        onDeleteClick={handleDeleteClick}
-        isCurrentUserPost={post.profileData?.userId === decodeToken()._id}
-        user={user}
-        profileId={ProfileId()}
-        loading={loading}
-        fetchAllData={fetchAllData}
-        resolvedProfileId={resolvedProfileId}
-        userId={userId}
-        userEmail={post.userEmail}
-        profileID={post.profileId}
-      />
-    );
-  }
+          if (post.profileId === id) {
+            return (
+              <OnePost
+                key={post._id}
+                postID={post._id}
+                profileName={`${post.profileData?.firstName || ''} ${post.profileData?.lastName || ''}`}
+                profileStatus={new Date(post.creationDate).toLocaleString()}
+                title={post.title}
+                description={post.content}
+                profilePic={post.profileData?.image}
+                comments={commentaire.comments || []}
+                onDeleteClick={handleDeleteClick}
+                isCurrentUserPost={post.profileData?.userId === decodeToken()._id}
+                user={user}
+                profileId={ProfileId()}
+                loading={loading}
+                fetchAllData={fetchAllData}
+                resolvedProfileId={resolvedProfileId}
+                userId={userId}
+                userEmail={post.userEmail}
+                profileID={post.profileId}
+              />
+            );
+          }
 
-  return null;
+        return null;
 })}
                 </>
               )}
@@ -356,8 +351,8 @@ const fetchProfileData = async (profileId) => {
             ) : (
               stages.length > 0 && (
                 <>
-                  {stages.map((stage) => (
-                    stage.laureatId === resolvedProfileId &&
+                  {stages.map((stage) => (                                        
+                    stage.laureatId === id &&
                     <OneStage
                 key={stage._id}
                 company={stage.company}

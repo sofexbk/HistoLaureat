@@ -86,6 +86,20 @@ const LaureatIcon = () => (
     ></path>
   </svg>
 )
+const BanIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 64 64"
+  >
+    <path
+      fill="#ffff"
+      d="M40 32l20-20c1.332-1.332 1.332-3.488 0-4.82-1.332-1.332-3.488-1.332-4.82 0L35.18 27.18 14.362 6.362c-1.332-1.332-3.488-1.332-4.82 0-1.332 1.332-1.332 3.488 0 4.82l20 20-20 20c-1.332 1.332-1.332 3.488 0 4.82.66.664 1.524.996 2.39.996s1.73-.332 2.39-.996l20-20 20 20c.66.664 1.524.996 2.39.996s1.73-.332 2.39-.996c1.332-1.332 1.332-3.488 0-4.82L40 32z"
+    />
+  </svg>
+);
+
 
 const SideBar = ({ children, onStateBtnChange }) => {
   const { logout } = useLogout();
@@ -126,6 +140,11 @@ const SideBar = ({ children, onStateBtnChange }) => {
       title: 'Suivi des lauréats', 
       icon: <LaureatIcon />, 
       onClick: () => handleItemClick('Laureat'), 
+    },
+    {
+      title: 'Bloquer les utilisateurs', 
+      icon: <BanIcon />, 
+      onClick: () => handleItemClick('Utilisateurs'), 
     },
     {
       title: 'Déconnexion',

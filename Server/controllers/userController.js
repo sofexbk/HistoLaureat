@@ -24,7 +24,7 @@ const loginUser=async (req,res)=>{
     try{
      const user=await User.login(email,password)
      const token=createToken(user._id)
-     res.status(200).json({email,token,role:user.role,userId: user._id})
+     res.status(200).json({email,token,role:user.role,userId: user._id,locked: user.locked})
    }catch (error) {
     res.status(400).json({error:error.message})
 }}
@@ -75,7 +75,7 @@ const sendProfileCreationEmail = async (email,token) => {
 
 async function createAdminUser() {
   try {
-    const email = 'admin@admin.fr';
+    //const email = 'admin@admin.fr';
     const password = 'admin123';
 
     const adminUser = await User.createAdmin(email, password);
@@ -267,9 +267,64 @@ const getLaureats = async (req, res) => {
 };
 
 
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({ role: { $ne: 'admin' } });
+    res.status(200).json(users);
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 
+const toggleProfileLock = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }    
+    user.locked = !user.locked;
+    await user.save();
+    res.json({ isLocked: user.locked });
+  } catch (error) {
+    console.error('Error toggling profile lock status:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+const checkProfileLock = async (req, res, next) => {
+  try {
+    // Get the user ID from the request (assuming it's stored in the request object)
+    const userId = req.user._id; // Adjust according to your authentication mechanism
+
+    // Find the user by ID
+    const user = await User.findById(userId);
+
+    // If the user doesn't exist or their profile is locked, deny access
+    if (!user || user.locked) {
+      return res.status(401).json({ error: 'Access denied. Profile is locked.' });
+    }
+
+    // If the user's profile is not locked, allow access
+    next();
+  } catch (error) {
+    console.error('Error checking profile lock status:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+const getUserId = async (userId) => {
+  try {
+    const user = await User.findById(userId);
+    return user;
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    throw new Error('Error fetching user');
+  }
+};
 
 module.exports={
-    signupUser,loginUser,resetPassword,forgotPassword,createAdminUser,getUserById,getUserEmail,getStats,getLaureats
+  checkProfileLock,signupUser,loginUser,resetPassword,forgotPassword,createAdminUser,getUserById,getUserEmail,getStats,getLaureats,getAllUsers,toggleProfileLock
 }

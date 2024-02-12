@@ -9,6 +9,8 @@ const userSchema=new Schema({
   role: { type: String, enum: ['etudiant', 'laureat', 'admin'], required: true },
   resetToken: String,
   resetTokenExpiration: Date,
+  locked: { type: Boolean, default: false },
+  profile: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' }
 })
 
 userSchema.statics.signup = async function (email, password, confirmPassword, role) {
@@ -45,6 +47,9 @@ userSchema.statics.login=async function(email,password){
     if(!user){
       throw Error('Email incorrecte ')
     } 
+    if (user.locked) {
+      throw new Error('Votre compte est verrouillé. Veuillez contacter l\'administrateur.');
+    }
     const match=await bcrypt.compare(password,user.password)
      if(!match){
         throw Error('mot de passe incorrecte')
@@ -60,7 +65,7 @@ userSchema.statics.createAdmin = async function (email, password) {
   }
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
-  const adminUser = await this.create({ email, password: hash, role: adminRole });
+  const adminUser = await this.create({ email, password: hash, role: adminRole,locked });
   return adminUser;
 }
 
